@@ -127,7 +127,7 @@
 <input type="radio" value="terminal" bind:group={claimType}> Terminal
 <br/>
 
-<hr/>	
+<hr/> 
 <h4>I. CREDITABLE YEARS IN SERVICE</h4>
 Gap in Service? <input type="checkbox" bind:checked={gapInSvc}>
 <table>

@@ -1,0 +1,1 @@
+export { default as ComIntro } from "./ComIntro.svelte";
