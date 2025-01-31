@@ -1,14 +1,14 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { ComIntro } from '$lib/components';
+	import { ComIntro, YearsInSvc } from '$lib/components';
 
 	let { data }: { data: PageData } = $props();
 	let page = $state([
-		'Introduction',
-		'Calculate Years in Service',
-		'Highest Salary Received',
-		'Computation of Gratuity Claim',
-		'Computation of Terminal Claim'
+		'Intro',
+		'Yrs in Svc',
+		'HSR',
+		'Lumpsum',
+		'Terminal'
 	]);
     let pageIndex =$state(0);
     function movepage(direction:boolean){
@@ -26,7 +26,9 @@
 	<div class="card w-auto bg-base-100 shadow-xl">
 		<div class="card-body">
             {#if pageIndex==0}
-			    <ComIntro />    
+			    <ComIntro />
+            {:else if pageIndex==1}
+                <YearsInSvc />    
             {/if}
 			<div class="flex justify-between">
 				<div>
