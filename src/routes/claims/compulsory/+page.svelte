@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { ComIntro, YearsInSvc } from '$lib/components';
+	import { ComIntro, YearsInSvc, CalculateHSR } from '$lib/components';
 
 	let { data }: { data: PageData } = $props();
 	let page = $state([
@@ -29,6 +29,8 @@
 			    <ComIntro />
             {:else if pageIndex==1}
                 <YearsInSvc />    
+            {:else if pageIndex==2}
+                <CalculateHSR />    
             {/if}
 			<div class="flex justify-between">
 				<div>
