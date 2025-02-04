@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { ComIntro, YearsInSvc, CalculateHSR } from '$lib/components';
+	import { ComIntro, YearsInSvc, CalculateHSR, Lumpsum } from '$lib/components';
+    import { fly } from 'svelte/transition';
 
 	let { data }: { data: PageData } = $props();
 	let page = $state([
@@ -26,11 +27,21 @@
 	<div class="card w-auto bg-base-100 shadow-xl">
 		<div class="card-body">
             {#if pageIndex==0}
-			    <ComIntro />
+                <div in:fly={{ x: 200}}>
+                    <ComIntro />
+                </div>
             {:else if pageIndex==1}
-                <YearsInSvc />    
+                <div in:fly={{ x: 200}}>
+                    <YearsInSvc />    
+                </div>
             {:else if pageIndex==2}
-                <CalculateHSR />    
+                <div in:fly={{ x: 200}}>
+                    <CalculateHSR />    
+                </div>
+            {:else if pageIndex==3}
+                <div in:fly={{ x: 200}}>
+                    <Lumpsum />    
+                </div>
             {/if}
 			<div class="flex justify-between">
 				<div>
