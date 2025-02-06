@@ -32,14 +32,9 @@
     function getYearsInService(){
         des = new Date(svcdate);
         totalsvc.year = dor.getFullYear()-des.getFullYear();
-
         totalsvc.month = dor.getMonth()-des.getMonth();
-        if(totalsvc.month<0){
-            totalsvc.year -=1;
-            totalsvc.month +=12;
-        }
-
         totalsvc.day = dor.getDate()-des.getDate();
+
         if(totalsvc.day<0){
             totalsvc.month -=1;
             totalsvc.day +=30;
@@ -49,11 +44,17 @@
             totalsvc.month +=1;
             totalsvc.day = 0;
         }
-
+        
         if(totalsvc.month==12){
             totalsvc.year +=1;
             totalsvc.month = 0;
         }
+
+        if(totalsvc.month<0){
+            totalsvc.year -=1;
+            totalsvc.month +=12;
+        }
+        
         YearsInSvc.des = svcdate;
         YearsInSvc.total.y = totalsvc.year;
         YearsInSvc.total.m = totalsvc.month;
