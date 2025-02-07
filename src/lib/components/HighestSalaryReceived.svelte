@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {YearsInSvc, HighestSalaryReceived} from './shared.svelte.js';
+    import {YearsInSvc, HighestSalaryReceived, moneyFormat} from './shared.svelte.js';
 
     interface SalaryMatrix{
         rank:string,
@@ -54,11 +54,6 @@
         hsr:(HighestSalaryReceived.hsr!=0)? HighestSalaryReceived.hsr:0
     });
     let rankHigher:boolean = $state((retiree.retrank=="Select Your Rank")? false:true);
-
-
-    function moneyFormat(a:string):string{
-		return a.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-	}
 
     function computeHSR(){
         let index = salaryGrade.findIndex(t=>t.rank == retiree.rank);

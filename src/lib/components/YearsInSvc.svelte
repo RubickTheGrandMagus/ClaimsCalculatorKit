@@ -85,15 +85,15 @@
 <p>Please Enter Dates</p>
 <label for="dob" class="flex items-center gap-2 label">
     Date of Birth:
-    <input id ="dob" type="date" class="grow input input-sm input-bordered" bind:value={bdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler()}}>
+    <input id ="dob" type="date" class="grow input input-sm input-bordered text-right" bind:value={bdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler()}}>
 </label>
 <label for="des" class="flex items-center gap-2 label">
     Date Entered Service:
-    <input id ="des" type="date" class="grow input input-sm input-bordered" bind:value={svcdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler()}}>
+    <input id ="des" type="date" class="grow input input-sm input-bordered text-right" bind:value={svcdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler()}}>
 </label>
 <label for="dor" class="flex items-center gap-2 label">
     Date of Retirement:
-    <input id ="dor" type="date" class="grow input input-sm input-bordered" bind:value={retdate} readonly>
+    <input id ="dor" type="date" class="grow input input-sm input-bordered text-right" bind:value={retdate} readonly>
 </label>
 Total Years in Service: 
 <div class="flex flex-row items-center">

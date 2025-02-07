@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { ComIntro, YearsInSvc, CalculateHSR, Lumpsum } from '$lib/components';
+	import { ComIntro, YearsInSvc, CalculateHSR, Lumpsum, LeaveCredits } from '$lib/components';
     import { fly } from 'svelte/transition';
 
 	let { data }: { data: PageData } = $props();
@@ -41,6 +41,10 @@
             {:else if pageIndex==3}
                 <div in:fly={{ x: 200}}>
                     <Lumpsum />    
+                </div>
+            {:else if pageIndex==4}
+                <div in:fly={{ x: 200}}>
+                    <LeaveCredits />    
                 </div>
             {/if}
 			<div class="flex justify-between">
