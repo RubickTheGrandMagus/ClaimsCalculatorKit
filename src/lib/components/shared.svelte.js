@@ -4,6 +4,9 @@ export const YearsInSvc = $state({
 export const HighestSalaryReceived = $state({
     rank:"",retrank:"",bp:0,pagi:0,lp:0,hsr:0
 });
+export const LeaveCreditsData = $state({
+    enjoyedSLVL:0
+});
 /**
  * Function to format a number string with commas
  * @param {string} a - a number string

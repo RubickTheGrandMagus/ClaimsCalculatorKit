@@ -55,6 +55,13 @@
             totalsvc.month +=12;
         }
         
+        if(isNaN(totalsvc.year))
+            totalsvc.year = 0;
+        if(isNaN(totalsvc.month))
+            totalsvc.month = 0;
+        if(isNaN(totalsvc.day))
+            totalsvc.day = 0;    
+
         YearsInSvc.des = svcdate;
         YearsInSvc.total.y = totalsvc.year;
         YearsInSvc.total.m = totalsvc.month;
@@ -74,7 +81,7 @@
             error = "You are to old to enter the service. Please change DES or DOB";
         else if(validAge.year<0)
             error = "Invalid Date. Please change Date of Birth.";
-        else if(totalsvc.year<10)
+        else if(totalsvc.year<10 && totalsvc.year!=0 && totalsvc.month!=0 && totalsvc.day!=0)
             error = "You are not qualified for this benefit. Please change Date entered service.";
         else
             error = "";
