@@ -19,7 +19,16 @@
     let validAge:CalculatedDate=$state({
         year:0,month:0,day:0
     });
+    let otherGovSvc:CalculatedDate=$state({
+        year:0,month:0,day:0
+    });
+    let suspendedSvc:CalculatedDate=$state({
+        year:0,month:0,day:0
+    });
     let error:string = $state("");
+    let showSVCadd:boolean = $state(false);
+    let showOtherGovSvc:boolean = $state(false);
+    let showSuspendedSvc:boolean = $state(false);
 
     function getRetirementDate(){
         dor = new Date(bdate);
@@ -86,17 +95,22 @@
         else
             error = "";
     }
+
+    function showSVCaddHandler(){
+        showSVCadd = (totalsvc.year!=0 && totalsvc.month!=0 && totalsvc.day!=0)? true:false;
+        if(error.length>0) showSVCadd = false;
+    }
 </script>
 
 <h2 class="card-title">Calculate Years in Service</h2>
 <p>Please Enter Dates</p>
 <label for="dob" class="flex items-center gap-2 label">
     Date of Birth:
-    <input id ="dob" type="date" class="grow input input-sm input-bordered text-right" bind:value={bdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler()}}>
+    <input id ="dob" type="date" class="grow input input-sm input-bordered text-right" bind:value={bdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
 </label>
 <label for="des" class="flex items-center gap-2 label">
     Date Entered Service:
-    <input id ="des" type="date" class="grow input input-sm input-bordered text-right" bind:value={svcdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler()}}>
+    <input id ="des" type="date" class="grow input input-sm input-bordered text-right" bind:value={svcdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
 </label>
 <label for="dor" class="flex items-center gap-2 label">
     Date of Retirement:
@@ -108,6 +122,54 @@ Total Years in Service:
     <span class="font-mono text-4xl ml-2">{totalsvc.month}</span> months
     <span class="font-mono text-4xl ml-2">{totalsvc.day}</span> days
 </div>
+{#if showSVCadd}
+    <label for="othergovsvc" class="label">
+        <input type="checkbox" class="toggle toggle-success" bind:checked={showOtherGovSvc}/>
+        Other Government Service
+    </label>
+    {#if showOtherGovSvc}
+        <div class="grid grid-cols-[auto,auto,auto]">
+            <div class="p-1">
+                <input type="number" min="0" max="{35-YearsInSvc.total.y}" class="w-14 input input-primary input-sm input-bordered text-right "
+                bind:value={otherGovSvc.year}>
+                Yrs
+            </div> 
+            <div class="p-1">
+                <input type="number" min="0" max="{11-YearsInSvc.total.m}" class="w-14 input input-primary input-sm input-bordered text-right "
+                bind:value={otherGovSvc.month}>
+                Mos
+            </div> 
+            <div class="p-1">
+                <input type="number" min="0" max="{30-YearsInSvc.total.d}" class="w-14 input input-primary input-sm input-bordered text-right "
+                bind:value={otherGovSvc.day}>
+                Days
+            </div> 
+        </div>
+    {/if}
+    <label for="suspendedsvc" class="label">
+        <input type="checkbox" class="toggle toggle-success" bind:checked={showSuspendedSvc}/>
+        Suspended in Service
+    </label>
+    {#if showSuspendedSvc}
+        <div class="grid grid-cols-[auto,auto,auto]">
+            <div class="p-1">
+                <input type="number" min="0" max="1" class="w-14 input input-primary input-sm input-bordered text-right "
+                bind:value={suspendedSvc.year}>
+                Yrs
+            </div> 
+            <div class="p-1">
+                <input type="number" min="0" max="12" class="w-14 input input-primary input-sm input-bordered text-right "
+                bind:value={suspendedSvc.month}>
+                Mos
+            </div> 
+            <div class="p-1">
+                <input type="number" min="0" max="30" class="w-14 input input-primary input-sm input-bordered text-right "
+                bind:value={suspendedSvc.day}>
+                Days
+            </div> 
+        </div>
+    {/if}
+{/if}
 {#if error.length>0}
     <div role="alert" class="alert alert-error">
             <svg
