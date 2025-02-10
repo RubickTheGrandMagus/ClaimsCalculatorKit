@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-  import { injectSpeedInsights } from '@vercel/speed-insights';
+  import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 
   injectSpeedInsights();
 	let { children } = $props();
