@@ -35,13 +35,6 @@
     <div class="p-1 text-right">
         <span>{totalRate.day.toFixed(5)} %</span>
     </div>
-    <div class="p-1">
-        <span>{YearsInSvc.total.d} days x 2.5%</span>
-    </div>
-    <div class="p-1"> = </div>
-    <div class="p-1 text-right">
-        <span>{totalRate.day.toFixed(5)} %</span>
-    </div>
     <div class="p-1 font-bold">
         <span>TOTAL RATE</span>
     </div>
