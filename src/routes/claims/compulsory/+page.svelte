@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { ComIntro, YearsInSvc, CalculateHSR, Lumpsum, LeaveCredits } from '$lib/components';
+	import { ComIntro, YearsInSvcComponent, CalculateHSR, Lumpsum, LeaveCredits } from '$lib/components';
+    import { YearsInSvc } from '$lib/components/shared.svelte';
     import { fly } from 'svelte/transition';
 
 	let { data }: { data: PageData } = $props();
@@ -13,7 +14,7 @@
 	]);
     let pageIndex =$state(0);
     function movepage(direction:boolean){
-        if((pageIndex==0 && !direction) || (pageIndex==page.length-1 && direction)) //dont move when beyond index
+        if((pageIndex==0 && !direction) || (pageIndex==page.length-1 && direction) || YearsInSvc.error.state) //dont move when beyond index
             return;
 
         if(direction)
@@ -32,7 +33,7 @@
                 </div>
             {:else if pageIndex==1}
                 <div in:fly={{ x: 200}}>
-                    <YearsInSvc />    
+                    <YearsInSvcComponent />    
                 </div>
             {:else if pageIndex==2}
                 <div in:fly={{ x: 200}}>

@@ -33,7 +33,7 @@
         month:YearsInSvc.otherService.suspension.months,
         day:YearsInSvc.otherService.suspension.days
     });
-    let error:string = $state("");
+    let error:string = $state(YearsInSvc.error);
     let showSVCadd:boolean = $state(YearsInSvc.otherService.state);
     let showOtherGovSvc:boolean = $state(YearsInSvc.otherService.gov.state);
     let showSuspendedSvc:boolean = $state(YearsInSvc.otherService.suspension.state);
@@ -112,12 +112,15 @@
             error = "You are to young to enter the service. Please change Date Entered Service.";
         else if(validAge.year>35)
             error = "You are to old to enter the service. Please change DES or DOB";
-        else if(validAge.year<0)
+        else if(validAge.year<=0)
             error = "Invalid Date. Please change Date of Birth.";
         else if(totalsvc.year<10 && totalsvc.year!=0 && totalsvc.month!=0 && totalsvc.day!=0)
             error = "You are not qualified for this benefit. Please change Date entered service.";
         else
             error = "";
+
+        YearsInSvc.error.text = error;
+        YearsInSvc.error.state = (error.length>0)? true:false;
     }
 
     function showSVCaddHandler(){
