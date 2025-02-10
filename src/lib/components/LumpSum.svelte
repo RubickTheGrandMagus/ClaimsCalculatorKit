@@ -22,14 +22,14 @@
         <span>{totalRate.year.toFixed(5)} %</span>
     </div>
     <div class="p-1">
-        <span>{YearsInSvc.total.m} months x 2.5%</span>
+        <span>{YearsInSvc.total.m} months /12 x 2.5%</span>
     </div>
     <div class="p-1"> = </div>
     <div class="p-1 text-right">
         <span>{totalRate.month.toFixed(5)} %</span>
     </div>
     <div class="p-1">
-        <span>{YearsInSvc.total.d} days x 2.5%</span>
+        <span>{YearsInSvc.total.d} days /360 x 2.5%</span>
     </div>
     <div class="p-1"> = </div>
     <div class="p-1 text-right">
@@ -57,7 +57,7 @@
         <span>₱ {moneyFormat(computation.pension.toFixed(2))} </span>
     </div>
     <div class="p-1 font-bold">
-        <span>LUMP SUM</span>
+        <span>36 MONTHS LUMP SUM</span>
     </div>
     <div class="p-1 font-bold"> = </div>
     <div class="p-1 text-right font-bold">
