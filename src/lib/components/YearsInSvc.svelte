@@ -1,5 +1,9 @@
 <script lang="ts">
     import {YearsInSvc} from './shared.svelte.js';
+
+    const daysInAYear:number = 360;
+    const maximumDaysInService:number = 36*daysInAYear; //Number of Days in 36 Years of service
+    const minimumDaysInService:number = 10*daysInAYear; //Number of Days in 10 Years of Service
     let des: Date = $state(new Date());
     let dor: Date = $state(new Date());
     let dob: Date = $state(new Date());
@@ -20,15 +24,19 @@
         year:0,month:0,day:0
     });
     let otherGovSvc:CalculatedDate=$state({
-        year:0,month:0,day:0
+        year:YearsInSvc.otherService.gov.years,
+        month:YearsInSvc.otherService.gov.months,
+        day:YearsInSvc.otherService.gov.days
     });
     let suspendedSvc:CalculatedDate=$state({
-        year:0,month:0,day:0
+        year:YearsInSvc.otherService.suspension.years,
+        month:YearsInSvc.otherService.suspension.months,
+        day:YearsInSvc.otherService.suspension.days
     });
     let error:string = $state("");
-    let showSVCadd:boolean = $state(false);
-    let showOtherGovSvc:boolean = $state(false);
-    let showSuspendedSvc:boolean = $state(false);
+    let showSVCadd:boolean = $state(YearsInSvc.otherService.state);
+    let showOtherGovSvc:boolean = $state(YearsInSvc.otherService.gov.state);
+    let showSuspendedSvc:boolean = $state(YearsInSvc.otherService.suspension.state);
 
     function getRetirementDate(){
         dor = new Date(bdate);
@@ -44,6 +52,18 @@
         totalsvc.month = dor.getMonth()-des.getMonth();
         totalsvc.day = dor.getDate()-des.getDate();
 
+        calibrateGetYearsInService();
+
+        YearsInSvc.des = svcdate;
+        YearsInSvc.total.y = totalsvc.year;
+        YearsInSvc.total.m = totalsvc.month;
+        YearsInSvc.total.d = totalsvc.day;
+        YearsInSvc.otherService.bfp.years = totalsvc.year;
+        YearsInSvc.otherService.bfp.months = totalsvc.month;
+        YearsInSvc.otherService.bfp.days = totalsvc.day;
+    }
+
+    function calibrateGetYearsInService(){
         if(totalsvc.day<0){
             totalsvc.month -=1;
             totalsvc.day +=30;
@@ -63,6 +83,16 @@
             totalsvc.year -=1;
             totalsvc.month +=12;
         }
+
+        if(totalsvc.day>30){
+            totalsvc.day -=30
+            totalsvc.month +=1;
+        }
+
+        if(totalsvc.month>12){
+            totalsvc.month -=12;
+            totalsvc.year +=1;
+        }
         
         if(isNaN(totalsvc.year))
             totalsvc.year = 0;
@@ -70,12 +100,6 @@
             totalsvc.month = 0;
         if(isNaN(totalsvc.day))
             totalsvc.day = 0;    
-
-        YearsInSvc.des = svcdate;
-        YearsInSvc.total.y = totalsvc.year;
-        YearsInSvc.total.m = totalsvc.month;
-        YearsInSvc.total.d = totalsvc.day;
-        
     }
 
     function getAgeValidation(){
@@ -99,6 +123,110 @@
     function showSVCaddHandler(){
         showSVCadd = (totalsvc.year!=0 && totalsvc.month!=0 && totalsvc.day!=0)? true:false;
         if(error.length>0) showSVCadd = false;
+
+        YearsInSvc.otherService.state = showSVCadd;
+    }
+
+    function addOtherSvc(){
+        if(!showSVCadd)
+            return
+
+        if(showOtherGovSvc){
+            totalsvc.year += otherGovSvc.year;
+            totalsvc.month += otherGovSvc.month;
+            totalsvc.day += otherGovSvc.day;
+        }
+        if(showSuspendedSvc){
+            totalsvc.year -= suspendedSvc.year;
+            totalsvc.month -= suspendedSvc.month;
+            totalsvc.day -= suspendedSvc.day;
+            
+            getBFPservice();
+        }
+
+        calibrateGetYearsInService();
+
+        if(totalsvc.year*daysInAYear>=maximumDaysInService){
+            totalsvc.year = 36;
+            totalsvc.month = 0;
+            totalsvc.day =0;
+        }
+        if(totalsvc.year*daysInAYear<minimumDaysInService ){
+            totalsvc.year = 10;
+            totalsvc.month = 0;
+            totalsvc.day = 0;
+        }
+
+        YearsInSvc.des = svcdate;
+        YearsInSvc.total.y = totalsvc.year;
+        YearsInSvc.total.m = totalsvc.month;
+        YearsInSvc.total.d = totalsvc.day;
+
+        YearsInSvc.otherService.gov.state = showOtherGovSvc;
+        YearsInSvc.otherService.suspension.state = showSuspendedSvc;
+    }
+
+    function counterGovService(){
+        if(otherGovSvc.day>=30){
+            otherGovSvc.day =0;
+            otherGovSvc.month +=1;
+        }
+        if(otherGovSvc.month>=12){
+            otherGovSvc.month = 0;
+            otherGovSvc.year +=1;
+        }
+        if(otherGovSvc.day<0)
+            otherGovSvc.day = 0;
+        if(otherGovSvc.month<0)
+            otherGovSvc.month = 0;
+        if(otherGovSvc.year<0)
+            otherGovSvc.year = 0;
+
+        YearsInSvc.otherService.gov.years = otherGovSvc.year;
+        YearsInSvc.otherService.gov.months = otherGovSvc.month;
+        YearsInSvc.otherService.gov.days = otherGovSvc.day;
+    }
+
+    function counterSuspendedService(){
+        if(suspendedSvc.day>=30){
+            suspendedSvc.day = 0;
+            suspendedSvc.month += 1;
+        }
+        if(suspendedSvc.month>=12){
+            suspendedSvc.month = 0;
+            suspendedSvc.year += 1;
+        }
+        if(suspendedSvc.day<0)
+            suspendedSvc.day = 0;
+        if(suspendedSvc.month<0)
+            suspendedSvc.month = 0;
+        if(suspendedSvc.year<0)
+            suspendedSvc.year = 0;
+
+        YearsInSvc.otherService.suspension.years = suspendedSvc.year;
+        YearsInSvc.otherService.suspension.months = suspendedSvc.month;
+        YearsInSvc.otherService.suspension.days = suspendedSvc.day;
+    }
+
+    function getBFPservice(){
+        YearsInSvc.otherService.bfp.years -= suspendedSvc.year;
+        YearsInSvc.otherService.bfp.months -= suspendedSvc.month;
+        YearsInSvc.otherService.bfp.days -= suspendedSvc.day;
+
+        if(YearsInSvc.otherService.bfp.years*daysInAYear < minimumDaysInService){
+            YearsInSvc.otherService.bfp.years = 10;
+            YearsInSvc.otherService.bfp.months = 0;
+            YearsInSvc.otherService.bfp.days = 0;
+        }
+
+        if(YearsInSvc.otherService.bfp.months==12){
+            YearsInSvc.otherService.bfp.years +=1;
+            YearsInSvc.otherService.bfp.months = 0;
+        }
+        if(YearsInSvc.otherService.bfp.days==30){
+            YearsInSvc.otherService.bfp.months +=1;
+            YearsInSvc.otherService.bfp.days = 0;
+        }
     }
 </script>
 
@@ -124,47 +252,47 @@ Total Years in Service:
 </div>
 {#if showSVCadd}
     <label for="othergovsvc" class="label">
-        <input type="checkbox" class="toggle toggle-success" bind:checked={showOtherGovSvc}/>
+        <input type="checkbox" class="toggle toggle-success" bind:checked={showOtherGovSvc} onchange={()=>{getRetirementDate();getYearsInService();addOtherSvc();}}>
         Other Government Service
     </label>
     {#if showOtherGovSvc}
         <div class="grid grid-cols-[auto,auto,auto]">
             <div class="p-1">
-                <input type="number" min="0" max="{35-YearsInSvc.total.y}" class="w-14 input input-primary input-sm input-bordered text-right "
-                bind:value={otherGovSvc.year}>
-                Yrs
-            </div> 
-            <div class="p-1">
-                <input type="number" min="0" max="{11-YearsInSvc.total.m}" class="w-14 input input-primary input-sm input-bordered text-right "
-                bind:value={otherGovSvc.month}>
-                Mos
-            </div> 
-            <div class="p-1">
-                <input type="number" min="0" max="{30-YearsInSvc.total.d}" class="w-14 input input-primary input-sm input-bordered text-right "
-                bind:value={otherGovSvc.day}>
-                Days
-            </div> 
-        </div>
-    {/if}
-    <label for="suspendedsvc" class="label">
-        <input type="checkbox" class="toggle toggle-success" bind:checked={showSuspendedSvc}/>
-        Suspended in Service
-    </label>
-    {#if showSuspendedSvc}
-        <div class="grid grid-cols-[auto,auto,auto]">
-            <div class="p-1">
-                <input type="number" min="0" max="1" class="w-14 input input-primary input-sm input-bordered text-right "
-                bind:value={suspendedSvc.year}>
+                <input type="number" min="0" class="w-14 input input-primary input-sm input-bordered text-right "
+                bind:value={otherGovSvc.year} onchange={()=>{counterGovService();getRetirementDate();getYearsInService();addOtherSvc();}}>
                 Yrs
             </div> 
             <div class="p-1">
                 <input type="number" min="0" max="12" class="w-14 input input-primary input-sm input-bordered text-right "
-                bind:value={suspendedSvc.month}>
+                bind:value={otherGovSvc.month} onchange={()=>{counterGovService();getRetirementDate();getYearsInService();addOtherSvc();}}>
                 Mos
             </div> 
             <div class="p-1">
                 <input type="number" min="0" max="30" class="w-14 input input-primary input-sm input-bordered text-right "
-                bind:value={suspendedSvc.day}>
+                bind:value={otherGovSvc.day} onchange={()=>{counterGovService();getRetirementDate();getYearsInService();addOtherSvc();}}>
+                Days
+            </div> 
+        </div>
+    {/if}
+    <label for="suspendedsvc" class="label text-sm">
+        <input type="checkbox" class="toggle toggle-success" bind:checked={showSuspendedSvc} onchange={()=>{getRetirementDate();getYearsInService();addOtherSvc();}}>
+        Suspended/Detained/Rehab in Service
+    </label>
+    {#if showSuspendedSvc}
+        <div class="grid grid-cols-[auto,auto,auto]">
+            <div class="p-1">
+                <input type="number" min="0" class="w-14 input input-error input-sm input-bordered text-right "
+                bind:value={suspendedSvc.year} onchange={()=>{counterSuspendedService();getRetirementDate();getYearsInService();addOtherSvc();}}>
+                Yrs
+            </div> 
+            <div class="p-1">
+                <input type="number" min="0" max="12" class="w-14 input input-error input-sm input-bordered text-right "
+                bind:value={suspendedSvc.month} onchange={()=>{counterSuspendedService();getRetirementDate();getYearsInService();addOtherSvc();}}>
+                Mos
+            </div> 
+            <div class="p-1">
+                <input type="number" min="0" max="30" class="w-14 input input-error input-sm input-bordered text-right "
+                bind:value={suspendedSvc.day} onchange={()=>{counterSuspendedService();getRetirementDate();getYearsInService();addOtherSvc();}}>
                 Days
             </div> 
         </div>

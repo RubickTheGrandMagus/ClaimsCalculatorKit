@@ -13,9 +13,9 @@
     
     let enjoyedSLVL:number = $state(LeaveCreditsData.enjoyedSLVL);
     let computation:LeaveCredits = $state({
-        year:YearsInSvc.total.y*15,
-        month:YearsInSvc.total.m/12*15,
-        day:YearsInSvc.total.d/360*15,
+        year:YearsInSvc.otherService.bfp.years*15,
+        month:YearsInSvc.otherService.bfp.months/12*15,
+        day:YearsInSvc.otherService.bfp.days/360*15,
         slvl:0,
         tlc:0,
         cf:0.0481927,
