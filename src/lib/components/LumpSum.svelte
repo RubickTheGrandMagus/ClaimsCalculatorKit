@@ -9,6 +9,7 @@
 
     let totalRate:TotalRating = {year:YearsInSvc.total.y*2.5,month:YearsInSvc.total.m/12*2.5,day:YearsInSvc.total.d/360*2.5,total:0};
     totalRate.total = totalRate.year + totalRate.month + totalRate.day;
+    totalRate.total = (totalRate.total>90)? 90:totalRate.total;
     let computation ={pension:HighestSalaryReceived.hsr*totalRate.total/100,lumpsum:0};
     computation.lumpsum = parseFloat(computation.pension.toFixed(2)) * 36; 
 </script>
@@ -65,5 +66,26 @@
     </div>
 </div>
 
+<div tabindex="0" class="collapse collapse-plus border-base-300 bg-base-200 border">
+    <div class="collapse-title text-xl font-medium flex items-center">
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        class="h-6 w-6 shrink-0 stroke-current mr-2">
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        DILG ACT of 1990 Section 75
+    </div>
+    <div class="collapse-content text-justify">
+        <blockquote class="border-l-4 border-gray-500 pl-4 italic text-gray-700">
+        Monthly retirement pay shall be fifty percent (50%) of the base pay and longevity pay of the retired grade in case of twenty (20) years of active service, increasing by two and one-half percent (2.5%) for every year of active service rendered beyond twenty (20) years to a maximum of ninety percent (90%) for thirty-six (36) years of active service and over.
+        </blockquote>
+    </div>
+  </div>
   
   

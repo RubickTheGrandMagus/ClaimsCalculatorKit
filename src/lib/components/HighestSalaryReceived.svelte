@@ -89,8 +89,10 @@
     </select>
 </label>
 <label for="rank" class="label">
-    <input type="checkbox" class="toggle toggle-success" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
-    {(rankHigher)? "with one rank higher":"without one rank higher"}
+        <div class="tooltip tooltip-right" data-tip="at least 1 year active service of current rank">
+        <input type="checkbox" class="toggle toggle-success" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
+        </div>
+        {(rankHigher)? "with one rank higher":"without one rank higher"}
 </label>
 <label class="label font-bold" for="retrank">
     <span>Retired Rank:</span>

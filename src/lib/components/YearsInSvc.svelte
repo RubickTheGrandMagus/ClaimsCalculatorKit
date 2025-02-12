@@ -33,7 +33,7 @@
         month:YearsInSvc.otherService.suspension.months,
         day:YearsInSvc.otherService.suspension.days
     });
-    let error:string = $state(YearsInSvc.error);
+    let error:string = $state(YearsInSvc.error.text);
     let showSVCadd:boolean = $state(YearsInSvc.otherService.state);
     let showOtherGovSvc:boolean = $state(YearsInSvc.otherService.gov.state);
     let showSuspendedSvc:boolean = $state(YearsInSvc.otherService.suspension.state);
