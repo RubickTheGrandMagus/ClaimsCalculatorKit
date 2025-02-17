@@ -20,7 +20,7 @@
         hsr:number
     }
 
-    let salaryGrade:SalaryMatrix[]=[
+    const salaryGrade:SalaryMatrix[]=[
         {rank:"FO1",basepay:29668},
         {rank:"FO2",basepay:30867},
         {rank:"FO3",basepay:32114},
@@ -49,10 +49,11 @@
         rank:(HighestSalaryReceived.rank!="")? HighestSalaryReceived.rank:"",
         retrank:(HighestSalaryReceived.retrank!="")? HighestSalaryReceived.retrank:"Select Your Rank",
         bp:(HighestSalaryReceived.bp!=0)? HighestSalaryReceived.bp:0,
-        pagi:(HighestSalaryReceived.pagi!=0)? HighestSalaryReceived.pagi:Math.floor(YearsInSvc.total.y/5),
+        pagi:(HighestSalaryReceived.pagi!=0)? HighestSalaryReceived.pagi:Math.floor(YearsInSvc.otherService.bfp.years/5),
         lp:(HighestSalaryReceived.lp!=0)? HighestSalaryReceived.lp:0,
         hsr:(HighestSalaryReceived.hsr!=0)? HighestSalaryReceived.hsr:0
     });
+    retiree.pagi = (retiree.pagi>5)? 5:retiree.pagi;
     let rankHigher:boolean = $state((retiree.retrank=="Select Your Rank")? false:true);
 
     function computeHSR(){
@@ -88,8 +89,10 @@
     </select>
 </label>
 <label for="rank" class="label">
-    <input type="checkbox" class="toggle toggle-success" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
-    {(rankHigher)? "with one rank higher":"without one rank higher"}
+        <div class="tooltip tooltip-right" data-tip="at least 1 year active service of current rank">
+        <input type="checkbox" class="toggle toggle-success" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
+        </div>
+        {(rankHigher)? "with one rank higher":"without one rank higher"}
 </label>
 <label class="label font-bold" for="retrank">
     <span>Retired Rank:</span>
