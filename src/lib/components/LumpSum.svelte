@@ -44,7 +44,7 @@
         <span>{totalRate.total.toFixed(5)} %</span>
     </div>
     <div class="p-1">
-        <span>₱ {moneyFormat(HighestSalaryReceived.hsr.toFixed(2))} x {totalRate.total.toFixed(5)}</span>
+        <span>₱ {moneyFormat(HighestSalaryReceived.hsr.toFixed(2))} x {totalRate.total.toFixed(5)} %</span>
     </div>
     <div class="p-1"> = </div>
     <div class="p-1 text-right">

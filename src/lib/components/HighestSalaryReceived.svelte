@@ -54,7 +54,7 @@
         hsr:(HighestSalaryReceived.hsr!=0)? HighestSalaryReceived.hsr:0
     });
     retiree.pagi = (retiree.pagi>5)? 5:retiree.pagi;
-    let rankHigher:boolean = $state((retiree.retrank=="Select Your Rank")? false:true);
+    let rankHigher:boolean = $state((retiree.retrank=="Select Your Rank" || retiree.rank==retiree.retrank)? false:true);
 
     function computeHSR(){
         let index = salaryGrade.findIndex(t=>t.rank == retiree.rank);

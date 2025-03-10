@@ -2,7 +2,6 @@
     import {YearsInSvc} from './shared.svelte.js';
 
     const daysInAYear:number = 360;
-    const maximumDaysInService:number = 36*daysInAYear; //Number of Days in 36 Years of service
     const minimumDaysInService:number = 10*daysInAYear; //Number of Days in 10 Years of Service
     let des: Date = $state(new Date());
     let dor: Date = $state(new Date());
@@ -149,11 +148,6 @@
 
         calibrateGetYearsInService();
 
-        if(totalsvc.year*daysInAYear>=maximumDaysInService){
-            totalsvc.year = 36;
-            totalsvc.month = 0;
-            totalsvc.day =0;
-        }
         if(totalsvc.year*daysInAYear<minimumDaysInService ){
             totalsvc.year = 10;
             totalsvc.month = 0;
