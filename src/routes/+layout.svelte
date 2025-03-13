@@ -30,7 +30,7 @@
           </label>
         </div>
         <div class="flex-1">
-          <a href="/" class="btn btn-ghost normal-case text-xl">ClaimsCalculatorKit</a>
+          <a href="/" class="btn btn-ghost normal-case text-xl">Claims Calculator Kit</a>
         </div>
 	</div>
 		<!-- Main content here -->

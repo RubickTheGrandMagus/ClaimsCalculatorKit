@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { ComIntro, YearsInSvcComponent, CalculateHSR, Lumpsum, LeaveCredits } from '$lib/components/compulsory';
-    import { YearsInSvc } from '$lib/components/compulsory/shared.svelte';
+	import { OptIntro, YearsInSvcComponent, CalculateHSR, Lumpsum, LeaveCredits } from '$lib/components/optional';
+    import { YearsInSvc } from '$lib/components/optional/shared.svelte';
     import { fly } from 'svelte/transition';
 
 	let page = $state([
@@ -27,7 +27,7 @@
 		<div class="card-body">
             {#if pageIndex==0}
                 <div in:fly={{ x: 200}}>
-                    <ComIntro />
+                    <OptIntro />
                 </div>
             {:else if pageIndex==1}
                 <div in:fly={{ x: 200}}>

@@ -123,7 +123,7 @@
     }
 
     function showSVCaddHandler(){
-        showSVCadd = (totalsvc.year!=0 && totalsvc.month!=0 && totalsvc.day!=0)? true:false;
+        showSVCadd = (totalsvc.year!=0)? true:false;
         if(error.length>0) showSVCadd = false;
 
         YearsInSvc.otherService.state = showSVCadd;
