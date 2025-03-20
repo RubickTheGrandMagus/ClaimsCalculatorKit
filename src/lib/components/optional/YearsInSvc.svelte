@@ -38,8 +38,11 @@
     let showSuspendedSvc:boolean = $state(YearsInSvc.otherService.suspension.state);
 
     function getRetirementDate(){
-        dor = new Date(bdate);
-        dor.setFullYear(dor.getFullYear()+56);
+        if(svcdate=="")
+            return
+
+        dor = new Date(svcdate);
+        dor.setFullYear(dor.getFullYear()+20);
         retdate = dor.toISOString().substring(0,10);
         YearsInSvc.dor = retdate;
         YearsInSvc.dob = bdate;
@@ -47,6 +50,7 @@
 
     function getYearsInService(){
         des = new Date(svcdate);
+        dor = new Date(retdate);
         totalsvc.year = dor.getFullYear()-des.getFullYear();
         totalsvc.month = dor.getMonth()-des.getMonth();
         totalsvc.day = dor.getDate()-des.getDate();
@@ -105,6 +109,15 @@
         dob = new Date(bdate);
         validAge.year = des.getFullYear()-dob.getFullYear();
     };
+
+    function validateDateofRetirement():boolean{
+        let compulsoryDate = new Date(bdate);
+        compulsoryDate.setFullYear(compulsoryDate.getFullYear()+56);
+        if(retdate>compulsoryDate.toISOString().substring(0,10))
+            return true;
+
+        return false;
+    }
     
     function errorHandler(){
         if(validAge.year<18 && validAge.year>0)
@@ -115,6 +128,12 @@
             error = "Invalid Date. Please change Date of Birth.";
         else if(totalsvc.year<10 && totalsvc.year!=0 && totalsvc.month!=0 && totalsvc.day!=0)
             error = "You are not qualified for this benefit. Please change Date entered service.";
+        else if(bdate=="")
+            error = "Date of Birth must not be empty.";
+        else if(svcdate=="")
+            error = "Date Entered Service must not be empty.";
+        else if(validateDateofRetirement())
+            error = "Please change Date of Retirement. It is above the mandatory age of 56.";
         else
             error = "";
 
@@ -239,7 +258,7 @@
 </label>
 <label for="dor" class="flex items-center gap-2 label">
     Date of Retirement:
-    <input id ="dor" type="date" class="grow input input-sm input-bordered text-right" bind:value={retdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
+    <input id ="dor" type="date" class="grow input input-sm input-bordered text-right" bind:value={retdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
 </label>
 Total Years in Service: 
 <div class="flex flex-row items-center">
@@ -249,47 +268,47 @@ Total Years in Service:
 </div>
 {#if showSVCadd}
     <label for="othergovsvc" class="label">
-        <input type="checkbox" class="toggle toggle-success" bind:checked={showOtherGovSvc} onchange={()=>{getRetirementDate();getYearsInService();addOtherSvc();}}>
+        <input type="checkbox" class="toggle toggle-success" bind:checked={showOtherGovSvc} onchange={()=>{getYearsInService();addOtherSvc();}}>
         Other Government Service
     </label>
     {#if showOtherGovSvc}
         <div class="grid grid-cols-[auto,auto,auto]">
             <div class="p-1">
-                <input type="number" min="0" class="w-14 input input-primary input-sm input-bordered text-right "
-                bind:value={otherGovSvc.year} onchange={()=>{counterGovService();getRetirementDate();getYearsInService();addOtherSvc();}}>
+                <input type="number" min="0" max="20" class="w-14 input input-primary input-sm input-bordered text-right "
+                bind:value={otherGovSvc.year} onchange={()=>{counterGovService();getYearsInService();addOtherSvc();}}>
                 Yrs
             </div> 
             <div class="p-1">
                 <input type="number" min="0" max="12" class="w-14 input input-primary input-sm input-bordered text-right "
-                bind:value={otherGovSvc.month} onchange={()=>{counterGovService();getRetirementDate();getYearsInService();addOtherSvc();}}>
+                bind:value={otherGovSvc.month} onchange={()=>{counterGovService();getYearsInService();addOtherSvc();}}>
                 Mos
             </div> 
             <div class="p-1">
                 <input type="number" min="0" max="30" class="w-14 input input-primary input-sm input-bordered text-right "
-                bind:value={otherGovSvc.day} onchange={()=>{counterGovService();getRetirementDate();getYearsInService();addOtherSvc();}}>
+                bind:value={otherGovSvc.day} onchange={()=>{counterGovService();getYearsInService();addOtherSvc();}}>
                 Days
             </div> 
         </div>
     {/if}
     <label for="suspendedsvc" class="label text-sm">
-        <input type="checkbox" class="toggle toggle-success" bind:checked={showSuspendedSvc} onchange={()=>{getRetirementDate();getYearsInService();addOtherSvc();}}>
+        <input type="checkbox" class="toggle toggle-success" bind:checked={showSuspendedSvc} onchange={()=>{getYearsInService();addOtherSvc();}}>
         Suspended/Detained/Rehab in Service
     </label>
     {#if showSuspendedSvc}
         <div class="grid grid-cols-[auto,auto,auto]">
             <div class="p-1">
-                <input type="number" min="0" class="w-14 input input-error input-sm input-bordered text-right "
-                bind:value={suspendedSvc.year} onchange={()=>{counterSuspendedService();getRetirementDate();getYearsInService();addOtherSvc();}}>
+                <input type="number" min="0" max="20" class="w-14 input input-error input-sm input-bordered text-right "
+                bind:value={suspendedSvc.year} onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();}}>
                 Yrs
             </div> 
             <div class="p-1">
                 <input type="number" min="0" max="12" class="w-14 input input-error input-sm input-bordered text-right "
-                bind:value={suspendedSvc.month} onchange={()=>{counterSuspendedService();getRetirementDate();getYearsInService();addOtherSvc();}}>
+                bind:value={suspendedSvc.month} onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();}}>
                 Mos
             </div> 
             <div class="p-1">
                 <input type="number" min="0" max="30" class="w-14 input input-error input-sm input-bordered text-right "
-                bind:value={suspendedSvc.day} onchange={()=>{counterSuspendedService();getRetirementDate();getYearsInService();addOtherSvc();}}>
+                bind:value={suspendedSvc.day} onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();}}>
                 Days
             </div> 
         </div>
