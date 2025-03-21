@@ -21,20 +21,20 @@
     }
 
     const salaryGrade:SalaryMatrix[]=[
-        {rank:"FO1",basepay:29668},
-        {rank:"FO2",basepay:30867},
-        {rank:"FO3",basepay:32114},
-        {rank:"SFO1",basepay:33411},
-        {rank:"SFO2",basepay:34079},
-        {rank:"SFO3",basepay:34761},
-        {rank:"SFO4",basepay:38366},
-        {rank:"FINSP",basepay:49528},
-        {rank:"FSINSP",basepay:56582},
-        {rank:"FCINSP",basepay:62555},
-        {rank:"FSUPT",basepay:71313},
-        {rank:"FSSUPT",basepay:80583},
-        {rank:"FCSUPT",basepay:91058},
-        {rank:"FDIR",basepay:102896}
+        {rank:"FO1 (SG 10)",basepay:29668},
+        {rank:"FO2 (SG 12)",basepay:30867},
+        {rank:"FO3 (SG 14)",basepay:32114},
+        {rank:"SFO1 (SG 16)",basepay:33411},
+        {rank:"SFO2 (SG 17)",basepay:34079},
+        {rank:"SFO3 (SG 18)",basepay:34761},
+        {rank:"SFO4 (SG 19)",basepay:38366},
+        {rank:"FINSP (SG 22)",basepay:49528},
+        {rank:"FSINSP (SG 23)",basepay:56582},
+        {rank:"FCINSP (SG 24)",basepay:62555},
+        {rank:"FSUPT (SG 25)",basepay:71313},
+        {rank:"FSSUPT (SG 26)",basepay:80583},
+        {rank:"FCSUPT (SG 27)",basepay:91058},
+        {rank:"FDIR (SG 28)",basepay:102896}
     ];
 
     let longevityPay:LongPayMatrix[]=[
