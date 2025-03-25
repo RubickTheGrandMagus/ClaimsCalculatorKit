@@ -409,6 +409,8 @@
         {rank:"FDIR (SG 28)",basepay:102896}
     ];
 
+    let salaryGrade2:SalaryMatrix[]= findSalaryMatrix();
+
     let longevityPay:LongPayMatrix[]=[
         {pagi:5,rate:0.5},
         {pagi:4,rate:0.4641},
@@ -428,16 +430,23 @@
     retiree.pagi = (retiree.pagi>5)? 5:retiree.pagi;
     let rankHigher:boolean = $state((retiree.retrank=="Select Your Rank" || retiree.rank==retiree.retrank)? false:true);
 
+    function findSalaryMatrix(){
+        let retdate = new Date(YearsInSvc.dor);
+
+        let index = salaryDatabase.findIndex(t=>retdate>(new Date(t.coverage.startDate)) && retdate<(new Date((t.coverage.endDate=="present")? "": t.coverage.endDate)));
+        return salaryDatabase[index].salaryMatrix;
+    }
+
     function computeHSR(){
-        let index = salaryGrade.findIndex(t=>t.rank == retiree.rank);
+        let index = salaryGrade2.findIndex(t=>t.rank == retiree.rank);
         let index2 = longevityPay.findIndex(t=>t.pagi == retiree.pagi);
-        if(rankHigher && index<salaryGrade.length-1 && retiree.rank!="Your current rank"){
+        if(rankHigher && index<salaryGrade2.length-1 && retiree.rank!="Your current rank"){
             index +=1;
         }
 
-        retiree.retrank = salaryGrade[index].rank;
-        retiree.bp = salaryGrade[index].basepay;
-        retiree.lp = salaryGrade[index].basepay * longevityPay[index2].rate;
+        retiree.retrank = salaryGrade2[index].rank;
+        retiree.bp = salaryGrade2[index].basepay;
+        retiree.lp = salaryGrade2[index].basepay * longevityPay[index2].rate;
         retiree.hsr = retiree.bp + retiree.lp;
 
         HighestSalaryReceived.rank = retiree.rank;
@@ -453,7 +462,7 @@
 <label for="rank" class="label flex items-center gap-2">Rank:
     <select id="rank" class="select select-bordered select-sm w-full max-w-xs" bind:value={retiree.rank} onchange={()=>computeHSR()}>
         <option disabled selected>Your current rank</option>
-        {#each salaryGrade as salary}
+        {#each salaryGrade2 as salary}
             {#if salary.rank != "FDIR"}
                 <option value={salary.rank}>{salary.rank}</option>
             {/if}
