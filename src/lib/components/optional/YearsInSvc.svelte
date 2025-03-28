@@ -23,19 +23,19 @@
         year:0,month:0,day:0
     });
     let otherGovSvc:CalculatedDate=$state({
-        year:YearsInSvc.otherService.gov.years,
-        month:YearsInSvc.otherService.gov.months,
-        day:YearsInSvc.otherService.gov.days
+        year:YearsInSvc.allService.gov.years,
+        month:YearsInSvc.allService.gov.months,
+        day:YearsInSvc.allService.gov.days
     });
     let suspendedSvc:CalculatedDate=$state({
-        year:YearsInSvc.otherService.suspension.years,
-        month:YearsInSvc.otherService.suspension.months,
-        day:YearsInSvc.otherService.suspension.days
+        year:YearsInSvc.allService.suspension.years,
+        month:YearsInSvc.allService.suspension.months,
+        day:YearsInSvc.allService.suspension.days
     });
     let error:string = $state(YearsInSvc.error.text);
-    let showSVCadd:boolean = $state(YearsInSvc.otherService.state);
-    let showOtherGovSvc:boolean = $state(YearsInSvc.otherService.gov.state);
-    let showSuspendedSvc:boolean = $state(YearsInSvc.otherService.suspension.state);
+    let showSVCadd:boolean = $state(YearsInSvc.allService.state);
+    let showOtherGovSvc:boolean = $state(YearsInSvc.allService.gov.state);
+    let showSuspendedSvc:boolean = $state(YearsInSvc.allService.suspension.state);
 
     function getRetirementDate(){
         if(svcdate=="")
@@ -43,7 +43,7 @@
 
         dor = new Date(svcdate);
         dor.setFullYear(dor.getFullYear()+20);
-        retdate = dor.toISOString().substring(0,10);
+        retdate = dor.getFullYear()+"-"+(String(dor.getMonth()+1).padStart(2, '0'))+"-"+String(dor.getDate()).padStart(2, '0');
         YearsInSvc.dor = retdate;
         YearsInSvc.dob = bdate;
     }
@@ -61,9 +61,9 @@
         YearsInSvc.total.y = totalsvc.year;
         YearsInSvc.total.m = totalsvc.month;
         YearsInSvc.total.d = totalsvc.day;
-        YearsInSvc.otherService.bfp.years = totalsvc.year;
-        YearsInSvc.otherService.bfp.months = totalsvc.month;
-        YearsInSvc.otherService.bfp.days = totalsvc.day;
+        YearsInSvc.allService.bfp.years = totalsvc.year;
+        YearsInSvc.allService.bfp.months = totalsvc.month;
+        YearsInSvc.allService.bfp.days = totalsvc.day;
     }
 
     function calibrateGetYearsInService(){
@@ -113,7 +113,8 @@
     function validateDateofRetirement():boolean{
         let compulsoryDate = new Date(bdate);
         compulsoryDate.setFullYear(compulsoryDate.getFullYear()+56);
-        if(retdate>compulsoryDate.toISOString().substring(0,10))
+        const age56Formated = compulsoryDate.getFullYear()+"-"+(String(compulsoryDate.getMonth()+1).padStart(2, '0'))+"-"+String(compulsoryDate.getDate()).padStart(2, '0');
+        if(retdate>age56Formated)
             return true;
 
         return false;
@@ -145,7 +146,7 @@
         showSVCadd = (totalsvc.year!=0)? true:false;
         if(error.length>0) showSVCadd = false;
 
-        YearsInSvc.otherService.state = showSVCadd;
+        YearsInSvc.allService.state = showSVCadd;
     }
 
     function addOtherSvc(){
@@ -178,8 +179,8 @@
         YearsInSvc.total.m = totalsvc.month;
         YearsInSvc.total.d = totalsvc.day;
 
-        YearsInSvc.otherService.gov.state = showOtherGovSvc;
-        YearsInSvc.otherService.suspension.state = showSuspendedSvc;
+        YearsInSvc.allService.gov.state = showOtherGovSvc;
+        YearsInSvc.allService.suspension.state = showSuspendedSvc;
     }
 
     function counterGovService(){
@@ -198,9 +199,9 @@
         if(otherGovSvc.year<0)
             otherGovSvc.year = 0;
 
-        YearsInSvc.otherService.gov.years = otherGovSvc.year;
-        YearsInSvc.otherService.gov.months = otherGovSvc.month;
-        YearsInSvc.otherService.gov.days = otherGovSvc.day;
+        YearsInSvc.allService.gov.years = otherGovSvc.year;
+        YearsInSvc.allService.gov.months = otherGovSvc.month;
+        YearsInSvc.allService.gov.days = otherGovSvc.day;
     }
 
     function counterSuspendedService(){
@@ -219,55 +220,63 @@
         if(suspendedSvc.year<0)
             suspendedSvc.year = 0;
 
-        YearsInSvc.otherService.suspension.years = suspendedSvc.year;
-        YearsInSvc.otherService.suspension.months = suspendedSvc.month;
-        YearsInSvc.otherService.suspension.days = suspendedSvc.day;
+        YearsInSvc.allService.suspension.years = suspendedSvc.year;
+        YearsInSvc.allService.suspension.months = suspendedSvc.month;
+        YearsInSvc.allService.suspension.days = suspendedSvc.day;
     }
 
     function getBFPservice(){
-        YearsInSvc.otherService.bfp.years -= suspendedSvc.year;
-        YearsInSvc.otherService.bfp.months -= suspendedSvc.month;
-        YearsInSvc.otherService.bfp.days -= suspendedSvc.day;
+        YearsInSvc.allService.bfp.years -= suspendedSvc.year;
+        YearsInSvc.allService.bfp.months -= suspendedSvc.month;
+        YearsInSvc.allService.bfp.days -= suspendedSvc.day;
 
-        if(YearsInSvc.otherService.bfp.years*daysInAYear < minimumDaysInService){
-            YearsInSvc.otherService.bfp.years = 10;
-            YearsInSvc.otherService.bfp.months = 0;
-            YearsInSvc.otherService.bfp.days = 0;
+        if(YearsInSvc.allService.bfp.years*daysInAYear < minimumDaysInService){
+            YearsInSvc.allService.bfp.years = 10;
+            YearsInSvc.allService.bfp.months = 0;
+            YearsInSvc.allService.bfp.days = 0;
         }
 
-        if(YearsInSvc.otherService.bfp.months==12){
-            YearsInSvc.otherService.bfp.years +=1;
-            YearsInSvc.otherService.bfp.months = 0;
+        if(YearsInSvc.allService.bfp.months==12){
+            YearsInSvc.allService.bfp.years +=1;
+            YearsInSvc.allService.bfp.months = 0;
         }
-        if(YearsInSvc.otherService.bfp.days==30){
-            YearsInSvc.otherService.bfp.months +=1;
-            YearsInSvc.otherService.bfp.days = 0;
+        if(YearsInSvc.allService.bfp.days==30){
+            YearsInSvc.allService.bfp.months +=1;
+            YearsInSvc.allService.bfp.days = 0;
         }
     }
 </script>
 
 <h2 class="card-title">Calculate Years in Service</h2>
 <p>Please Enter Dates</p>
-<label for="dob" class="flex items-center gap-2 label">
-    Date of Birth:
-    <input id ="dob" type="date" class="grow input input-sm input-bordered text-right" bind:value={bdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
+<label for="dob" class="flex input mb-2">
+    <span class="label">Date of Birth:</span> 
+    <input id ="dob" type="date" class="text-right block" bind:value={bdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
 </label>
-<label for="des" class="flex items-center gap-2 label">
-    Date Entered Service:
-    <input id ="des" type="date" class="grow input input-sm input-bordered text-right" bind:value={svcdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
+<label for="des" class="flex input mb-2">
+    <span class="label">Date Entered Service:</span> 
+    <input id ="des" type="date" class="text-right block" bind:value={svcdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
 </label>
-<label for="dor" class="flex items-center gap-2 label">
-    Date of Retirement:
-    <input id ="dor" type="date" class="grow input input-sm input-bordered text-right" bind:value={retdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
+<label for="dor" class="flex input mb-2">
+    <span class="label">Date of Retirement:</span> 
+    <input id ="dor" type="date" class="text-right block" bind:value={retdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
 </label>
 Total Years in Service: 
-<div class="flex flex-row items-center">
+<div class="flex flex-row items-center mb-2">
     <span class="font-mono text-4xl">{totalsvc.year}</span> years
     <span class="font-mono text-4xl ml-2">{totalsvc.month}</span> months
     <span class="font-mono text-4xl ml-2">{totalsvc.day}</span> days
 </div>
+{#if showOtherGovSvc}
+    BFP Service: 
+    <div class="flex flex-row items-center mb-2">
+        <span class="font-mono text-4xl">{YearsInSvc.allService.bfp.years}</span> years
+        <span class="font-mono text-4xl ml-2">{YearsInSvc.allService.bfp.months}</span> months
+        <span class="font-mono text-4xl ml-2">{YearsInSvc.allService.bfp.days}</span> days
+    </div>
+{/if}
 {#if showSVCadd}
-    <label for="othergovsvc" class="label">
+    <label for="othergovsvc" class="flex items-center mb-2">
         <input type="checkbox" class="toggle toggle-success" bind:checked={showOtherGovSvc} onchange={()=>{getYearsInService();addOtherSvc();}}>
         Other Government Service
     </label>
@@ -290,7 +299,7 @@ Total Years in Service:
             </div> 
         </div>
     {/if}
-    <label for="suspendedsvc" class="label text-sm">
+    <label for="suspendedsvc" class="flex items-center mb-2">
         <input type="checkbox" class="toggle toggle-success" bind:checked={showSuspendedSvc} onchange={()=>{getYearsInService();addOtherSvc();}}>
         Suspended/Detained/Rehab in Service
     </label>

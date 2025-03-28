@@ -19,7 +19,7 @@
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/typography": "^0.5.16",
 		"autoprefixer": "^10.4.20",
-		"daisyui": "^4.12.23",
+		"daisyui": "^5.0.9",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
 		"prettier-plugin-tailwindcss": "^0.6.10",

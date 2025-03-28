@@ -392,24 +392,7 @@
         }
     ]
 
-    const salaryGrade:SalaryMatrix[]=[
-        {rank:"FO1 (SG 10)",basepay:29668},
-        {rank:"FO2 (SG 12)",basepay:30867},
-        {rank:"FO3 (SG 14)",basepay:32114},
-        {rank:"SFO1 (SG 16)",basepay:33411},
-        {rank:"SFO2 (SG 17)",basepay:34079},
-        {rank:"SFO3 (SG 18)",basepay:34761},
-        {rank:"SFO4 (SG 19)",basepay:38366},
-        {rank:"FINSP (SG 22)",basepay:49528},
-        {rank:"FSINSP (SG 23)",basepay:56582},
-        {rank:"FCINSP (SG 24)",basepay:62555},
-        {rank:"FSUPT (SG 25)",basepay:71313},
-        {rank:"FSSUPT (SG 26)",basepay:80583},
-        {rank:"FCSUPT (SG 27)",basepay:91058},
-        {rank:"FDIR (SG 28)",basepay:102896}
-    ];
-
-    let salaryGrade2:SalaryMatrix[]= findSalaryMatrix();
+    let salaryGrade:SalaryMatrix[]= findSalaryMatrix();
 
     let longevityPay:LongPayMatrix[]=[
         {pagi:5,rate:0.5},
@@ -423,7 +406,7 @@
         rank:(HighestSalaryReceived.rank!="")? HighestSalaryReceived.rank:"",
         retrank:(HighestSalaryReceived.retrank!="")? HighestSalaryReceived.retrank:"Select Your Rank",
         bp:(HighestSalaryReceived.bp!=0)? HighestSalaryReceived.bp:0,
-        pagi:(HighestSalaryReceived.pagi!=0)? HighestSalaryReceived.pagi:Math.floor(YearsInSvc.otherService.bfp.years/5),
+        pagi:(HighestSalaryReceived.pagi!=0)? HighestSalaryReceived.pagi:Math.floor(YearsInSvc.allService.bfp.years/5),
         lp:(HighestSalaryReceived.lp!=0)? HighestSalaryReceived.lp:0,
         hsr:(HighestSalaryReceived.hsr!=0)? HighestSalaryReceived.hsr:0
     });
@@ -433,20 +416,24 @@
     function findSalaryMatrix(){
         let retdate = new Date(YearsInSvc.dor);
 
+        if(YearsInSvc.dor=="" || retdate>=(new Date())){
+            return salaryDatabase[0].salaryMatrix;
+        }
+
         let index = salaryDatabase.findIndex(t=>retdate>(new Date(t.coverage.startDate)) && retdate<(new Date((t.coverage.endDate=="present")? "": t.coverage.endDate)));
         return salaryDatabase[index].salaryMatrix;
     }
 
     function computeHSR(){
-        let index = salaryGrade2.findIndex(t=>t.rank == retiree.rank);
+        let index = salaryGrade.findIndex(t=>t.rank == retiree.rank);
         let index2 = longevityPay.findIndex(t=>t.pagi == retiree.pagi);
-        if(rankHigher && index<salaryGrade2.length-1 && retiree.rank!="Your current rank"){
+        if(rankHigher && index<salaryGrade.length-1 && retiree.rank!="Your current rank"){
             index +=1;
         }
 
-        retiree.retrank = salaryGrade2[index].rank;
-        retiree.bp = salaryGrade2[index].basepay;
-        retiree.lp = salaryGrade2[index].basepay * longevityPay[index2].rate;
+        retiree.retrank = salaryGrade[index].rank;
+        retiree.bp = salaryGrade[index].basepay;
+        retiree.lp = salaryGrade[index].basepay * longevityPay[index2].rate;
         retiree.hsr = retiree.bp + retiree.lp;
 
         HighestSalaryReceived.rank = retiree.rank;
@@ -458,36 +445,37 @@
     }
 
 </script>
-<h2 class="card-title">Calculate Highest Salary Received</h2>
-<label for="rank" class="label flex items-center gap-2">Rank:
-    <select id="rank" class="select select-bordered select-sm w-full max-w-xs" bind:value={retiree.rank} onchange={()=>computeHSR()}>
+<h2 class="card-title mb-2">Calculate Highest Salary Received</h2>
+<label for="rank" class="select mb-2">
+    <span class="label">Rank:</span>
+    <select id="rank" class="w-full max-w-xs" bind:value={retiree.rank} onchange={()=>computeHSR()}>
         <option disabled selected>Your current rank</option>
-        {#each salaryGrade2 as salary}
-            {#if salary.rank != "FDIR"}
+        {#each salaryGrade as salary}
+            {#if salary.rank != "FDIR (SG 28)"}
                 <option value={salary.rank}>{salary.rank}</option>
             {/if}
         {/each}
     </select>
 </label>
-<label for="rank" class="label">
+<label for="rank" class="flex mb-2">
         <div class="tooltip tooltip-right" data-tip="at least 1 year active service of current rank">
-        <input type="checkbox" class="toggle toggle-success" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
+        <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
         </div>
-        {(rankHigher)? "with one rank higher":"without one rank higher"}
+        <span class="{(rankHigher)? "": "text-gray-400"}">{(rankHigher)? " with one rank higher":" without one rank higher"}</span>
 </label>
-<label class="label font-bold" for="retrank">
-    <span>Retired Rank:</span>
-    <span>{retiree.retrank}</span>
+<label class="label font-bold flex mb-2" for="retrank">
+    <span class="flex-auto">Retired Rank:</span>
+    <span class="flex-auto text-right">{retiree.retrank}</span>
 </label>
-<label class="label" for="basepay">
-    <span>Base Pay:</span>
-    <span>₱ {moneyFormat(retiree.bp.toFixed(2))}</span>
+<label class="label flex mb-2" for="basepay">
+    <span class="flex-auto">Base Pay:</span>
+    <span class="flex-auto text-right">₱ {moneyFormat(retiree.bp.toFixed(2))}</span>
 </label>
-<label class="label" for="longpay">
-    <span>Long Pay [ {retiree.pagi} ]:</span>
-    <span>₱ {moneyFormat(retiree.lp.toFixed(2))}</span>
+<label class="label flex mb-2" for="longpay">
+    <span class="flex-auto">Long Pay [ {retiree.pagi} ]:</span>
+    <span class="flex-auto text-right">₱ {moneyFormat(retiree.lp.toFixed(2))}</span>
 </label>
-<label class="label" for="hsr">
-    <span>Highest Salary Received:</span>
-    <span>₱ {moneyFormat(retiree.hsr.toFixed(2))}</span>
+<label class="label flex mb-2" for="hsr">
+    <span class="flex-auto">Highest Salary Received:</span>
+    <span class="flex-auto text-right">₱ {moneyFormat(retiree.hsr.toFixed(2))}</span>
 </label>

@@ -13,9 +13,9 @@
     
     let enjoyedSLVL:number = $state(LeaveCreditsData.enjoyedSLVL);
     let computation:LeaveCredits = $state({
-        year:parseFloat((YearsInSvc.total.y*15).toFixed(3)),
-        month:parseFloat((YearsInSvc.total.m/12*15).toFixed(3)),
-        day:parseFloat((YearsInSvc.total.d/360*15).toFixed(3)),
+        year:parseFloat((YearsInSvc.allService.bfp.years*15).toFixed(3)),
+        month:parseFloat((YearsInSvc.allService.bfp.months/12*15).toFixed(3)),
+        day:parseFloat((YearsInSvc.allService.bfp.days/360*15).toFixed(3)),
         slvl:0,
         tlc:0,
         cf:0.0481927,
@@ -52,21 +52,21 @@
         <span>₱ {moneyFormat(HighestSalaryReceived.hsr.toFixed(2))}</span>
     </div>
     <div class="p-1">
-        <span>{YearsInSvc.total.y} years x 15 days</span>
+        <span>{YearsInSvc.allService.bfp.years} years x 15 days</span>
     </div> 
     <div class="p-1"> = </div> 
     <div class="p-1 text-right">
         <span>{computation.year.toFixed(3)}</span>
     </div>
     <div class="p-1">
-        <span>{YearsInSvc.total.m} months / 12 x 15 days</span>
+        <span>{YearsInSvc.allService.bfp.months} months / 12 x 15 days</span>
     </div> 
     <div class="p-1"> = </div> 
     <div class="p-1 text-right">
         <span>{computation.month.toFixed(3)}</span>
     </div>
     <div class="p-1">
-        <span>{YearsInSvc.total.d} days / 360 x 15 days</span>
+        <span>{YearsInSvc.allService.bfp.days} days / 360 x 15 days</span>
     </div> 
     <div class="p-1"> = </div> 
     <div class="p-1 text-right">
