@@ -2,7 +2,7 @@
     <input type="radio" name="my-accordion-3" />
     <div class="collapse-title text-xl font-medium">Retirement Gratuity Claim (3 yr Lumpsum / Outright Pension)</div>
     <div class="collapse-content">
-        <a href="https://region7.bfp.gov.ph/wp-content/uploads/TABLE-OF-CONTENTS-Gratuity.docx" class="text-blue-600 hover:underline">Download Table of Contents</a>
+        <a href="#" class="text-blue-600 hover:underline">Download Table of Contents</a>
         <p>1 Folder containing 2 copies of the following:</p>
         <details class="collapse bg-base-200 hover:collapse-open">
             <summary class="collapse-title text-xl font-medium">A. Letter of Intent addressed to the Regional Director</summary>
