@@ -414,6 +414,7 @@
     let rankHigher:boolean = $state((retiree.retrank=="Select Your Rank" || retiree.rank==retiree.retrank)? false:true);
 
     function findSalaryMatrix(){
+        return salaryDatabase[0].salaryMatrix;
         let retdate = new Date(YearsInSvc.dor);
 
         if(YearsInSvc.dor=="" || retdate>=(new Date())){
