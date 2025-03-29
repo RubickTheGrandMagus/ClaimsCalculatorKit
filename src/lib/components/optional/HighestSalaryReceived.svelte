@@ -414,15 +414,14 @@
     let rankHigher:boolean = $state((retiree.retrank=="Select Your Rank" || retiree.rank==retiree.retrank)? false:true);
 
     function findSalaryMatrix(){
-        return salaryDatabase[0].salaryMatrix;
         let retdate = new Date(YearsInSvc.dor);
 
         if(YearsInSvc.dor=="" || retdate>=(new Date())){
-            return salaryDatabase[0].salaryMatrix;
+            return salaryDatabase[1].salaryMatrix;
         }
 
-        // let index = salaryDatabase.findIndex(t=>retdate>(new Date(t.coverage.startDate)) && retdate<(new Date((t.coverage.endDate=="present")? "": t.coverage.endDate)));
-        // return salaryDatabase[index].salaryMatrix;
+        let index = salaryDatabase.findIndex(t=>retdate>(new Date(t.coverage.startDate)) && retdate<(new Date((t.coverage.endDate=="present")? "": t.coverage.endDate)));
+        return salaryDatabase[index+1].salaryMatrix;
     }
 
     function computeHSR(){
