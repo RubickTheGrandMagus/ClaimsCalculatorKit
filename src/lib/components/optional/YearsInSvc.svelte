@@ -58,6 +58,7 @@
         calibrateGetYearsInService();
 
         YearsInSvc.des = svcdate;
+        YearsInSvc.dor = retdate;
         YearsInSvc.total.y = totalsvc.year;
         YearsInSvc.total.m = totalsvc.month;
         YearsInSvc.total.d = totalsvc.day;
@@ -135,6 +136,8 @@
             error = "Date Entered Service must not be empty.";
         else if(validateDateofRetirement())
             error = "Please change Date of Retirement. It is above the mandatory age of 56.";
+        else if((new Date(dor))< (new Date("1991-01-29")))
+            error = "Retirement is beyond BFP's established date. Please change Date of Retirement.";
         else
             error = "";
 

@@ -372,7 +372,7 @@
             ]  
         },
         {
-            coverage:{startDate:"past",endDate:"1993-12-31"},
+            coverage:{startDate:"1991-01-29",endDate:"1993-12-31"},
             salaryMatrix:[
                         {rank:"FO1 (SG 10)",basepay:1000},
                         {rank:"FO2 (SG 12)",basepay:1100},
@@ -390,9 +390,9 @@
                         {rank:"FDIR (SG 28)",basepay:8000}
             ]  
         }
-    ]
+    ];
 
-    const salaryGrade:SalaryMatrix[]=findSalaryMatrix();
+    let salaryGrade:SalaryMatrix[]=findSalaryMatrix();
 
     let longevityPay:LongPayMatrix[]=[
         {pagi:5,rate:0.5},
@@ -416,12 +416,12 @@
     function findSalaryMatrix(){
         let retdate = new Date(YearsInSvc.dor);
 
-        if(YearsInSvc.dor=="" || retdate>=(new Date())){
-            return salaryDatabase[1].salaryMatrix;
+        if(YearsInSvc.dor=="" || retdate>=(new Date("2019-01-01"))){
+            return salaryDatabase[0].salaryMatrix;
         }
 
-        let index = salaryDatabase.findIndex(t=>retdate>(new Date(t.coverage.startDate)) && retdate<(new Date((t.coverage.endDate=="present")? "": t.coverage.endDate)));
-        return salaryDatabase[index+1].salaryMatrix;
+        let index = salaryDatabase.findIndex(t=>retdate>(new Date(t.coverage.startDate)) && retdate<(new Date(t.coverage.endDate)));
+        return salaryDatabase[index].salaryMatrix;
     }
 
     function computeHSR(){
@@ -443,7 +443,11 @@
         HighestSalaryReceived.lp = retiree.lp;
         HighestSalaryReceived.hsr = retiree.hsr;
     }
-
+    //reload when date of retirement changes
+    if(YearsInSvc.dor!="" && HighestSalaryReceived.rank!=""){
+        salaryGrade = findSalaryMatrix();
+        computeHSR();
+    }
 </script>
 <h2 class="card-title mb-2">Calculate Highest Salary Received</h2>
 <label for="rank" class="select mb-2">
