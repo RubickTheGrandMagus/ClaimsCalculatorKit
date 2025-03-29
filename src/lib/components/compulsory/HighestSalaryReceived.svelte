@@ -420,8 +420,8 @@
             return salaryDatabase[0].salaryMatrix;
         }
 
-        let index = salaryDatabase.findIndex(t=>retdate>(new Date(t.coverage.startDate)) && retdate<(new Date((t.coverage.endDate=="present")? "": t.coverage.endDate)));
-        return salaryDatabase[index].salaryMatrix;
+        // let index = salaryDatabase.findIndex(t=>retdate>(new Date(t.coverage.startDate)) && retdate<(new Date((t.coverage.endDate=="present")? "": t.coverage.endDate)));
+        // return salaryDatabase[index].salaryMatrix;
     }
 
     function computeHSR(){
