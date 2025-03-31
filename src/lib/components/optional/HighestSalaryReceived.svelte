@@ -468,7 +468,7 @@
         <span class="{(rankHigher)? "": "text-gray-400"}">{(rankHigher)? " with one rank higher":" without one rank higher"}</span>
 </label>
 <label class="label font-bold flex mb-2" for="retrank">
-    <span>Retired Rank:</span>
+    <span>Retirement Salary Grade:</span>
     <span>{retiree.retrank}</span>
 </label>
 <label class="label flex mb-2" for="basepay">
