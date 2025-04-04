@@ -113,6 +113,8 @@
             error = "You are to old to enter the service. Please change DES or DOB";
         else if(validAge.year<=0)
             error = "Invalid Date. Please change Date of Birth.";
+        else if(svcdate=="")
+            error = "Date Entered Service must not be empty.";
         else if(totalsvc.year<10 && totalsvc.year!=0 && totalsvc.month!=0 && totalsvc.day!=0)
             error = "You are not qualified for this benefit. Please change Date entered service.";
         else if((new Date(dor))< (new Date("1991-01-29")))
