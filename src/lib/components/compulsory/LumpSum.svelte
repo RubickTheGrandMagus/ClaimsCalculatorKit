@@ -82,7 +82,7 @@
         DILG ACT of 1990 Section 75
     </div>
     <div class="collapse-content text-justify">
-        <blockquote class="border-l-4 border-gray-500 pl-4 italic text-gray-700">
+        <blockquote class="border-l-4 border-gray-500 pl-4 italic text-gray-700 w-80">
         Monthly retirement pay shall be fifty percent (50%) of the base pay and longevity pay of the retired grade in case of twenty (20) years of active service, increasing by two and one-half percent (2.5%) for every year of active service rendered beyond twenty (20) years to a maximum of ninety percent (90%) for thirty-six (36) years of active service and over.
         </blockquote>
     </div>
