@@ -285,7 +285,7 @@ Total Years in Service:
     {/if}
     <label for="suspendedsvc" class="flex items-center mb-2">
         <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={showSuspendedSvc} onchange={()=>{getRetirementDate();getYearsInService();addOtherSvc();}}>
-        Suspended/Detained/Rehab in Service
+        Gap in Service
     </label>
     {#if showSuspendedSvc}
         <div class="grid grid-cols-[auto,auto,auto]">
