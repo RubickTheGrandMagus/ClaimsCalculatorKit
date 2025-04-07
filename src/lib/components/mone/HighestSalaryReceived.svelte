@@ -418,9 +418,9 @@
         personnel.pagi = personnel.pagi>5 ? 5:personnel.pagi;
     }
     function findSalaryMatrix(){
-        let sepdate = new Date(YearsInSvc.dos);
+        let sepdate = new Date(YearsInSvc.doa);
 
-        if(YearsInSvc.dos=="" || sepdate>=(new Date("2019-01-01"))){
+        if(YearsInSvc.doa=="" || sepdate>=(new Date("2019-01-01"))){
             return salaryDatabase[0].salaryMatrix;
         }
 
@@ -450,12 +450,12 @@
         HighestSalaryReceived.hsr = personnel.hsr;
     }
     //reload when date of retirement changes
-    if(YearsInSvc.dos!="" && HighestSalaryReceived.rank!=""){
+    if(YearsInSvc.doa!="" && HighestSalaryReceived.rank!=""){
         salaryGrade = findSalaryMatrix();
         computeHSR();
     }
 </script>
-<h2 class="card-title mb-2">Calculate Highest Salary Received - TLC</h2>
+<h2 class="card-title mb-2">Calculate Highest Salary Received - MLC</h2>
 <label for="rank" class="select mb-2">
     <span class="label">Rank:</span>
     <select id="rank" class="select select-bordered select-sm w-full max-w-xs" bind:value={personnel.rank} onchange={()=>computeHSR()} {disabled}>

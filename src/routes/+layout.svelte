@@ -32,13 +32,13 @@
         <div class="flex-1">
           <a href="/" class="btn btn-ghost normal-case text-xl">Claims Calculator Kit</a>
         </div>
-	</div>
+	    </div>
 		<!-- Main content here -->
 		{@render children()}
     </div>
     <div class="drawer-side">
       <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-      <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+      <ul class="menu bg-base-200 text-base-content min-h-full w-70 p-4">
         <!-- Sidebar content here -->
         <li><a href="/">Home</a></li>
         <li><a href="/legacy">Version 1.5</a></li>
@@ -49,4 +49,8 @@
       </ul>
     </div>
   </div>
-
+<footer class="fixed bottom-0 left-0 footer footer-center text-base-content text-xs p-4">
+  <aside>
+    <p>Copyright © {new Date().getFullYear()} - BFP Region 7 (Central Visayas)</p>
+  </aside>
+</footer>

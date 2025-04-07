@@ -231,7 +231,7 @@
     }
 </script>
 
-<h2 class="card-title">Calculate Years in Service</h2>
+<h2 class="card-title">Calculate Years in Service - COM</h2>
 <p>Please Enter Dates</p>
 <label for="dob" class="flex input mb-2">
     <span class="label">Date of Birth:</span> 

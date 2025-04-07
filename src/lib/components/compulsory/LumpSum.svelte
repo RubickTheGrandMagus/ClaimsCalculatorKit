@@ -13,8 +13,8 @@
     let computation ={pension:HighestSalaryReceived.hsr*totalRate.total/100,lumpsum:0};
     computation.lumpsum = parseFloat(computation.pension.toFixed(2)) * 36; 
 </script>
-<h2 class="card-title">Calculate 3 year Lump Sum</h2>
-<div class="grid grid-cols-[2fr,auto,1fr]">
+<h2 class="card-title">Calculate 3 year Lump Sum - COM</h2>
+<div class="grid grid-cols-[auto,auto,2fr]">
     <div class="p-1">
         <span>{YearsInSvc.total.y} years x 2.5%</span>
     </div>

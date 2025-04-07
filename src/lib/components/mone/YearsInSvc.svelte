@@ -1,9 +1,10 @@
 <script lang="ts">
-    import {YearsInSvc, HighestSalaryReceived} from './shared.svelte.js';
+    import {YearsInSvc} from './shared.svelte.js';
 
     const daysInAYear:number = 360;
+    const minimumAccumulatedDaysInService:number = 360; //minimum days to qualify for monetization
     let des: Date = $state(new Date());
-    let dos: Date = $state(new Date());
+    let doa: Date = $state(new Date());
     let dob: Date = $state(new Date());
 
     interface CalculatedDate{
@@ -12,7 +13,7 @@
         day:number
     }
 
-    let sepdate:string = $state((YearsInSvc.dos.length===0)? "":YearsInSvc.dos);
+    let appdate:string = $state((YearsInSvc.doa.length===0)? "":YearsInSvc.doa);
     let bdate:string = $state((YearsInSvc.dob.length===0)? "":YearsInSvc.dob);
     let svcdate:string = $state((YearsInSvc.des.length===0)? "":YearsInSvc.des);
     let totalsvc:CalculatedDate=$state({
@@ -34,16 +35,16 @@
     function getYearsInService(){
         dob = new Date(bdate);
         des = new Date(svcdate);
-        dos = new Date(sepdate);
-        totalsvc.year = dos.getFullYear()-des.getFullYear();
-        totalsvc.month = dos.getMonth()-des.getMonth();
-        totalsvc.day = dos.getDate()-des.getDate();
+        doa = new Date(appdate);
+        totalsvc.year = doa.getFullYear()-des.getFullYear();
+        totalsvc.month = doa.getMonth()-des.getMonth();
+        totalsvc.day = doa.getDate()-des.getDate();
 
         calibrateGetYearsInService();
 
         YearsInSvc.dob = bdate;
         YearsInSvc.des = svcdate;
-        YearsInSvc.dos = sepdate;
+        YearsInSvc.doa = appdate;
         YearsInSvc.total.y = totalsvc.year;
         YearsInSvc.total.m = totalsvc.month;
         YearsInSvc.total.d = totalsvc.day;
@@ -100,7 +101,7 @@
         let compulsoryDate = new Date(bdate);
         compulsoryDate.setFullYear(compulsoryDate.getFullYear()+56);
         const age56Formated = compulsoryDate.getFullYear()+"-"+(String(compulsoryDate.getMonth()+1).padStart(2, '0'))+"-"+String(compulsoryDate.getDate()).padStart(2, '0');
-        if(sepdate>age56Formated)
+        if(appdate>age56Formated)
             return true;
 
         return false;
@@ -109,7 +110,7 @@
         let compulsoryDate = new Date(bdate);
         compulsoryDate.setFullYear(compulsoryDate.getFullYear()+65);
         const age65Formated = compulsoryDate.getFullYear()+"-"+(String(compulsoryDate.getMonth()+1).padStart(2, '0'))+"-"+String(compulsoryDate.getDate()).padStart(2, '0');
-        if(sepdate>age65Formated)
+        if(appdate>age65Formated)
             return true;
 
         return false;
@@ -126,16 +127,18 @@
             error = "Date of Birth must not be empty.";
         else if(svcdate=="")
             error = "Date Entered Service must not be empty.";
-        else if(sepdate=="")
-            error = "Date Separated must not be empty.";
+        else if(appdate=="")
+            error = "Date Applied must not be empty.";
         else if(validateDateofRetirement() && !showIsNUP)
-            error = "Please change Date of Separation. It is above the mandatory age of 56.";
+            error = "Please change Date Applied. It is above the mandatory age of 56.";
         else if(validateDateofRetirementNUP() && showIsNUP)
-            error = "Please change Date of Separation. It is above the mandatory age of 65.";
-        else if((new Date(dos))< (new Date("1991-01-29")))
-            error = "Severance is beyond BFP's established date. Please change Date of Separation.";
+            error = "Please change Date Applied. It is above the mandatory age of 65.";
+        else if((new Date(doa))< (new Date("1991-01-29")))
+            error = "Application date is beyond BFP's established date. Please change Date Applied.";
         else if(totalsvc.year<0)
             error = "Invalid Years in Service. Please change added suspension";
+        else if(!validAccumulatedDaysInService())
+            error = "Minimum years in service is 1 year. Please change date of application.";
         else
             error = "";
 
@@ -210,9 +213,18 @@
             YearsInSvc.allService.bfp.days = 0;
         }
     }
+
+    function validAccumulatedDaysInService():boolean{
+        let totalDaysInService = (totalsvc.year*daysInAYear) + (totalsvc.month*30) + totalsvc.day;
+
+        if(totalDaysInService>=minimumAccumulatedDaysInService)
+            return true;
+        
+        return false;
+    }
 </script>
 
-<h2 class="card-title">Calculate Years in Service - TLC</h2>
+<h2 class="card-title">Calculate Years in Service - MLC</h2>
 <p>Please Enter Dates</p>
 <label for="dob" class="flex input mb-2">
     <span class="label">Date of Birth:</span> 
@@ -222,9 +234,9 @@
     <span class="label">Date Entered Service:</span> 
     <input id ="des" type="date" class="text-right block" bind:value={svcdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
 </label>
-<label for="dos" class="flex input mb-2">
-    <span class="label">Date Separated:</span> 
-    <input id ="dos" type="date" class="text-right block" bind:value={sepdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
+<label for="doa" class="flex input mb-2">
+    <span class="label">Date Applied:</span> 
+    <input id ="doa" type="date" class="text-right block" bind:value={appdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();showSVCaddHandler();}}>
 </label>
 Total Years in Service: 
 <div class="flex flex-row items-center mb-2">

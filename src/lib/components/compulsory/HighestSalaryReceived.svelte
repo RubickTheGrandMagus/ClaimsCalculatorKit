@@ -449,7 +449,7 @@
         computeHSR();
     }
 </script>
-<h2 class="card-title mb-2">Calculate Highest Salary Received</h2>
+<h2 class="card-title mb-2">Calculate Highest Salary Received - COM</h2>
 <label for="rank" class="select mb-2">
     <span class="label">Rank:</span>
     <select id="rank" class="w-full max-w-xs" bind:value={retiree.rank} onchange={()=>computeHSR()}>

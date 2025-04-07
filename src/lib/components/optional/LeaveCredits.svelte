@@ -42,8 +42,8 @@
             computation.computation = 0;    
     }
 </script>
-<h2 class="card-title">Calculate Terminal Leave Claim</h2>
-<div class="grid grid-cols-[1fr,auto,auto]">
+<h2 class="card-title">Calculate Terminal Leave Claim - OPT</h2>
+<div class="grid grid-cols-[auto,auto,2fr]">
     <div class="p-1 font-bold">
         <span>Highest Salary Received</span>
     </div> 

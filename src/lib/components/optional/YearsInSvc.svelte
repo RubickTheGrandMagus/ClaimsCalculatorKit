@@ -250,7 +250,7 @@
     }
 </script>
 
-<h2 class="card-title">Calculate Years in Service</h2>
+<h2 class="card-title">Calculate Years in Service - OPT</h2>
 <p>Please Enter Dates</p>
 <label for="dob" class="flex input mb-2">
     <span class="label">Date of Birth:</span> 
@@ -280,7 +280,7 @@ Total Years in Service:
 {/if}
 {#if showSVCadd}
     <label for="othergovsvc" class="flex items-center mb-2">
-        <input type="checkbox" class="toggle toggle-success" bind:checked={showOtherGovSvc} onchange={()=>{getYearsInService();addOtherSvc();}}>
+        <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={showOtherGovSvc} onchange={()=>{getYearsInService();addOtherSvc();}}>
         Other Government Service
     </label>
     {#if showOtherGovSvc}
@@ -303,7 +303,7 @@ Total Years in Service:
         </div>
     {/if}
     <label for="suspendedsvc" class="flex items-center mb-2">
-        <input type="checkbox" class="toggle toggle-success" bind:checked={showSuspendedSvc} onchange={()=>{getYearsInService();addOtherSvc();}}>
+        <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={showSuspendedSvc} onchange={()=>{getYearsInService();addOtherSvc();}}>
         Gap in Service
     </label>
     {#if showSuspendedSvc}
