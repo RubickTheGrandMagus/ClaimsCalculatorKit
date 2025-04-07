@@ -1,5 +1,5 @@
 <div class="flex flex-col justify-center items-center">
-    <p class="text-xl normal-case text-center">PLEASE SELECT ONE MODE OF SEPARATION</p>
+    <p class="text-xl normal-case text-center">PLEASE SELECT MODE OF RETIREMENT AND SEPARATION BENEFITS</p>
     <ul class="menu">
         <li class="p-1"><a href="/claims/compulsory" class="btn btn-outline btn-info hover:btn-primary btn-wide">COMPULSORY</a></li>
         <li class="p-1"><a href="/claims/optional" class="btn btn-outline btn-info hover:btn-secondary btn-wide">OPTIONAL</a></li>
