@@ -12,6 +12,26 @@
     totalRate.total = (totalRate.total>90)? 90:totalRate.total;
     let computation ={pension:HighestSalaryReceived.hsr*totalRate.total/100,lumpsum:0};
     computation.lumpsum = parseFloat(computation.pension.toFixed(2)) * 36; 
+
+    //intro guide for ease of use
+    import { onMount } from "svelte";
+    import introJs from "intro.js";
+    import 'intro.js/introjs.css';
+
+    onMount(() => {
+        introJs().setOptions({
+            steps: [
+                {
+                    intro: 'Please click Next to proceed'
+                }
+            ],
+            dontShowAgain: true,
+            showBullets:false,
+            showButtons:false,
+            dontShowAgainCookie:'introLSCom',
+            dontShowAgainCookieDays:7
+        }).start();
+    });
 </script>
 <h2 class="card-title">Calculate 3 year Lump Sum - COM</h2>
 <div class="grid grid-cols-[auto,auto,2fr]">

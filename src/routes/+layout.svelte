@@ -30,7 +30,7 @@
           </label>
         </div>
         <div class="flex-1">
-          <a href="/" class="btn btn-ghost normal-case text-xl">Claims Calculator Kit</a>
+          <a href="/" id="home" class="btn btn-ghost normal-case text-xl">Claims Calculator Kit </a>
         </div>
 	    </div>
 		<!-- Main content here -->
@@ -51,6 +51,6 @@
   </div>
 <footer class="fixed bottom-0 left-0 footer footer-center text-base-content text-xs p-4">
   <aside>
-    <p>Copyright © {new Date().getFullYear()} - BFP Region 7 (Central Visayas)</p>
+    <p>Copyright © 2025 - BFP Region 7 (Central Visayas)</p>
   </aside>
 </footer>

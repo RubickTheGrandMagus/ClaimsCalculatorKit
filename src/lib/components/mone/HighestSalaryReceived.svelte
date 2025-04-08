@@ -454,6 +454,27 @@
         salaryGrade = findSalaryMatrix();
         computeHSR();
     }
+
+    //intro guide for ease of use
+    import { onMount } from "svelte";
+    import introJs from "intro.js";
+    import 'intro.js/introjs.css';
+
+    onMount(() => {
+        introJs().setOptions({
+            steps: [
+                {
+                    element: 'label[for="rank"]',
+                    intro: 'Please enter your Rank'
+                }
+            ],
+            dontShowAgain: true,
+            showBullets:false,
+            showButtons:false,
+            dontShowAgainCookie:'introHSRMone',
+            dontShowAgainCookieDays:7
+        }).start();
+    });
 </script>
 <h2 class="card-title mb-2">Calculate Highest Salary Received - MLC</h2>
 <label for="rank" class="select mb-2">

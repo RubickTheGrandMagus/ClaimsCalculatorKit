@@ -448,6 +448,31 @@
         salaryGrade = findSalaryMatrix();
         computeHSR();
     }
+
+    //intro guide for ease of use
+    import { onMount } from "svelte";
+    import introJs from "intro.js";
+    import 'intro.js/introjs.css';
+
+    onMount(() => {
+        introJs().setOptions({
+            steps: [
+                {
+                    element: 'label[for="rank"]',
+                    intro: 'Please enter your Rank'
+                },
+                {
+                    element: 'label[for="1rank"]',
+                    intro: 'Enable if at least 1 year active service of current rank'
+                }
+            ],
+            dontShowAgain: true,
+            showBullets:false,
+            showButtons:true,
+            dontShowAgainCookie:'introHSROpt',
+            dontShowAgainCookieDays:7
+        }).start();
+    });
 </script>
 <h2 class="card-title mb-2">Calculate Highest Salary Received - OPT</h2>
 <label for="rank" class="select mb-2">
@@ -461,7 +486,7 @@
         {/each}
     </select>
 </label>
-<label for="rank" class="flex mb-2">
+<label for="1rank" class="flex mb-2">
         <div class="tooltip tooltip-right" data-tip="at least 1 year active service of current rank">
         <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
         </div>

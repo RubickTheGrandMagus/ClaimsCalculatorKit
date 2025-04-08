@@ -1,3 +1,33 @@
+<script lang="ts">
+    import { onMount } from "svelte";
+    import introJs from "intro.js";
+    import 'intro.js/introjs.css';
+
+    onMount(() => {
+        introJs().setOptions({
+            steps: [
+                {intro:"Welcome to the web app!"},
+                {
+                    element: '.menu',
+                    intro: 'Select one of the following options',
+                    position: 'right'
+                },  
+                {
+                    element: 'label[for="my-drawer"]',
+                    intro: 'Click here to open the menu',
+                    position: 'right'
+                },  
+                {
+                    element: '#home',
+                    intro: 'Click here to return to homepage'
+                }  
+            ],
+            dontShowAgain: true
+        }).start();
+    });
+
+</script>
+
 <div class="flex flex-col justify-center items-center">
     <p class="text-xl normal-case text-center">PLEASE SELECT MODE OF RETIREMENT AND SEPARATION BENEFITS</p>
     <ul class="menu">

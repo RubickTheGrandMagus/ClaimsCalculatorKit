@@ -229,6 +229,30 @@
             YearsInSvc.allService.bfp.days = 0;
         }
     }
+
+    //intro guide for ease of use
+    import { onMount } from "svelte";
+    import introJs from "intro.js";
+    import 'intro.js/introjs.css';
+
+    onMount(() => {
+        introJs().setOptions({
+            steps: [
+                {
+                    element: 'label[for="dob"]',
+                    intro: 'Please Enter your Date of Birth'
+                },
+                {
+                    element: 'label[for="des"]',
+                    intro: 'Please Enter your Date Entered Service'
+                }
+            ],
+            dontShowAgain: true,
+            showBullets:false,
+            dontShowAgainCookie:'introYrsCom',
+            dontShowAgainCookieDays:7
+        }).start();
+    });
 </script>
 
 <h2 class="card-title">Calculate Years in Service - COM</h2>

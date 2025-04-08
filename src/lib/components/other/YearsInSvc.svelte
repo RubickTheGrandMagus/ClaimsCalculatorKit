@@ -1,7 +1,6 @@
 <script lang="ts">
-    import {YearsInSvc, HighestSalaryReceived} from './shared.svelte.js';
+    import {YearsInSvc} from './shared.svelte.js';
 
-    const daysInAYear:number = 360;
     let des: Date = $state(new Date());
     let dos: Date = $state(new Date());
     let dob: Date = $state(new Date());
@@ -210,6 +209,34 @@
             YearsInSvc.allService.bfp.days = 0;
         }
     }
+
+    //intro guide for ease of use
+    import { onMount } from "svelte";
+    import introJs from "intro.js";
+    import 'intro.js/introjs.css';
+
+    onMount(() => {
+        introJs().setOptions({
+            steps: [
+                {
+                    element: 'label[for="dob"]',
+                    intro: 'Please Enter your Date of Birth'
+                },
+                {
+                    element: 'label[for="des"]',
+                    intro: 'Please Enter your Date Entered Service'
+                },
+                {
+                    element: 'label[for="dos"]',
+                    intro: 'Please Enter your Date of Separation'
+                }
+            ],
+            dontShowAgain: true,
+            showBullets:false,
+            dontShowAgainCookie:'introYrsEtc',
+            dontShowAgainCookieDays:7
+        }).start();
+    });
 </script>
 
 <h2 class="card-title">Calculate Years in Service - TLC</h2>

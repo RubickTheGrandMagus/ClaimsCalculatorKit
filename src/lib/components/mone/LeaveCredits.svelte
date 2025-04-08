@@ -41,6 +41,27 @@
         if(computation.computation<0)
             computation.computation = 0;    
     }
+
+    //intro guide for ease of use
+    import { onMount } from "svelte";
+    import introJs from "intro.js";
+    import 'intro.js/introjs.css';
+
+    onMount(() => {
+        introJs().setOptions({
+            steps: [
+                {
+                    element: 'label[for="daysToMone"]',
+                    intro: 'Please enter no of days to monetize',
+                }
+            ],
+            dontShowAgain: true,
+            showBullets:false,
+            showButtons:false,
+            dontShowAgainCookie:'introLCMone',
+            dontShowAgainCookieDays:7
+        }).start();
+    });
 </script>
 <h2 class="card-title">Calculate Monetized Leave Credits</h2>
 <div class="grid grid-cols-[auto,auto,2fr]">
@@ -79,14 +100,13 @@
     <div class="p-1 text-right">
         <span>{computation.slvl.toFixed(3)}</span>
     </div>
-    <div class="p-1 font-bold">
-        <span>No. of Days to Monetized </span>
-    </div> 
-    <div class="p-1"> = </div> 
-    <div class="p-1 text-right">
-            <input type="number" step = "1" min="10" max="{computation.slvl}" class="w-32 input input-primary input-sm input-bordered text-right" bind:value={daysToMone}
+    <div class="p-1 font-bold col-span-3">
+        <label for="daysToMone" class="flex input input-neutral mb-2 w-full">
+        <span class="label">No. of Days to Monetized:</span>
+            <input type="number" step = "1" min="10" max="{computation.slvl}" class="w-32 text-right" bind:value={daysToMone}
             onchange={()=>{getTerminalComputation();errorHandler()}}
             >
+        </label>
     </div>
     <div class="p-1 font-bold">
         <span>Constant Factor</span>

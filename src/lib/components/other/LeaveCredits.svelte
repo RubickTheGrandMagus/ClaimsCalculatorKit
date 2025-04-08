@@ -41,6 +41,27 @@
         if(computation.computation<0)
             computation.computation = 0;    
     }
+
+     //intro guide for ease of use
+     import { onMount } from "svelte";
+    import introJs from "intro.js";
+    import 'intro.js/introjs.css';
+
+    onMount(() => {
+        introJs().setOptions({
+            steps: [
+                {
+                    element: 'label[for="enjoyedSLVL"]',
+                    intro: 'Please enter enjoyed SL/VL',
+                }
+            ],
+            dontShowAgain: true,
+            showBullets:false,
+            showButtons:false,
+            dontShowAgainCookie:'introLCEtc',
+            dontShowAgainCookieDays:7
+        }).start();
+    });
 </script>
 <h2 class="card-title">Calculate Terminal Leave Claim</h2>
 <div class="grid grid-cols-[auto,auto,2fr]">
@@ -79,14 +100,13 @@
     <div class="p-1 text-right">
         <span>{computation.slvl.toFixed(3)}</span>
     </div>
-    <div class="p-1">
-        <span>Total Enjoyed VL & SL </span>
-    </div> 
-    <div class="p-1"> = </div> 
-    <div class="p-1 text-right">
-            <input type="number" step = "0.001" min="0" max="{computation.slvl}" class="w-32 input input-primary input-sm input-bordered text-right" bind:value={enjoyedSLVL}
-            onchange={()=>{getTerminalComputation();errorHandler()}}
+    <div class="p-1 col-span-3">
+        <label for="enjoyedSLVL" class="flex input input-neutral mb-2 w-full">
+            <span class="label">Total Enjoyed VL & SL :</span> 
+            <input id ="enjoyedSLVL" type="number" step = "0.001" min="0" max="{computation.slvl}" class="enjoyedSLVL w-32 text-right" bind:value={enjoyedSLVL}
+                onchange={()=>{getTerminalComputation();errorHandler()}}
             >
+        </label>
     </div>
     <div class="p-1 font-bold">
         <span>Total Leave Credits</span>

@@ -49,7 +49,7 @@
 			<div class="flex justify-between">
 				<div>
                     {#if pageIndex!=0}
-                        <button class="btn btn-sm gap-2 md:btn-md lg:gap-3 {(pageIndex==page.length-1)? 'btn-neutral':''}"
+                        <button class="prev btn btn-sm gap-2 md:btn-md lg:gap-3 {(pageIndex==page.length-1)? 'btn-neutral':''}"
                             onclick={()=>movepage(false)}
                             ><svg
                                 class="h-6 w-6 fill-current md:h-8 md:w-8"
@@ -67,7 +67,7 @@
 				</div>
 				<div>
                     {#if pageIndex!=page.length-1}
-                        <button class="btn btn-neutral btn-sm gap-2 md:btn-md lg:gap-3" 
+                        <button class="next btn btn-neutral btn-sm gap-2 md:btn-md lg:gap-3" 
                             onclick={()=>movepage(true)}
                             ><div class="flex flex-col items-end">
                                 <span class="hidden text-xs font-normal text-neutral-content/50 md:block">Next</span>
