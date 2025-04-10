@@ -48,19 +48,21 @@
     import 'intro.js/introjs.css';
 
     onMount(() => {
-        introJs().setOptions({
-            steps: [
-                {
-                    element: 'label[for="enjoyedSLVL"]',
-                    intro: 'Please enter enjoyed SL/VL',
-                }
-            ],
-            dontShowAgain: true,
-            showBullets:false,
-            showButtons:false,
-            dontShowAgainCookie:'introLCEtc',
-            dontShowAgainCookieDays:7
-        }).start();
+        setTimeout(() => {
+            introJs().setOptions({
+                steps: [
+                    {
+                        element: 'label[for="enjoyedSLVL"]',
+                        intro: 'Please enter enjoyed SL/VL',
+                    }
+                ],
+                dontShowAgain: true,
+                showBullets:false,
+                showButtons:false,
+                dontShowAgainCookie:'introLCEtc',
+                dontShowAgainCookieDays:7
+            }).start();
+        }, 1000);
     });
 </script>
 <h2 class="card-title">Calculate Terminal Leave Claim</h2>

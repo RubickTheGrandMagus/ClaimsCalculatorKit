@@ -229,6 +229,9 @@
 
     onMount(() => {
         setTimeout(() => {
+            introJs().exit(true);
+        }, 500);
+        setTimeout(() => {
             introJs().setOptions({
                 steps: [
                     {
