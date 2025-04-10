@@ -8,7 +8,8 @@
         introJs().setOptions({
             steps: [
                 {
-                    intro: 'Please click Next to proceed'
+                    element: ".next",
+                    intro: 'Please click to proceed'
                 }
             ],
             dontShowAgain: true,

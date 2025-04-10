@@ -68,14 +68,14 @@
             totalsvc.day +=30;
         }
         
-        if(totalsvc.day==30){
+        if(totalsvc.day>=30){
             totalsvc.month +=1;
-            totalsvc.day = 0;
+            totalsvc.day -= 30;
         }
         
-        if(totalsvc.month==12){
+        if(totalsvc.month>=12){
             totalsvc.year +=1;
-            totalsvc.month = 0;
+            totalsvc.month -= 12;
         }
 
         if(totalsvc.month<0){
@@ -83,16 +83,6 @@
             totalsvc.month +=12;
         }
 
-        if(totalsvc.day>30){
-            totalsvc.day -=30
-            totalsvc.month +=1;
-        }
-
-        if(totalsvc.month>12){
-            totalsvc.month -=12;
-            totalsvc.year +=1;
-        }
-        
         if(isNaN(totalsvc.year))
             totalsvc.year = 0;
         if(isNaN(totalsvc.month))
@@ -220,13 +210,21 @@
             YearsInSvc.allService.bfp.days = 0;
         }
 
-        if(YearsInSvc.allService.bfp.months==12){
+        if(YearsInSvc.allService.bfp.months>=12){
             YearsInSvc.allService.bfp.years +=1;
-            YearsInSvc.allService.bfp.months = 0;
+            YearsInSvc.allService.bfp.months -= 12;
         }
-        if(YearsInSvc.allService.bfp.days==30){
+        if(YearsInSvc.allService.bfp.days>=30){
             YearsInSvc.allService.bfp.months +=1;
-            YearsInSvc.allService.bfp.days = 0;
+            YearsInSvc.allService.bfp.days -= 30;
+        }
+        if(YearsInSvc.allService.bfp.months<0){
+            YearsInSvc.allService.bfp.years -= 1;
+            YearsInSvc.allService.bfp.months += 12;
+        }
+        if(YearsInSvc.allService.bfp.days<0){
+            YearsInSvc.allService.bfp.months -= 1;
+            YearsInSvc.allService.bfp.days += 30;
         }
     }
 
