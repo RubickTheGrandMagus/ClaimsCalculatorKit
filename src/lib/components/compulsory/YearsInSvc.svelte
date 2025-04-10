@@ -31,7 +31,6 @@
         day:YearsInSvc.allService.suspension.days
     });
     let error:string = $state(YearsInSvc.error.text);
-    let showSVCadd:boolean = $state(true);
     let showOtherGovSvc:boolean = $state(YearsInSvc.allService.gov.state);
     let showSuspendedSvc:boolean = $state(YearsInSvc.allService.suspension.state);
 
@@ -95,14 +94,16 @@
     };
     
     function errorHandler(){
-        if(validAge.year<18 && validAge.year>0)
+        if(svcdate=="")
+            error = "Date Entered Service must not be empty.";
+        else if(bdate=="")
+            error = "Date of Birth must not be empty.";
+        else if(validAge.year<18 && validAge.year>0)
             error = "You are to young to enter the service. Please change Date Entered Service.";
         else if(validAge.year>35)
             error = "You are to old to enter the service. Please change DES or DOB";
         else if(validAge.year<=0)
             error = "Invalid Date. Please change Date of Birth.";
-        else if(svcdate=="")
-            error = "Date Entered Service must not be empty.";
         else if(totalsvc.year<10 && totalsvc.year!=0 && totalsvc.month!=0 && totalsvc.day!=0)
             error = "You are not qualified for this benefit. Please change Date entered service.";
         else if((new Date(dor))< (new Date("1991-01-29")))
@@ -115,8 +116,6 @@
     }
 
     function addOtherSvc(){
-        if(!showSVCadd)
-            return
 
         if(showOtherGovSvc){
             totalsvc.year += otherGovSvc.year;
@@ -211,7 +210,6 @@
     import { onMount } from "svelte";
     import introJs from "intro.js";
     import 'intro.js/introjs.css';
-    import './custom.css';
 
     onMount(() => {
         setTimeout(() => {
@@ -237,7 +235,6 @@
                         intro: 'Toggle to add Gap(s) in Service'
                     }
                 ],
-                tooltipClass:'introjs-prevbutton',
                 dontShowAgain: true,
                 showBullets:false,
                 dontShowAgainCookie:'introYrsCom',

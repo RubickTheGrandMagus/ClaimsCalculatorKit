@@ -1,5 +1,5 @@
 export const YearsInSvc = $state({
-    dob:"",des:"",doa:"",total:{y:0,m:0,d:0},allService:{state:false,suspension:{state:false,years:0,months:0,days:0},bfp:{years:0,months:0,days:0}},error:{state:false,text:""},isNUP:false
+    dob:"",des:"",doa:"",total:{y:0,m:0,d:0},allService:{suspension:{state:false,years:0,months:0,days:0},bfp:{years:0,months:0,days:0}},error:{state:false,text:""},isNUP:false
 });
 export const HighestSalaryReceived = $state({
     rank:"",bp:0,pagi:0,lp:0,hsr:0

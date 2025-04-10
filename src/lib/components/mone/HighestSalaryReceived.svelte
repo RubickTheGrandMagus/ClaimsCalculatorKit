@@ -461,19 +461,21 @@
     import 'intro.js/introjs.css';
 
     onMount(() => {
-        introJs().setOptions({
-            steps: [
-                {
-                    element: 'label[for="rank"]',
-                    intro: 'Please enter your Rank'
-                }
-            ],
-            dontShowAgain: true,
-            showBullets:false,
-            showButtons:false,
-            dontShowAgainCookie:'introHSRMone',
-            dontShowAgainCookieDays:7
-        }).start();
+        setTimeout(() => {
+            introJs().setOptions({
+                steps: [
+                    {
+                        element: 'label[for="rank"]',
+                        intro: 'Please enter your Rank'
+                    }
+                ],
+                dontShowAgain: true,
+                showBullets:false,
+                showButtons:false,
+                dontShowAgainCookie:'introHSRMone',
+                dontShowAgainCookieDays:7
+            }).start();
+        }, 1000);
     });
 </script>
 <h2 class="card-title mb-2">Calculate Highest Salary Received - MLC</h2>

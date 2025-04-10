@@ -1,0 +1,11 @@
+@media (max-width: 400px) {
+    .customTooltip {
+      min-width: 150%;
+    }
+    .introjs-dontShowAgain{
+        padding-bottom: 1rem;
+    }
+    .introjs-tooltip-header{
+        padding:0;
+    }
+}

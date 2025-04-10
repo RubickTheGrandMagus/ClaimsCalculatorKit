@@ -3,20 +3,26 @@
     import { onMount } from "svelte";
     import introJs from "intro.js";
     import 'intro.js/introjs.css';
+    import './custom.css';
 
     onMount(() => {
-        introJs().setOptions({
-            steps: [
-                {
-                    intro: 'Please click Next to proceed'
-                }
-            ],
-            dontShowAgain: true,
-            showBullets:false,
-            showButtons:false,
-            dontShowAgainCookie:'introMone',
-            dontShowAgainCookieDays:7
-        }).start();
+        setTimeout(() => {
+            introJs().setOptions({
+                steps: [
+                    {
+                        element: ".next",
+                        intro: 'Please click to proceed',
+                        position: 'left'
+                    }
+                ],
+                tooltipClass:"customTooltip",
+                dontShowAgain: true,
+                showBullets:false,
+                showButtons:false,
+                dontShowAgainCookie:'introMone',
+                dontShowAgainCookieDays:7
+            }).start();
+        },1000);
     });
 </script>
 <h2 class="card-title">MONETIZATION OF LEAVE CREDITS</h2>

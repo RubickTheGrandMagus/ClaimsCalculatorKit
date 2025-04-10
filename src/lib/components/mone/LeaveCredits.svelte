@@ -48,19 +48,21 @@
     import 'intro.js/introjs.css';
 
     onMount(() => {
-        introJs().setOptions({
-            steps: [
-                {
-                    element: 'label[for="daysToMone"]',
-                    intro: 'Please enter no of days to monetize',
-                }
-            ],
-            dontShowAgain: true,
-            showBullets:false,
-            showButtons:false,
-            dontShowAgainCookie:'introLCMone',
-            dontShowAgainCookieDays:7
-        }).start();
+        setTimeout(() => {
+            introJs().setOptions({
+                steps: [
+                    {
+                        element: 'label[for="daysToMone"]',
+                        intro: 'Please enter no of days to monetize',
+                    }
+                ],
+                dontShowAgain: true,
+                showBullets:false,
+                showButtons:false,
+                dontShowAgainCookie:'introLCMone',
+                dontShowAgainCookieDays:7
+            }).start();
+        }, 1000);
     });
 </script>
 <h2 class="card-title">Calculate Monetized Leave Credits</h2>
