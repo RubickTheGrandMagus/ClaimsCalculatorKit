@@ -6,21 +6,23 @@
     import './custom.css';
 
     onMount(() => {
-        introJs().setOptions({
-            steps: [
-                {
-                    element: ".next",
-                    intro: 'Please click to proceed',
-                    position: 'left'
-                }
-            ],
-            tooltipClass:"customTooltip",
-            dontShowAgain: true,
-            showBullets:false,
-            showButtons:false,
-            dontShowAgainCookie:'introCom',
-            dontShowAgainCookieDays:7
-        }).start();
+        setTimeout(() => {
+            introJs().setOptions({
+                steps: [
+                    {
+                        element: ".next",
+                        intro: 'Please click to proceed',
+                        position: 'left'
+                    }
+                ],
+                tooltipClass:"customTooltip",
+                dontShowAgain: true,
+                showBullets:false,
+                showButtons:false,
+                dontShowAgainCookie:'introCom',
+                dontShowAgainCookieDays:7
+            }).start();
+        },1000);
     });
 </script>
 <h2 class="card-title mb-2">COMPULSORY RETIREMENT</h2>

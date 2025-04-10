@@ -19,21 +19,23 @@
     import 'intro.js/introjs.css';
 
     onMount(() => {
-        introJs().setOptions({
-            steps: [
-                {
-                    element: ".next",
-                    intro: 'Please click Next to proceed',
-                    position: 'left'
-                }
-            ],
-            tooltipClass:"customTooltip",
-            dontShowAgain: true,
-            showBullets:false,
-            showButtons:false,
-            dontShowAgainCookie:'introLSCom',
-            dontShowAgainCookieDays:7
-        }).start();
+        setTimeout(() => {
+            introJs().setOptions({
+                steps: [
+                    {
+                        element: ".next",
+                        intro: 'Please click Next to proceed',
+                        position: 'left'
+                    }
+                ],
+                tooltipClass:"customTooltip",
+                dontShowAgain: true,
+                showBullets:false,
+                showButtons:false,
+                dontShowAgainCookie:'introLSCom',
+                dontShowAgainCookieDays:7
+            }).start();
+        },1000);
     });
 </script>
 <h2 class="card-title">Calculate 3 year Lump Sum - COM</h2>

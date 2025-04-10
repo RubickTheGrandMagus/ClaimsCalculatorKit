@@ -211,32 +211,39 @@
     import { onMount } from "svelte";
     import introJs from "intro.js";
     import 'intro.js/introjs.css';
+    import './custom.css';
 
     onMount(() => {
-        introJs().setOptions({
-            steps: [
-                {
-                    element: 'label[for="dob"]',
-                    intro: 'Please Enter your Date of Birth'
-                },
-                {
-                    element: 'label[for="des"]',
-                    intro: 'Please Enter your Date Entered Service'
-                },
-                {
-                    element: 'label[for="otherGovSvc"]',
-                    intro: 'Toggle to add Other Government Service'
-                },
-                {
-                    element: 'label[for="suspendedSvc"]',
-                    intro: 'Toggle to add Gap(s) in Service'
-                }
-            ],
-            dontShowAgain: true,
-            showBullets:false,
-            dontShowAgainCookie:'introYrsCom',
-            dontShowAgainCookieDays:7
-        }).start();
+        setTimeout(() => {
+                introJs().exit(true);
+        });
+        setTimeout(() => {
+            introJs().setOptions({
+                steps: [
+                    {
+                        element: 'label[for="dob"]',
+                        intro: 'Please Enter your Date of Birth'
+                    },
+                    {
+                        element: 'label[for="des"]',
+                        intro: 'Please Enter your Date Entered Service'
+                    },
+                    {
+                        element: 'label[for="otherGovSvc"]',
+                        intro: 'Toggle to add Other Government Service'
+                    },
+                    {
+                        element: 'label[for="suspendedSvc"]',
+                        intro: 'Toggle to add Gap(s) in Service'
+                    }
+                ],
+                tooltipClass:'introjs-prevbutton',
+                dontShowAgain: true,
+                showBullets:false,
+                dontShowAgainCookie:'introYrsCom',
+                dontShowAgainCookieDays:7
+            }).start();
+        }, 1000);
     });
 </script>
 
