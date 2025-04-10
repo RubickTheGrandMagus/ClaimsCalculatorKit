@@ -26,7 +26,7 @@
         day:YearsInSvc.allService.suspension.days
     });
     let error:string = $state(YearsInSvc.error.text);
-    let showSVCadd:boolean = $state(YearsInSvc.allService.state);
+    let showSVCadd:boolean = $state(true);
     let showSuspendedSvc:boolean = $state(YearsInSvc.allService.suspension.state);
     let showIsNUP:boolean = $state(YearsInSvc.isNUP);
 

@@ -49,7 +49,7 @@
       </ul>
     </div>
   </div>
-<footer class="fixed bottom-0 left-0 footer footer-center text-base-content text-xs p-4">
+<footer class="fixed bottom-0 left-0 sm:relative footer footer-center text-base-content text-xs p-4">
   <aside>
     <p>Copyright © 2025 - BFP Region 7 (Central Visayas)</p>
   </aside>

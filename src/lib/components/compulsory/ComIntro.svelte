@@ -3,15 +3,18 @@
     import { onMount } from "svelte";
     import introJs from "intro.js";
     import 'intro.js/introjs.css';
+    import './custom.css';
 
     onMount(() => {
         introJs().setOptions({
             steps: [
                 {
                     element: ".next",
-                    intro: 'Please click to proceed'
+                    intro: 'Please click to proceed',
+                    position: 'left'
                 }
             ],
+            tooltipClass:"customTooltip",
             dontShowAgain: true,
             showBullets:false,
             showButtons:false,

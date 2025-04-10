@@ -22,9 +22,12 @@
         introJs().setOptions({
             steps: [
                 {
-                    intro: 'Please click Next to proceed'
+                    element: ".next",
+                    intro: 'Please click Next to proceed',
+                    position: 'left'
                 }
             ],
+            tooltipClass:"customTooltip",
             dontShowAgain: true,
             showBullets:false,
             showButtons:false,
