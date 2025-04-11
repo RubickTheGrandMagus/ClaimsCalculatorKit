@@ -35,6 +35,9 @@
     let showSuspendedSvc:boolean = $state(YearsInSvc.allService.suspension.state);
 
     function getRetirementDate(){
+        if(svcdate=="" || bdate=="")
+            return;
+
         dor = new Date(bdate);
         dor.setFullYear(dor.getFullYear()+56);
         retdate = dor.getFullYear()+"-"+(String(dor.getMonth()+1).padStart(2, '0'))+"-"+String(dor.getDate()).padStart(2, '0');
@@ -43,6 +46,9 @@
     }
 
     function getYearsInService(){
+        if(svcdate=="" || bdate=="")
+            return;
+
         des = new Date(svcdate);
         totalsvc.year = dor.getFullYear()-des.getFullYear();
         totalsvc.month = dor.getMonth()-des.getMonth();
@@ -116,6 +122,8 @@
     }
 
     function addOtherSvc(){
+        if(svcdate=="" || bdate=="")
+            return;
 
         if(showOtherGovSvc){
             totalsvc.year += otherGovSvc.year;
@@ -142,6 +150,9 @@
     }
 
     function counterGovService(){
+        if(svcdate=="" || bdate=="")
+            return;
+
         if(otherGovSvc.day>=30){
             otherGovSvc.day =0;
             otherGovSvc.month +=1;
@@ -248,11 +259,11 @@
 <p>Please Enter Dates</p>
 <label for="dob" class="flex input mb-2">
     <span class="label">Date of Birth:</span> 
-    <input id ="dob" type="date" class="text-right block" bind:value={bdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler();}}>
+    <input id ="dob" type="date" class="text-right block" bind:value={bdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();counterGovService();addOtherSvc();errorHandler();}}>
 </label>
 <label for="des" class="flex input mb-2">
     <span class="label">Date Entered Service:</span> 
-    <input id ="des" type="date" class="text-right block" bind:value={svcdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler();}}>
+    <input id ="des" type="date" class="text-right block" bind:value={svcdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();counterGovService();addOtherSvc();errorHandler();}}>
 </label>
 <label for="dor" class="flex input mb-2">
     <span class="label">Date of Retirement:</span> 

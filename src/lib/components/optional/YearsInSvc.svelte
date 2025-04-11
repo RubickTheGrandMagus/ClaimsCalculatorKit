@@ -35,7 +35,7 @@
     let showSuspendedSvc:boolean = $state(YearsInSvc.allService.suspension.state);
 
     function getRetirementDate(){
-        if(svcdate=="")
+        if(svcdate=="" || bdate=="")
             return
 
         dor = new Date(svcdate);
@@ -46,6 +46,9 @@
     }
 
     function getYearsInService(){
+        if(svcdate=="" || bdate=="")
+            return
+
         des = new Date(svcdate);
         dor = new Date(retdate);
         totalsvc.year = dor.getFullYear()-des.getFullYear();
@@ -120,7 +123,7 @@
         else if(validAge.year<=0)
             error = "Invalid Date. Please change Date of Birth.";
         else if(totalsvc.year<20)
-            error = "You are not qualified for this benefit. Please change Date entered service.";
+            error = "You are not qualified for this benefit. Please change Date entered service."+totalsvc.year;
         else if(validateDateofRetirement())
             error = "Please change Date of Retirement. It is above the mandatory age of 56.";
         else if((new Date(dor))< (new Date("1991-01-29")))
@@ -133,6 +136,9 @@
     }
 
     function addOtherSvc(){
+        if(svcdate=="" || bdate=="")
+            return
+
         if(showOtherGovSvc){
             totalsvc.year += otherGovSvc.year;
             totalsvc.month += otherGovSvc.month;
@@ -158,6 +164,9 @@
     }
 
     function counterGovService(){
+        if(svcdate=="" || bdate=="")
+            return
+
         if(otherGovSvc.day>=30){
             otherGovSvc.day =0;
             otherGovSvc.month +=1;
@@ -268,15 +277,15 @@
 <p>Please Enter Dates</p>
 <label for="dob" class="flex input mb-2">
     <span class="label">Date of Birth:</span> 
-    <input id ="dob" type="date" class="text-right block" bind:value={bdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler();}}>
+    <input id ="dob" type="date" class="text-right block" bind:value={bdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();counterGovService();addOtherSvc();errorHandler();}}>
 </label>
 <label for="des" class="flex input mb-2">
     <span class="label">Date Entered Service:</span> 
-    <input id ="des" type="date" class="text-right block" bind:value={svcdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();errorHandler();}}>
+    <input id ="des" type="date" class="text-right block" bind:value={svcdate} onchange={()=>{getRetirementDate();getYearsInService();getAgeValidation();counterGovService();addOtherSvc();errorHandler();}}>
 </label>
 <label for="dor" class="flex input mb-2">
     <span class="label">Date of Retirement:</span> 
-    <input id ="dor" type="date" class="text-right block" bind:value={retdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();}}>
+    <input id ="dor" type="date" class="text-right block" bind:value={retdate} onchange={()=>{getYearsInService();getAgeValidation();counterGovService();addOtherSvc();errorHandler();}}>
 </label>
 Total Years in Service: 
 <div class="flex flex-row items-center mb-2">
