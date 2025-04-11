@@ -32,6 +32,9 @@
     let showIsNUP:boolean = $state(YearsInSvc.isNUP);
 
     function getYearsInService(){
+        if(appdate=="" || svcdate=="" || bdate=="")
+            return;
+
         dob = new Date(bdate);
         des = new Date(svcdate);
         doa = new Date(appdate);
@@ -53,6 +56,9 @@
     }
 
     function calibrateGetYearsInService(){
+        if(appdate=="" || svcdate=="" || bdate=="")
+            return;
+
         if(totalsvc.day<0){
             totalsvc.month -=1;
             totalsvc.day +=30;
@@ -82,6 +88,9 @@
     }
 
     function getAgeValidation(){
+        if(appdate=="" || svcdate=="" || bdate=="")
+            return;
+
         dob = new Date(bdate);
         validAge.year = des.getFullYear()-dob.getFullYear();
     };
@@ -140,6 +149,9 @@
     }
 
     function addOtherSvc(){
+        if(appdate=="" || svcdate=="" || bdate=="")
+            return;
+
         if(showSuspendedSvc){
             totalsvc.year -= suspendedSvc.year;
             totalsvc.month -= suspendedSvc.month;
@@ -159,6 +171,9 @@
     }
 
     function counterSuspendedService(){
+        if(appdate=="" || svcdate=="" || bdate=="")
+            return;
+
         if(suspendedSvc.day>=30){
             suspendedSvc.day = 0;
             suspendedSvc.month += 1;

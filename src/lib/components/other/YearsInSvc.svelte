@@ -30,6 +30,9 @@
     let showIsNUP:boolean = $state(YearsInSvc.isNUP);
 
     function getYearsInService(){
+        // if(bdate=="" || svcdate=="" || sepdate==""){
+        //     return;
+        // }
         dob = new Date(bdate);
         des = new Date(svcdate);
         dos = new Date(sepdate);
@@ -136,6 +139,9 @@
     }
 
     function addOtherSvc(){
+        if(bdate=="" || svcdate=="" || sepdate==""){
+            return;
+        }
         if(showSuspendedSvc){
             totalsvc.year -= suspendedSvc.year;
             totalsvc.month -= suspendedSvc.month;
@@ -240,15 +246,15 @@
 <p>Please Enter Dates</p>
 <label for="dob" class="flex input mb-2">
     <span class="label">Date of Birth:</span> 
-    <input id ="dob" type="date" class="text-right block" bind:value={bdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();}}>
+    <input id ="dob" type="date" class="text-right block" bind:value={bdate} onchange={()=>{getYearsInService();getAgeValidation();addOtherSvc();errorHandler();}}>
 </label>
 <label for="des" class="flex input mb-2">
     <span class="label">Date Entered Service:</span> 
-    <input id ="des" type="date" class="text-right block" bind:value={svcdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();}}>
+    <input id ="des" type="date" class="text-right block" bind:value={svcdate} onchange={()=>{getYearsInService();getAgeValidation();addOtherSvc();errorHandler();}}>
 </label>
 <label for="dos" class="flex input mb-2">
     <span class="label">Date Separated:</span> 
-    <input id ="dos" type="date" class="text-right block" bind:value={sepdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();}}>
+    <input id ="dos" type="date" class="text-right block" bind:value={sepdate} onchange={()=>{getYearsInService();getAgeValidation();addOtherSvc();errorHandler();}}>
 </label>
 Total Years in Service: 
 <div class="flex flex-row items-center mb-2">
