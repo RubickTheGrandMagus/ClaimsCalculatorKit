@@ -22,10 +22,13 @@
         computation:0
     });
     let error:string = $state("");
+    let hsr:number = $state(0);
+    //if 20+ years use +1 rankhigher salary else use default salary
+    hsr = (YearsInSvc.total.y>=20 && HighestSalaryReceived.rank==HighestSalaryReceived.retrank)? HighestSalaryReceived.rhsr : HighestSalaryReceived.hsr; 
 
     computation.slvl = parseFloat(((computation.year + computation.month + computation.day)*2).toFixed(3));
     computation.tlc = computation.slvl - LeaveCreditsData.enjoyedSLVL;
-    computation.computation = computation.tlc*computation.cf * HighestSalaryReceived.hsr;
+    computation.computation = computation.tlc*computation.cf * hsr;
 
     function errorHandler(){
         if(enjoyedSLVL>computation.slvl)
@@ -37,7 +40,7 @@
     function getTerminalComputation(){
         LeaveCreditsData.enjoyedSLVL = enjoyedSLVL;
         computation.tlc = computation.slvl- enjoyedSLVL;
-        computation.computation = computation.tlc*computation.cf * HighestSalaryReceived.hsr;
+        computation.computation = computation.tlc*computation.cf * hsr;
         if(computation.computation<0)
             computation.computation = 0;    
     }
@@ -65,7 +68,7 @@
         }, 1000);
     });
 </script>
-<h2 class="card-title">Calculate Terminal Leave Claim - COM</h2>
+<h2 class="card-title">Calculate Terminal Leave Claim - DEA</h2>
 <div class="grid grid-cols-[auto,auto,2fr]">
     <div class="p-1 font-bold">
         <span>Highest Salary Received</span>
@@ -132,6 +135,41 @@
         <span>₱ {moneyFormat(computation.computation.toFixed(2))}</span>
     </div>
 </div>
+<div tabindex="0" class="collapse collapse-plus border-base-300 bg-base-200 border w-80">
+    <div class="collapse-title text-xl font-medium flex items-center">
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        class="h-6 w-6 shrink-0 stroke-current mr-2">
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        {#if YearsInSvc.total.y>=20}
+            RESO # 2001-01 Section 16.3
+        {:else}
+            RESO # 2001-01 Section 16.5
+        {/if}
+    </div>
+    <div class="collapse-content text-justify">
+        <blockquote class="border-l-4 border-gray-500 pl-4 italic text-gray-700">
+            {#if YearsInSvc.total.y>=20}
+                An officer or non-officer with at least twenty (20) years of active 
+                service who dies in line of duty shall be entitled to a one (1) rank 
+                higher if his/her permanent grade last held for the purpose of 
+                computing the commutation of his/her earned leave credits.
+            {:else}
+                An officer or non-officer with less than twenty (20) years of 
+                accumulated active service who voluntarily resigned and was 
+                <span class="font-bold">separated</span> from the service shall be entitled to the commutation of 
+                earned leave credits at his/her permanent grade last held.
+            {/if}
+        </blockquote>
+    </div>
+  </div>
 {#if error.length>0}
     <div role="alert" class="alert alert-error">
             <svg

@@ -103,14 +103,14 @@
             error = "Date of Birth must not be empty.";
         else if(svcdate=="")
             error = "Date Entered Service must not be empty.";
+        else if(deadate=="")
+            error = "Date of Death must not be empty.";
         else if(validAge.year<18 && validAge.year>0)
-            error = "You are to young to enter the service. Please change Date Entered Service.";
+            error = "Too young to enter the service. Please change Date Entered Service.";
         else if(validAge.year>35)
-            error = "You are to old to enter the service. Please change DES or DOB";
+            error = "Too old to enter the service. Please change DES or DOB";
         else if(validAge.year<=0)
             error = "Invalid Date. Please change Date of Birth.";
-        else if(totalsvc.year<20)
-            error = "You are not qualified for this benefit. Please change Date entered service.";
         else if(validateDateofRetirement())
             error = "Please change Date of Death. It is above the mandatory age of 56.";
         else if((new Date(dod))< (new Date("1991-01-29")))
@@ -270,16 +270,16 @@
 </label>
 Total Years in Service: 
 <div class="flex flex-row items-center mb-2">
-    <span class="font-mono text-4xl">{totalsvc.year}</span> years
-    <span class="font-mono text-4xl ml-2">{totalsvc.month}</span> months
-    <span class="font-mono text-4xl ml-2">{totalsvc.day}</span> days
+    <span class="font-mono text-4xl mr-2 ">{totalsvc.year}</span> years
+    <span class="font-mono text-4xl mr-2 ml-2">{totalsvc.month}</span> months
+    <span class="font-mono text-4xl mr-2 ml-2">{totalsvc.day}</span> days
 </div>
 {#if showOtherGovSvc}
     BFP Service: 
     <div class="flex flex-row items-center mb-2">
-        <span class="font-mono text-4xl">{YearsInSvc.allService.bfp.years}</span> years
-        <span class="font-mono text-4xl ml-2">{YearsInSvc.allService.bfp.months}</span> months
-        <span class="font-mono text-4xl ml-2">{YearsInSvc.allService.bfp.days}</span> days
+        <span class="font-mono text-4xl mr-2 ">{YearsInSvc.allService.bfp.years}</span> years
+        <span class="font-mono text-4xl mr-2 ml-2">{YearsInSvc.allService.bfp.months}</span> months
+        <span class="font-mono text-4xl mr-2 ml-2">{YearsInSvc.allService.bfp.days}</span> days
     </div>
 {/if}
 <label for="otherGovSvc" class="flex items-center mb-2">

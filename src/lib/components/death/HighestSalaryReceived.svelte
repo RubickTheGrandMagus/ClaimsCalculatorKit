@@ -399,7 +399,8 @@
         {pagi:4,rate:0.4641},
         {pagi:3,rate:0.331},
         {pagi:2,rate:0.21},
-        {pagi:1,rate:0.1}
+        {pagi:1,rate:0.1},
+        {pagi:0,rate:0}
     ];
 
     let retiree:CalculateHSR = $state({
@@ -414,9 +415,9 @@
     let rankHigher:boolean = $state((retiree.retrank=="Select Your Rank" || retiree.rank==retiree.retrank)? false:true);
 
     function findSalaryMatrix(){
-        let retdate = new Date(YearsInSvc.dor);
+        let retdate = new Date(YearsInSvc.dod);
 
-        if(YearsInSvc.dor=="" || retdate>=(new Date("2019-01-01"))){
+        if(YearsInSvc.dod=="" || retdate>=(new Date("2019-01-01"))){
             return salaryDatabase[0].salaryMatrix;
         }
 
@@ -425,6 +426,10 @@
     }
 
     function computeHSR(){
+        if(retiree.rank==""){
+            return;
+        }
+        
         let index = salaryGrade.findIndex(t=>t.rank == retiree.rank);
         let index2 = longevityPay.findIndex(t=>t.pagi == retiree.pagi);
         if(rankHigher && index<salaryGrade.length-1 && retiree.rank!="Your current rank"){
@@ -442,9 +447,17 @@
         HighestSalaryReceived.pagi = retiree.pagi;
         HighestSalaryReceived.lp = retiree.lp;
         HighestSalaryReceived.hsr = retiree.hsr;
+
+        //for terminal Claim with at least 20 yrs of service
+        //+1 rank even if not at least 1 year active service as per NHQ RBD
+        if(YearsInSvc.total.y>=20 && !rankHigher){ //if toggle is not enabled
+            HighestSalaryReceived.rbp = salaryGrade[index+1].basepay;
+            HighestSalaryReceived.rlp = salaryGrade[index+1].basepay * longevityPay[index2].rate;
+            HighestSalaryReceived.rhsr = HighestSalaryReceived.rbp + HighestSalaryReceived.rlp;
+        }
     }
      //reload when date of retirement changes
-    if(YearsInSvc.dor!="" && HighestSalaryReceived.rank!=""){
+    if(YearsInSvc.dod!="" && HighestSalaryReceived.rank!=""){
         salaryGrade = findSalaryMatrix();
         computeHSR();
     }
@@ -454,30 +467,44 @@
     import introJs from "intro.js";
     import 'intro.js/introjs.css';
 
+    //show 1 rank higher if more than 20 yrs of service (All gov service)
+    const introSteps = ()=>{
+        if(YearsInSvc.total.y<20 && YearsInSvc.dod!=""){
+            return [
+                {
+                    element: 'label[for="rank"]',
+                    intro: 'Please enter your Rank'
+                }
+            ];
+        }
+
+        return [
+            {
+                element: 'label[for="rank"]',
+                intro: 'Please enter your Rank'
+            },
+            {
+                element: 'label[for="1rank"]',
+                intro: 'Enable if at least 1 year active service of current rank'
+            }
+        ];
+    };
+
     onMount(() => {
         setTimeout(() => {
             introJs().setOptions({
-                steps: [
-                    {
-                        element: 'label[for="rank"]',
-                        intro: 'Please enter your Rank'
-                    },
-                    {
-                        element: 'label[for="1rank"]',
-                        intro: 'Enable if at least 1 year active service of current rank'
-                    }
-                ],
+                steps: introSteps(),
                 dontShowAgain: true,
                 showBullets:false,
                 showButtons:true,
-                dontShowAgainCookie:'introHSRCom',
+                dontShowAgainCookie:'introHSRDeath',
                 dontShowAgainCookieDays:7
             }).start();
         },1000);
     });
 
 </script>
-<h2 class="card-title mb-2">Calculate Highest Salary Received - COM</h2>
+<h2 class="card-title mb-2">Calculate Highest Salary Received - DEA</h2>
 <label for="rank" class="select mb-2">
     <span class="label">Rank:</span>
     <select id="rank" class="w-full max-w-xs" bind:value={retiree.rank} onchange={()=>computeHSR()}>
@@ -489,12 +516,14 @@
         {/each}
     </select>
 </label>
-<label for="1rank" class="flex mb-2">
-        <div class="tooltip tooltip-right" data-tip="at least 1 year active service of current rank">
-        <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
-        </div>
-        <span class="{(rankHigher)? "": "text-gray-400"}">{(rankHigher)? " with one rank higher":" without one rank higher"}</span>
-</label>
+{#if YearsInSvc.total.y>=20 || YearsInSvc.dod==""}
+    <label for="1rank" class="flex mb-2">
+            <div class="tooltip tooltip-right" data-tip="at least 1 year active service of current rank">
+            <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
+            </div>
+            <span class="{(rankHigher)? "": "text-gray-400"}">{(rankHigher)? " with one rank higher":" without one rank higher"}</span>
+    </label>
+{/if}
 <label class="label font-bold flex mb-2" for="retrank">
     <span class="flex-auto">Retirement Salary Grade:</span>
     <span class="flex-auto text-right">{retiree.retrank}</span>

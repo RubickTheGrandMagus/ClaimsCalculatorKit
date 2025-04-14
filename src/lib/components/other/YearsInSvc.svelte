@@ -258,9 +258,9 @@
 </label>
 Total Years in Service: 
 <div class="flex flex-row items-center mb-2">
-    <span class="font-mono text-4xl">{totalsvc.year}</span> years
-    <span class="font-mono text-4xl ml-2">{totalsvc.month}</span> months
-    <span class="font-mono text-4xl ml-2">{totalsvc.day}</span> days
+    <span class="font-mono text-4xl mr-2 ">{totalsvc.year}</span> years
+    <span class="font-mono text-4xl mr-2 ml-2">{totalsvc.month}</span> months
+    <span class="font-mono text-4xl mr-2 ml-2">{totalsvc.day}</span> days
 </div>
 <label for="suspendedSvc" class="flex items-center mb-2">
     <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={showSuspendedSvc} onchange={()=>{getYearsInService();addOtherSvc();}}>

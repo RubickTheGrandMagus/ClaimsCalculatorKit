@@ -271,16 +271,16 @@
 </label>
 Total Years in Service: 
 <div class="flex flex-row items-center mb-2">
-    <span class="font-mono text-4xl">{totalsvc.year}</span> years
-    <span class="font-mono text-4xl ml-2">{totalsvc.month}</span> months
-    <span class="font-mono text-4xl ml-2">{totalsvc.day}</span> days
+    <span class="font-mono text-4xl mr-2">{totalsvc.year}</span> years
+    <span class="font-mono text-4xl mr-2 ml-2">{totalsvc.month}</span> months
+    <span class="font-mono text-4xl mr-2 ml-2">{totalsvc.day}</span> days
 </div>
 {#if showOtherGovSvc}
     BFP Service: 
     <div class="flex flex-row items-center mb-2">
-        <span class="font-mono text-4xl">{YearsInSvc.allService.bfp.years}</span> years
-        <span class="font-mono text-4xl ml-2">{YearsInSvc.allService.bfp.months}</span> months
-        <span class="font-mono text-4xl ml-2">{YearsInSvc.allService.bfp.days}</span> days
+        <span class="font-mono text-4xl  mr-2 ">{YearsInSvc.allService.bfp.years}</span> years
+        <span class="font-mono text-4xl  mr-2 ml-2">{YearsInSvc.allService.bfp.months}</span> months
+        <span class="font-mono text-4xl  mr-2 ml-2">{YearsInSvc.allService.bfp.days}</span> days
     </div>
 {/if}
 <label for="otherGovSvc" class="flex items-center mb-2">

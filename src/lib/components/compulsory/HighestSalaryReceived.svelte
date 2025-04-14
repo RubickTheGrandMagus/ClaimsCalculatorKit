@@ -425,6 +425,9 @@
     }
 
     function computeHSR(){
+        if(retiree.rank==""){
+            return;
+        }
         let index = salaryGrade.findIndex(t=>t.rank == retiree.rank);
         let index2 = longevityPay.findIndex(t=>t.pagi == retiree.pagi);
         if(rankHigher && index<salaryGrade.length-1 && retiree.rank!="Your current rank"){

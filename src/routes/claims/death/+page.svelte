@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { DeathIntro, YearsInSvcComponent, CalculateHSR, Lumpsum, LeaveCredits } from '$lib/components/death';
+	import { DeathIntro, YearsInSvcComponent, CalculateHSR, Pension, LeaveCredits } from '$lib/components/death';
     import { YearsInSvc } from '$lib/components/death/shared.svelte';
     import { fly } from 'svelte/transition';
 
@@ -7,7 +7,7 @@
 		'Intro',
 		'Yrs in Svc',
 		'HSR',
-		'Lumpsum',
+		'Pension',
 		'Terminal'
 	]);
     let pageIndex =$state(0);
@@ -39,7 +39,7 @@
                 </div>
             {:else if pageIndex==3}
                 <div in:fly={{ x: 200}}>
-                    <Lumpsum />    
+                    <Pension />    
                 </div>
             {:else if pageIndex==4}
                 <div in:fly={{ x: 200}}>
