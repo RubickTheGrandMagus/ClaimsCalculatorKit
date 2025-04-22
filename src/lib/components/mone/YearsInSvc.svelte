@@ -252,7 +252,7 @@
                     },
                     {
                         element: 'label[for="suspendedSvc"]',
-                        intro: 'Please Enter your Date Applied'
+                        intro: 'Toggle to add Gap(s) in Service'
                     }
                 ],
                 dontShowAgain: true,
@@ -286,7 +286,7 @@ Total Years in Service:
 </div>
 <label for="suspendedSvc" class="flex items-center mb-2">
     <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={showSuspendedSvc} onchange={()=>{getYearsInService();addOtherSvc();}}>
-    Gap in Service
+    Gap(s) in Service
 </label>
 {#if showSuspendedSvc}
     <div class="grid grid-cols-[auto,auto,auto]">
