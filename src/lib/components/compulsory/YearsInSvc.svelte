@@ -93,6 +93,34 @@
         if(isNaN(totalsvc.day))
             totalsvc.day = 0;    
     }
+    function calibrateBFPService(){
+        if(YearsInSvc.allService.bfp.days<0){
+            YearsInSvc.allService.bfp.months -=1;
+            YearsInSvc.allService.bfp.days +=30;
+        }
+        
+        if(YearsInSvc.allService.bfp.days>=30){
+            YearsInSvc.allService.bfp.months +=1;
+            YearsInSvc.allService.bfp.days -= 30;
+        }
+        
+        if(YearsInSvc.allService.bfp.months>=12){
+            YearsInSvc.allService.bfp.years +=1;
+            YearsInSvc.allService.bfp.months -= 12;
+        }
+
+        if(YearsInSvc.allService.bfp.months<0){
+            YearsInSvc.allService.bfp.years -=1;
+            YearsInSvc.allService.bfp.months +=12;
+        }
+
+        if(isNaN(YearsInSvc.allService.bfp.years))
+            YearsInSvc.allService.bfp.years = 0;
+        if(isNaN(YearsInSvc.allService.bfp.months))
+            YearsInSvc.allService.bfp.months = 0;
+        if(isNaN(YearsInSvc.allService.bfp.days))
+            YearsInSvc.allService.bfp.days = 0;    
+    }
 
     function getAgeValidation(){
         dob = new Date(bdate);
@@ -134,11 +162,13 @@
             totalsvc.year -= suspendedSvc.year;
             totalsvc.month -= suspendedSvc.month;
             totalsvc.day -= suspendedSvc.day;
-            
-            getBFPserviceVSsuspension();
+            YearsInSvc.allService.bfp.years -= suspendedSvc.year;
+            YearsInSvc.allService.bfp.months -= suspendedSvc.month;
+            YearsInSvc.allService.bfp.days -= suspendedSvc.day;
         }
 
         calibrateGetYearsInService();
+        calibrateBFPService();
 
         YearsInSvc.des = svcdate;
         YearsInSvc.total.y = totalsvc.year;
@@ -195,10 +225,6 @@
     }
 
     function getBFPserviceVSsuspension(){
-        YearsInSvc.allService.bfp.years -= suspendedSvc.year;
-        YearsInSvc.allService.bfp.months -= suspendedSvc.month;
-        YearsInSvc.allService.bfp.days -= suspendedSvc.day;
-
         if(YearsInSvc.allService.bfp.months>=12){
             YearsInSvc.allService.bfp.years +=1;
             YearsInSvc.allService.bfp.months -= 12;
