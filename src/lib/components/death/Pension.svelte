@@ -36,7 +36,7 @@
                 dontShowAgain: true,
                 showBullets:false,
                 showButtons:false,
-                dontShowAgainCookie:'introLSCom',
+                dontShowAgainCookie:'introPensionDea',
                 dontShowAgainCookieDays:7
             }).start();
         },1000);

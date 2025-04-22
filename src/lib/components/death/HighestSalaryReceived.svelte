@@ -454,6 +454,7 @@
             HighestSalaryReceived.rbp = salaryGrade[index+1].basepay;
             HighestSalaryReceived.rlp = salaryGrade[index+1].basepay * longevityPay[index2].rate;
             HighestSalaryReceived.rhsr = HighestSalaryReceived.rbp + HighestSalaryReceived.rlp;
+            HighestSalaryReceived.rrank = salaryGrade[index+1].rank;
         }
     }
      //reload when date of retirement changes

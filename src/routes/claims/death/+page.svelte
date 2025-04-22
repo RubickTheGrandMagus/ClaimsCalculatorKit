@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { DeathIntro, YearsInSvcComponent, CalculateHSR, Pension, LeaveCredits } from '$lib/components/death';
+	import { DeathIntro, DeathBenefits, SpecialFinancialAssistance, YearsInSvcComponent, CalculateHSR, Pension, LeaveCredits } from '$lib/components/death';
     import { YearsInSvc } from '$lib/components/death/shared.svelte';
     import { fly } from 'svelte/transition';
 
@@ -8,7 +8,9 @@
 		'Yrs in Svc',
 		'HSR',
 		'Pension',
-		'Terminal'
+		'Terminal',
+        'Death Benefits',
+        'SFA'
 	]);
     let pageIndex =$state(0);
     function movepage(direction:boolean){
@@ -23,7 +25,7 @@
 </script>
 
 <div class="flex flex-col items-center justify-center">
-	<div class="card w-auto bg-base-100 shadow-xl">
+	<div class="card w-96 bg-base-100 shadow-xl">
 		<div class="card-body">
             {#if pageIndex==0}
                 <div in:fly={{ x: 200}}>
@@ -44,6 +46,14 @@
             {:else if pageIndex==4}
                 <div in:fly={{ x: 200}}>
                     <LeaveCredits />    
+                </div>
+            {:else if pageIndex==5}
+                <div in:fly={{ x: 200}}>
+                    <DeathBenefits />    
+                </div>
+            {:else if pageIndex==6}
+                <div in:fly={{ x: 200}}>
+                    <SpecialFinancialAssistance />    
                 </div>
             {/if}
 			<div class="flex justify-between">

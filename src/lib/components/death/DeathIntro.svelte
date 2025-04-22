@@ -26,7 +26,7 @@
     });
 </script>
 <h2 class="card-title mb-2">DEATH BENEFITS</h2>
-<blockquote class="border-l-4 border-gray-500 pl-4 italic text-gray-700 text-justify w-80 mb-2">
+<blockquote class="border-l-4 border-gray-500 pl-4 italic text-gray-700 text-justify mb-2">
 "An officer or non-officer of the Bureau of Fire 
 Protection who died in the performance of his duty or by reason of 
 his office/position, upon resolution of the Line of Duty Board or 

@@ -24,7 +24,7 @@
     let error:string = $state("");
     let hsr:number = $state(0);
     //if 20+ years use +1 rankhigher salary else use default salary
-    hsr = (YearsInSvc.total.y>=20 && HighestSalaryReceived.rank==HighestSalaryReceived.retrank)? HighestSalaryReceived.rhsr : HighestSalaryReceived.hsr; 
+    hsr = (YearsInSvc.total.y>=20 && HighestSalaryReceived.rank==HighestSalaryReceived.retrank)? HighestSalaryReceived.rhsr : HighestSalaryReceived.hsr;
 
     computation.slvl = parseFloat(((computation.year + computation.month + computation.day)*2).toFixed(3));
     computation.tlc = computation.slvl - LeaveCreditsData.enjoyedSLVL;
@@ -62,7 +62,7 @@
                 dontShowAgain: true,
                 showBullets:false,
                 showButtons:false,
-                dontShowAgainCookie:'introLCCom',
+                dontShowAgainCookie:'LCDea',
                 dontShowAgainCookieDays:7
             }).start();
         }, 1000);
@@ -71,11 +71,11 @@
 <h2 class="card-title">Calculate Terminal Leave Claim - DEA</h2>
 <div class="grid grid-cols-[auto,auto,2fr]">
     <div class="p-1 font-bold">
-        <span>Highest Salary Received</span>
+        <span>Highest Salary Received </span> <br><span class="text-gray-400">{HighestSalaryReceived.rrank}</span>
     </div> 
     <div class="p-1 font-bold"> = </div> 
     <div class="p-1 text-right font-bold">
-        <span>₱ {moneyFormat(HighestSalaryReceived.hsr.toFixed(2))}</span>
+        <span>₱ {moneyFormat(hsr.toFixed(2))}</span>
     </div>
     <div class="p-1">
         <span>{YearsInSvc.allService.bfp.years} years x 15 days</span>
