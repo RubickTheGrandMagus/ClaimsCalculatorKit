@@ -391,7 +391,7 @@
         }
     ];
 
-    let salaryGrade:SalaryMatrix[]=findSalaryMatrix();
+    let salaryGrade:SalaryMatrix[]=$state(findSalaryMatrix());
 
     let longevityPay:LongPayMatrix[]=[
         {pagi:5,rate:0.5},
