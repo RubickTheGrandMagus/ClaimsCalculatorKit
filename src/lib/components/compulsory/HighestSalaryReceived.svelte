@@ -406,7 +406,7 @@
         rank:(HighestSalaryReceived.rank!="")? HighestSalaryReceived.rank:"",
         retrank:(HighestSalaryReceived.retrank!="")? HighestSalaryReceived.retrank:"Select Your Rank",
         bp:(HighestSalaryReceived.bp!=0)? HighestSalaryReceived.bp:0,
-        pagi:(HighestSalaryReceived.pagi!=0)? HighestSalaryReceived.pagi:Math.floor(YearsInSvc.allService.bfp.years/5),
+        pagi:Math.floor(YearsInSvc.allService.bfp.years/5),
         lp:(HighestSalaryReceived.lp!=0)? HighestSalaryReceived.lp:0,
         hsr:(HighestSalaryReceived.hsr!=0)? HighestSalaryReceived.hsr:0
     });
