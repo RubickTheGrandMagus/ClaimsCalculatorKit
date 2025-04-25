@@ -185,7 +185,9 @@
             totalsvc.year -= suspendedSvc.year;
             totalsvc.month -= suspendedSvc.month;
             totalsvc.day -= suspendedSvc.day;
-            
+            YearsInSvc.allService.bfp.years -= suspendedSvc.year;
+            YearsInSvc.allService.bfp.months -= suspendedSvc.month;
+            YearsInSvc.allService.bfp.days -= suspendedSvc.day;
         }
 
         calibrateGetYearsInService();

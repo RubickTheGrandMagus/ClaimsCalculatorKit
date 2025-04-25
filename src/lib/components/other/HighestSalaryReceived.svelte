@@ -391,7 +391,7 @@
         }
     ];
 
-    let salaryGrade:SalaryMatrix[]=findSalaryMatrix();
+    let salaryGrade:SalaryMatrix[]=$state(findSalaryMatrix());
 
     let longevityPay:LongPayMatrix[]=[
         {pagi:5,rate:0.5},
@@ -406,7 +406,7 @@
     let personnel:CalculateHSR = $state({
         rank:(HighestSalaryReceived.rank!="")? HighestSalaryReceived.rank:"",
         bp:(HighestSalaryReceived.bp!=0)? HighestSalaryReceived.bp:0,
-        pagi:(HighestSalaryReceived.pagi!=0)? HighestSalaryReceived.pagi:Math.floor(YearsInSvc.allService.bfp.years/5),
+        pagi:Math.floor(YearsInSvc.allService.bfp.years/5),
         lp:(HighestSalaryReceived.lp!=0)? HighestSalaryReceived.lp:0,
         hsr:(HighestSalaryReceived.hsr!=0)? HighestSalaryReceived.hsr:0
     });
