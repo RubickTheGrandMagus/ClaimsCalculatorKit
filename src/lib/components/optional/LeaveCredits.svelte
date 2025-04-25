@@ -66,6 +66,7 @@
     });
 </script>
 <h2 class="card-title">Calculate Terminal Leave Claim - OPT</h2>
+<p class="italic text-xs text-justify text-gray-400">Note: Overpayment maybe deducted from your Terminal Leave Claim.</p>
 <div class="grid grid-cols-[auto,auto,2fr]">
     <div class="p-1 font-bold">
         <span>Highest Salary Received</span>
