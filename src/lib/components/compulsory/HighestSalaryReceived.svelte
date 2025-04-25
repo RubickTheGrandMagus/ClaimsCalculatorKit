@@ -392,7 +392,7 @@
         }
     ];
 
-    let salaryGrade:SalaryMatrix[]= findSalaryMatrix();
+    let salaryGrade:SalaryMatrix[]= $state(findSalaryMatrix());
 
     let longevityPay:LongPayMatrix[]=[
         {pagi:5,rate:0.5},
@@ -406,7 +406,7 @@
         rank:(HighestSalaryReceived.rank!="")? HighestSalaryReceived.rank:"",
         retrank:(HighestSalaryReceived.retrank!="")? HighestSalaryReceived.retrank:"Select Your Rank",
         bp:(HighestSalaryReceived.bp!=0)? HighestSalaryReceived.bp:0,
-        pagi:(HighestSalaryReceived.pagi!=0)? HighestSalaryReceived.pagi:Math.floor(YearsInSvc.allService.bfp.years/5),
+        pagi:Math.floor(YearsInSvc.allService.bfp.years/5),
         lp:(HighestSalaryReceived.lp!=0)? HighestSalaryReceived.lp:0,
         hsr:(HighestSalaryReceived.hsr!=0)? HighestSalaryReceived.hsr:0
     });
@@ -425,6 +425,9 @@
     }
 
     function computeHSR(){
+        if(retiree.rank==""){
+            return;
+        }
         let index = salaryGrade.findIndex(t=>t.rank == retiree.rank);
         let index2 = longevityPay.findIndex(t=>t.pagi == retiree.pagi);
         if(rankHigher && index<salaryGrade.length-1 && retiree.rank!="Your current rank"){

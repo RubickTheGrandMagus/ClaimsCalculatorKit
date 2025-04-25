@@ -26,11 +26,11 @@
 
     function errorHandler(){
         if(daysToMone>computation.slvl)
-            error = "No of days to monetize cannot be greater than Total Earned.";
+            error = "No of days to monetize cannot <br> be greater than Total Earned.";
         else if(daysToMone<10)
-            error = "No of days to monetize cannot be less than 10.";
+            error = "No of days to monetize cannot <br> be less than 10.";
         else if(daysToMone>30)
-            error = "No of days to monetize cannot be more than 30.";
+            error = "No of days to monetize cannot <br> be more than 30.";
         else
             error = "";
     }
@@ -107,6 +107,7 @@
         <span class="label">No. of Days to Monetized:</span>
             <input type="number" step = "1" min="10" max="{computation.slvl}" class="w-32 text-right" bind:value={daysToMone}
             onchange={()=>{getTerminalComputation();errorHandler()}}
+            onkeyup={()=>{getTerminalComputation();errorHandler()}}
             >
         </label>
     </div>
@@ -138,6 +139,6 @@
                 stroke-width="2"
                 d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-        <span>{error}</span>
+        <span>{@html error}</span>
     </div>
 {/if}

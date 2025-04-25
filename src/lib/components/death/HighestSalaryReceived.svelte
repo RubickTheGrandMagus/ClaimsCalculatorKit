@@ -6,6 +6,14 @@
         basepay:number
     }
 
+    interface SalaryTable{
+        coverage:{
+            startDate:string,
+            endDate:string
+        },
+        salaryMatrix:SalaryMatrix[]
+    }
+
     interface LongPayMatrix{
         pagi:number,
         rate:number
@@ -13,18 +21,11 @@
 
     interface CalculateHSR{
         rank:string,
+        retrank:string,
         bp:number,
         pagi:number,
         lp:number,
         hsr:number
-    }
-
-    interface SalaryTable{
-        coverage:{
-            startDate:string,
-            endDate:string
-        },
-        salaryMatrix:SalaryMatrix[]
     }
 
     const salaryDatabase:SalaryTable[]=[
@@ -391,7 +392,7 @@
         }
     ];
 
-    let salaryGrade:SalaryMatrix[]=$state(findSalaryMatrix());
+    let salaryGrade:SalaryMatrix[]= $state(findSalaryMatrix());
 
     let longevityPay:LongPayMatrix[]=[
         {pagi:5,rate:0.5},
@@ -402,55 +403,62 @@
         {pagi:0,rate:0}
     ];
 
-    let disabled:boolean = YearsInSvc.isNUP;
-    let personnel:CalculateHSR = $state({
+    let retiree:CalculateHSR = $state({
         rank:(HighestSalaryReceived.rank!="")? HighestSalaryReceived.rank:"",
+        retrank:(HighestSalaryReceived.retrank!="")? HighestSalaryReceived.retrank:"Select Your Rank",
         bp:(HighestSalaryReceived.bp!=0)? HighestSalaryReceived.bp:0,
         pagi:Math.floor(YearsInSvc.allService.bfp.years/5),
         lp:(HighestSalaryReceived.lp!=0)? HighestSalaryReceived.lp:0,
         hsr:(HighestSalaryReceived.hsr!=0)? HighestSalaryReceived.hsr:0
     });
-    personnel.pagi = personnel.pagi>5 ? 5:personnel.pagi;
-    personnel.rank = YearsInSvc.isNUP ? "NUP": HighestSalaryReceived.rank;
+    retiree.pagi = (retiree.pagi>5)? 5:retiree.pagi;
+    let rankHigher:boolean = $state((retiree.retrank=="Select Your Rank" || retiree.rank==retiree.retrank)? false:true);
 
-    function getPagi(){
-        personnel.pagi = Math.floor(YearsInSvc.allService.bfp.years/5);
-        personnel.pagi = personnel.pagi>5 ? 5:personnel.pagi;
-    }
     function findSalaryMatrix(){
-        let sepdate = new Date(YearsInSvc.dos);
+        let retdate = new Date(YearsInSvc.dod);
 
-        if(YearsInSvc.dos=="" || sepdate>=(new Date("2019-01-01"))){
+        if(YearsInSvc.dod=="" || retdate>=(new Date("2019-01-01"))){
             return salaryDatabase[0].salaryMatrix;
         }
 
-        let index = salaryDatabase.findIndex(t=>sepdate>(new Date(t.coverage.startDate)) && sepdate<(new Date(t.coverage.endDate)));
+        let index = salaryDatabase.findIndex(t=>retdate>(new Date(t.coverage.startDate)) && retdate<(new Date(t.coverage.endDate)));
         return salaryDatabase[index].salaryMatrix;
     }
 
     function computeHSR(){
-        if(personnel.rank=="NUP"){
-            personnel.hsr = personnel.bp;
-            personnel.pagi = 0;
-            personnel.lp = 0;            
-        }else{
-            getPagi();
-            let index = salaryGrade.findIndex(t=>t.rank == personnel.rank);
-            let index2 = longevityPay.findIndex(t=>t.pagi == personnel.pagi);
-    
-            personnel.bp = salaryGrade[index].basepay;
-            personnel.lp = salaryGrade[index].basepay * longevityPay[index2].rate;
-            personnel.hsr = personnel.bp + personnel.lp;
+        if(retiree.rank==""){
+            return;
+        }
+        
+        let index = salaryGrade.findIndex(t=>t.rank == retiree.rank);
+        let index2 = longevityPay.findIndex(t=>t.pagi == retiree.pagi);
+        if(rankHigher && index<salaryGrade.length-1 && retiree.rank!="Your current rank"){
+            index +=1;
         }
 
-        HighestSalaryReceived.rank = personnel.rank;
-        HighestSalaryReceived.bp = personnel.bp;
-        HighestSalaryReceived.pagi = personnel.pagi;
-        HighestSalaryReceived.lp = personnel.lp;
-        HighestSalaryReceived.hsr = personnel.hsr;
+        retiree.retrank = salaryGrade[index].rank;
+        retiree.bp = salaryGrade[index].basepay;
+        retiree.lp = salaryGrade[index].basepay * longevityPay[index2].rate;
+        retiree.hsr = retiree.bp + retiree.lp;
+
+        HighestSalaryReceived.rank = retiree.rank;
+        HighestSalaryReceived.retrank = retiree.retrank;
+        HighestSalaryReceived.bp = retiree.bp;
+        HighestSalaryReceived.pagi = retiree.pagi;
+        HighestSalaryReceived.lp = retiree.lp;
+        HighestSalaryReceived.hsr = retiree.hsr;
+
+        //for terminal Claim with at least 20 yrs of service
+        //+1 rank even if not at least 1 year active service as per NHQ RBD
+        if(YearsInSvc.total.y>=20 && !rankHigher){ //if toggle is not enabled
+            HighestSalaryReceived.rbp = salaryGrade[index+1].basepay;
+            HighestSalaryReceived.rlp = salaryGrade[index+1].basepay * longevityPay[index2].rate;
+            HighestSalaryReceived.rhsr = HighestSalaryReceived.rbp + HighestSalaryReceived.rlp;
+            HighestSalaryReceived.rrank = salaryGrade[index+1].rank;
+        }
     }
-    //reload when date of retirement changes
-    if(YearsInSvc.dos!="" && HighestSalaryReceived.rank!=""){
+     //reload when date of retirement changes
+    if(YearsInSvc.dod!="" && HighestSalaryReceived.rank!=""){
         salaryGrade = findSalaryMatrix();
         computeHSR();
     }
@@ -460,31 +468,48 @@
     import introJs from "intro.js";
     import 'intro.js/introjs.css';
 
+    //show 1 rank higher if more than 20 yrs of service (All gov service)
+    const introSteps = ()=>{
+        if(YearsInSvc.total.y<20 && YearsInSvc.dod!=""){
+            return [
+                {
+                    element: 'label[for="rank"]',
+                    intro: 'Please enter your Rank'
+                }
+            ];
+        }
+
+        return [
+            {
+                element: 'label[for="rank"]',
+                intro: 'Please enter your Rank'
+            },
+            {
+                element: 'label[for="1rank"]',
+                intro: 'Enable if at least 1 year active service of current rank'
+            }
+        ];
+    };
+
     onMount(() => {
         setTimeout(() => {
             introJs().setOptions({
-                steps: [
-                    {
-                        element: 'label[for="rank"]',
-                        intro: 'Please enter your Rank'
-                    }
-                    
-                ],
+                steps: introSteps(),
                 dontShowAgain: true,
                 showBullets:false,
-                showButtons:false,
-                dontShowAgainCookie:'introHSREtc',
+                showButtons:true,
+                dontShowAgainCookie:'introHSRDeath',
                 dontShowAgainCookieDays:7
             }).start();
-        }, 1000);
+        },1000);
     });
+
 </script>
-<h2 class="card-title mb-2">Calculate Highest Salary Received - TLC</h2>
+<h2 class="card-title mb-2">Calculate Highest Salary Received - DEA</h2>
 <label for="rank" class="select mb-2">
     <span class="label">Rank:</span>
-    <select id="rank" class="select select-bordered select-sm w-full max-w-xs" bind:value={personnel.rank} onchange={()=>computeHSR()} {disabled}>
+    <select id="rank" class="w-full max-w-xs" bind:value={retiree.rank} onchange={()=>computeHSR()}>
         <option disabled selected>Your current rank</option>
-        <option value="NUP">Non-Uniform Personnel (NUP)</option>
         {#each salaryGrade as salary}
             {#if salary.rank != "FDIR (SG 28)"}
                 <option value={salary.rank}>{salary.rank}</option>
@@ -492,19 +517,27 @@
         {/each}
     </select>
 </label>
-<label class="label flex mb-2 {personnel.rank=="NUP" ? "input":""}" for="basepay">
-    <span class="flex-auto {personnel.rank=="NUP" ? "label":""}">Base Pay:</span>
-    {#if personnel.rank=="NUP"}
-        <input type="number" step="0.01" min="0" class="text-right" bind:value={personnel.bp} onchange={()=>computeHSR()}/>
-    {:else}
-        <span class="flex-auto text-right">₱ {moneyFormat(personnel.bp.toFixed(2))}</span>
-    {/if}
+{#if YearsInSvc.total.y>=20 || YearsInSvc.dod==""}
+    <label for="1rank" class="flex mb-2">
+            <div class="tooltip tooltip-right" data-tip="at least 1 year active service of current rank">
+            <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
+            </div>
+            <span class="{(rankHigher)? "": "text-gray-400"}">{(rankHigher)? " with one rank higher":" without one rank higher"}</span>
+    </label>
+{/if}
+<label class="label font-bold flex mb-2" for="retrank">
+    <span class="flex-auto">Retirement Salary Grade:</span>
+    <span class="flex-auto text-right">{retiree.retrank}</span>
+</label>
+<label class="label flex mb-2" for="basepay">
+    <span class="flex-auto">Base Pay:</span>
+    <span class="flex-auto text-right">₱ {moneyFormat(retiree.bp.toFixed(2))}</span>
 </label>
 <label class="label flex mb-2" for="longpay">
-    <span class="flex-auto">Long Pay [ {personnel.pagi} ]:</span>
-    <span class="flex-auto text-right">₱ {moneyFormat(personnel.lp.toFixed(2))}</span>
+    <span class="flex-auto">Long Pay [ {retiree.pagi} ]:</span>
+    <span class="flex-auto text-right">₱ {moneyFormat(retiree.lp.toFixed(2))}</span>
 </label>
 <label class="label flex mb-2" for="hsr">
     <span class="flex-auto">Highest Salary Received:</span>
-    <span class="flex-auto text-right">₱ {moneyFormat(personnel.hsr.toFixed(2))}</span>
+    <span class="flex-auto text-right">₱ {moneyFormat(retiree.hsr.toFixed(2))}</span>
 </label>
