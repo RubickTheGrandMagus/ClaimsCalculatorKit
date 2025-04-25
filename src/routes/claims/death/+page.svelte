@@ -62,7 +62,7 @@
                         <button class="prev btn btn-sm gap-2 md:btn-md lg:gap-3 {(pageIndex==page.length-1)? 'btn-neutral':''}"
                             onclick={()=>movepage(false)}
                             ><svg
-                                class="h-6 w-6 fill-current md:h-8 md:w-8"
+                                class="back h-6 w-6 fill-current md:h-8 md:w-8"
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
                                 height="24"

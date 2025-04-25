@@ -1,11 +1,13 @@
 <script lang="ts">
-    import {YearsInSvc, HighestSalaryReceived, moneyFormat} from './shared.svelte.js';
+    import {HighestSalaryReceived, moneyFormat} from './shared.svelte.js';
     interface OverAllAllowances{
         pera:number,                
         hazard:number,
         quarter:number,
         clothing:number,
         laundry:number,
+        bonus:number,
+        subsistence:number
     }
     interface AllowanceMatrix{
         rank:string,
@@ -13,7 +15,7 @@
         laundry:number
     }
 
-    let allowance:OverAllAllowances = $state({pera:0,hazard:0,quarter:0,clothing:0,laundry:0});
+    let allowance:OverAllAllowances = {pera:0,hazard:0,quarter:0,clothing:0,laundry:0,bonus:0,subsistence:0};
     const otherAllowance:AllowanceMatrix[] = [
         {rank:"FO1 (SG 10)",quarter:400,laundry:30},
         {rank:"FO2 (SG 12)",quarter:400,laundry:30},
@@ -38,8 +40,12 @@
         allowance.quarter = otherAllowance[index].quarter;
         allowance.clothing = 200;
         allowance.laundry = otherAllowance[index].laundry;
+        allowance.bonus = (HighestSalaryReceived.bp+5000)/12;
+        allowance.subsistence = 4500;
     }
     let total:number = allowance.pera + allowance.hazard + allowance.quarter + allowance.clothing + allowance.laundry + HighestSalaryReceived.hsr;
+
+    let specialFinancialAssistanceClaim:number = total + allowance.bonus + allowance.subsistence; //Only 6 months for Special Financial Assistance
 
     //intro guide for ease of use
     import { onMount } from "svelte";
@@ -51,12 +57,10 @@
             introJs().setOptions({
                 steps: [
                     {
-                        element: ".next",
-                        intro: 'Please click Next to proceed',
-                        position: 'left'
+                        element: ".allowances",
+                        intro: 'Please click See Allowances',
                     }
                 ],
-                tooltipClass:"customTooltip",
                 dontShowAgain: true,
                 showBullets:false,
                 showButtons:false,
@@ -84,7 +88,7 @@
             <span>₱ {moneyFormat(HighestSalaryReceived.lp.toFixed(2))}</span>
         </div>
         <div class="p-1 col-span-3">
-            <div tabindex="0" class="collapse collapse-arrow bg-base-100 border border-base-300 w-80 p-1">
+            <div tabindex="0" class="allowances collapse collapse-arrow bg-base-100 border border-base-300 w-80 p-1">
                 <div class="collapse-title font-bold min-h-0 p-3">See Allowances</div>
                 <div class="collapse-content text-sm grid grid-cols-[auto,auto,2fr]">
                     <div class="p-1 ">
@@ -131,6 +135,27 @@
         <div class="p-1 font-bold"> = </div>
         <div class="p-1 text-right font-bold">
             <span>₱ {moneyFormat(total.toFixed(2))}</span>
+        </div>
+        <div class="p-1">
+            <span>Bonus / 12 months</span>
+        </div>
+        <div class="p-1"> = </div>
+        <div class="p-1 text-right">
+            <span>₱ {moneyFormat(allowance.bonus.toFixed(2))}</span>
+        </div>
+        <div class="p-1">
+            <span>Subsistence Allowance <br> (₱ 150 * 30 days)</span>
+        </div>
+        <div class="p-1"> = </div>
+        <div class="p-1 text-right">
+            <span>₱ {moneyFormat(allowance.subsistence.toFixed(2))}</span>
+        </div>
+        <div class="p-1 font-bold">
+            <span>Total SFA Claim <br> (₱ {moneyFormat(specialFinancialAssistanceClaim.toFixed(2))} * 6 months)</span>
+        </div>
+        <div class="p-1 font-bold"> = </div>
+        <div class="p-1 text-right font-bold">
+            <span>₱ {moneyFormat((specialFinancialAssistanceClaim*6).toFixed(2))}</span>
         </div>
     </div>
     <div tabindex="0" class="collapse collapse-plus border-base-300 bg-base-200 border w-80">
