@@ -109,7 +109,7 @@
     <div class="p-1 col-span-3">
         <label for="enjoyedSLVL" class="flex input input-neutral mb-2 w-full">
             <span class="label">Total Enjoyed VL & SL :</span> 
-            <input id ="enjoyedSLVL" type="number" step = "0.001" min="0" max="{computation.slvl}" class="enjoyedSLVL w-32 text-right" bind:value={enjoyedSLVL}
+            <input id ="enjoyedSLVL" type="number" step = "0.001" min="0" max="{computation.slvl}" class="enjoyedSLVL text-right" bind:value={enjoyedSLVL}
                 onchange={()=>{getTerminalComputation();errorHandler()}}
                 onkeyup={()=>{getTerminalComputation();errorHandler()}}
             >

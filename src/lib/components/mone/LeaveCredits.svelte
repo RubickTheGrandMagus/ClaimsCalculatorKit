@@ -102,10 +102,10 @@
     <div class="p-1 text-right">
         <span>{computation.slvl.toFixed(3)}</span>
     </div>
-    <div class="p-1 font-bold col-span-3">
+    <div class="p-1 col-span-3">
         <label for="daysToMone" class="flex input input-neutral mb-2 w-full">
         <span class="label">No. of Days to Monetized:</span>
-            <input type="number" step = "1" min="10" max="{computation.slvl}" class="w-32 text-right" bind:value={daysToMone}
+            <input type="number" step = "1" min="10" max="{computation.slvl}" class="text-right" bind:value={daysToMone}
             onchange={()=>{getTerminalComputation();errorHandler()}}
             onkeyup={()=>{getTerminalComputation();errorHandler()}}
             >
