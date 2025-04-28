@@ -495,7 +495,7 @@
 <label class="label flex mb-2 {personnel.rank=="NUP" ? "input":""}" for="basepay">
     <span class="flex-auto {personnel.rank=="NUP" ? "label":""}">Base Pay:</span>
     {#if personnel.rank=="NUP"}
-        <input type="number" step="0.01" min="0" class="text-right" bind:value={personnel.bp} onchange={()=>computeHSR()}/>
+        <input type="number" step="0.01" min="0" class="text-right" bind:value={personnel.bp} onchange={()=>computeHSR()} onkeyup={()=>computeHSR()}/>
     {:else}
         <span class="flex-auto text-right">₱ {moneyFormat(personnel.bp.toFixed(2))}</span>
     {/if}

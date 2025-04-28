@@ -43,6 +43,15 @@
         <li><a href="/">Home</a></li>
         <li><a href="/legacy">Version 1.5</a></li>
         <li><a href="/mc">Reference Memos</a></li>
+        <li class="menu">
+            <details>
+              <summary>Documentary Requirements</summary>  
+              <ul>
+                <li><a href="/docs/compulsory">Compulsory Retirement</a></li>
+                <li><a href="/docs/optional">Optional Retirement</a></li>
+              </ul>
+            </details>
+        </li>
         <li><a href="/faq">Frequently Asked Questions</a></li>
         <li><a href="/bugreport">Report a Bug</a></li>
         <li><a href="/about">About</a></li>
