@@ -95,14 +95,14 @@
     <div class="divider">OR</div>
     <div class="grid grid-cols-[auto,auto,2fr]">
         <div class="p-1">
-            <span>1 Year Full Salary based on Retired Grade</span> <br> <span class="font-bold">₱ {moneyFormat(HighestSalaryReceived.hsr.toFixed(2))} x 12 mos</span>
+            <span>1 Year Full Salary <br> based on Retired Grade</span> <br> <span class="font-bold">₱ {moneyFormat(HighestSalaryReceived.bp.toFixed(2))} x 12 mos</span>
         </div>
         <div class="p-1"> = </div>
         <div class="p-1 text-right font-bold">
-            <span>₱ {moneyFormat((HighestSalaryReceived.hsr*12).toFixed(2))}</span>
+            <span>₱ {moneyFormat((HighestSalaryReceived.bp*12).toFixed(2))}</span>
         </div>
         <div class="p-1">
-            <span>Lifetime Pension (80% of BP)</span> <br> <span class="font-bold"> ₱ {moneyFormat(HighestSalaryReceived.bp.toFixed(2))} x 80%</span>
+            <span>Lifetime Pension <br> (80% of BP)</span> <br> <span class="font-bold"> ₱ {moneyFormat(HighestSalaryReceived.bp.toFixed(2))} x 80%</span>
         </div>
         <div class="p-1"> = </div>
         <div class="p-1 text-right font-bold">
@@ -119,11 +119,11 @@
             <span>₱ {moneyFormat((HighestSalaryReceived.hsr*1.25).toFixed(2))}</span>
         </div>
         <div class="p-1">
-            <span>1 Year Full Salary based on Retired Grade </span><br> <span class="font-bold"> ₱ {moneyFormat(HighestSalaryReceived.hsr.toFixed(2))} x 12 mos</span>
+            <span>1 Year Full Salary <br> based on Retired Grade </span><br> <span class="font-bold"> ₱ {moneyFormat(HighestSalaryReceived.bp.toFixed(2))} x 12 mos</span>
         </div>
         <div class="p-1"> = </div>
         <div class="p-1 text-right font-bold">
-            <span>₱ {moneyFormat((HighestSalaryReceived.hsr*12).toFixed(2))}</span>
+            <span>₱ {moneyFormat((HighestSalaryReceived.bp*12).toFixed(2))}</span>
         </div>
         <div class="p-1">
             <span>Lifetime Pension </span><br> <span class="font-bold"> (80% of last salary/basepay)</span>
