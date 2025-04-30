@@ -34,4 +34,4 @@ him during the course of his/her duties or occupation which is expected of him
 during the course of his/her employment..."
 <b>-RESOLUTION NO. 2001-01 Section 1</b> 
 </blockquote>
-<p>Please refer to this link for <a href="/docs/optional" class="link link-info">documentary requirements</a>.</p>
+<p>Please refer to this link for <a href="/docs/tppd" class="link link-info">documentary requirements</a>.</p>

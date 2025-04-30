@@ -42,4 +42,4 @@ for absences for incapacity incurred in line of duty shall be restored.
 The salary in this sub section shall mean the base and longevity pay."
 <b>-RESOLUTION NO. 2001-01 Section 18.1</b> 
 </blockquote>
-<p>Please refer to this link for <a href="/docs/compulsory" class="link link-info mb-2">documentary requirements</a>.</p>
+<p>Please refer to this link for <a href="/docs/death" class="link link-info mb-2">documentary requirements</a>.</p>
