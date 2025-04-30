@@ -2,7 +2,7 @@
     <span class="font-mono text-4xl mb-4 animate-pulse">
         Coming Soon
     </span>
-    <p class="text-lg mb-8">
+    <p class="text-lg mb-8 text-center">
         We're working on something amazing. Stay tuned!
     </p>
 </div>
