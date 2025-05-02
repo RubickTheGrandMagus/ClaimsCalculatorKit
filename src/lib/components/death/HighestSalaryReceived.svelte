@@ -439,21 +439,21 @@
         retiree.retrank = salaryGrade[index].rank;
         retiree.bp = salaryGrade[index].basepay;
         retiree.lp = salaryGrade[index].basepay * longevityPay[index2].rate;
-        retiree.hsr = retiree.bp + retiree.lp;
+        retiree.hsr = retiree.bp + parseFloat(retiree.lp.toFixed(2));
 
         HighestSalaryReceived.rank = retiree.rank;
         HighestSalaryReceived.retrank = retiree.retrank;
         HighestSalaryReceived.bp = retiree.bp;
         HighestSalaryReceived.pagi = retiree.pagi;
-        HighestSalaryReceived.lp = retiree.lp;
-        HighestSalaryReceived.hsr = retiree.hsr;
+        HighestSalaryReceived.lp = parseFloat(retiree.lp.toFixed(2));
+        HighestSalaryReceived.hsr = parseFloat(retiree.hsr.toFixed(2));
 
         //for terminal Claim with at least 20 yrs of service
         //+1 rank even if not at least 1 year active service as per NHQ RBD
         if(YearsInSvc.total.y>=20 && !rankHigher){ //if toggle is not enabled
             HighestSalaryReceived.rbp = salaryGrade[index+1].basepay;
-            HighestSalaryReceived.rlp = salaryGrade[index+1].basepay * longevityPay[index2].rate;
-            HighestSalaryReceived.rhsr = HighestSalaryReceived.rbp + HighestSalaryReceived.rlp;
+            HighestSalaryReceived.rlp = parseFloat((salaryGrade[index+1].basepay * longevityPay[index2].rate).toFixed(2));
+            HighestSalaryReceived.rhsr = parseFloat((HighestSalaryReceived.rbp + HighestSalaryReceived.rlp).toFixed(2));
             HighestSalaryReceived.rrank = salaryGrade[index+1].rank;
         }
     }
