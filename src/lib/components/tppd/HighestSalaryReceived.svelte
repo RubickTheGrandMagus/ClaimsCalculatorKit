@@ -438,14 +438,14 @@
         tppd.retrank = salaryGrade[index].rank;
         tppd.bp = salaryGrade[index].basepay;
         tppd.lp = salaryGrade[index].basepay * longevityPay[index2].rate;
-        tppd.hsr = tppd.bp + tppd.lp;
+        tppd.hsr = tppd.bp + parseFloat(tppd.lp.toFixed(2));
 
         HighestSalaryReceived.rank = tppd.rank;
         HighestSalaryReceived.retrank = tppd.retrank;
         HighestSalaryReceived.bp = tppd.bp;
         HighestSalaryReceived.pagi = tppd.pagi;
-        HighestSalaryReceived.lp = tppd.lp;
-        HighestSalaryReceived.hsr = tppd.hsr;
+        HighestSalaryReceived.lp = parseFloat(tppd.lp.toFixed(2));
+        HighestSalaryReceived.hsr = parseFloat(tppd.hsr.toFixed(2));
     }
     //reload when date of retirement changes
     if(YearsInSvc.dor!="" && HighestSalaryReceived.rank!=""){
