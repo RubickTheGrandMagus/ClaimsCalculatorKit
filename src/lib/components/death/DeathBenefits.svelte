@@ -1,21 +1,5 @@
 <script lang="ts">
-    import {YearsInSvc, HighestSalaryReceived, moneyFormat} from './shared.svelte.js';
-    interface TotalRating{
-        year:number,
-        month:number,
-        day:number,
-        total:number
-    }
-
-    // let totalRate:TotalRating = {year:YearsInSvc.total.y*2.5,month:YearsInSvc.total.m/12*2.5,day:YearsInSvc.total.d/360*2.5,total:0};
-    // totalRate.total = totalRate.year + totalRate.month + totalRate.day;
-    // totalRate.total = (totalRate.total>90)? 90:totalRate.total;
-    // let computation ={pension:HighestSalaryReceived.hsr*totalRate.total/100,survivorPension:0};
-    // computation.survivorPension = computation.pension*0.75; 
-    // if(YearsInSvc.total.y<20){
-    //     computation.pension = HighestSalaryReceived.hsr*0.5;
-    //     computation.survivorPension = computation.pension;
-    // }
+    import {HighestSalaryReceived, moneyFormat} from './shared.svelte.js';
 
     //intro guide for ease of use
     import { onMount } from "svelte";
