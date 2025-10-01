@@ -23,8 +23,10 @@
         rank:string,
         retrank:string,
         bp:number,
+        retbp:number,
         pagi:number,
         lp:number,
+        retlp:number,
         hsr:number
     }
 
@@ -407,6 +409,8 @@
         rank:(HighestSalaryReceived.rank!="")? HighestSalaryReceived.rank:"",
         retrank:(HighestSalaryReceived.retrank!="")? HighestSalaryReceived.retrank:"Select Your Rank",
         bp:(HighestSalaryReceived.bp!=0)? HighestSalaryReceived.bp:0,
+        retbp:(HighestSalaryReceived.retbp!=0)? HighestSalaryReceived.retbp:0,
+        retlp:(HighestSalaryReceived.retlp!=0)? HighestSalaryReceived.retlp:0,
         pagi:Math.floor(YearsInSvc.allService.bfp.years/5),
         lp:(HighestSalaryReceived.lp!=0)? HighestSalaryReceived.lp:0,
         hsr:(HighestSalaryReceived.hsr!=0)? HighestSalaryReceived.hsr:0
@@ -432,6 +436,8 @@
         
         let index = salaryGrade.findIndex(t=>t.rank == retiree.rank);
         let index2 = longevityPay.findIndex(t=>t.pagi == retiree.pagi);
+        retiree.retbp = salaryGrade[index].basepay; //store original bp for gratuity and burial
+        retiree.retlp = salaryGrade[index].basepay * longevityPay[index2].rate; //store original lp for special financial assistance
         if(rankHigher && index<salaryGrade.length-1 && retiree.rank!="Your current rank"){
             index +=1;
         }
@@ -444,8 +450,10 @@
         HighestSalaryReceived.rank = retiree.rank;
         HighestSalaryReceived.retrank = retiree.retrank;
         HighestSalaryReceived.bp = retiree.bp;
+        HighestSalaryReceived.retbp = retiree.retbp;
         HighestSalaryReceived.pagi = retiree.pagi;
         HighestSalaryReceived.lp = parseFloat(retiree.lp.toFixed(2));
+        HighestSalaryReceived.retlp = parseFloat(retiree.retlp.toFixed(2));
         HighestSalaryReceived.hsr = parseFloat(retiree.hsr.toFixed(2));
 
         //for terminal Claim with at least 20 yrs of service

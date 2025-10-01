@@ -40,10 +40,10 @@
         allowance.quarter = otherAllowance[index].quarter;
         allowance.clothing = 200;
         allowance.laundry = otherAllowance[index].laundry;
-        allowance.bonus = (HighestSalaryReceived.bp+5000)/12;
+        allowance.bonus = (HighestSalaryReceived.retbp+5000)/12;
         allowance.subsistence = 4500;
     }
-    let total:number = allowance.pera + allowance.hazard + allowance.quarter + allowance.clothing + allowance.laundry + HighestSalaryReceived.hsr;
+    let total:number = allowance.pera + allowance.hazard + allowance.quarter + allowance.clothing + allowance.laundry + HighestSalaryReceived.retbp + HighestSalaryReceived.retlp;
 
     let specialFinancialAssistanceClaim:number = total + allowance.bonus + allowance.subsistence; //Only 6 months for Special Financial Assistance
 
@@ -78,14 +78,14 @@
         </div>
         <div class="p-1 "> = </div>
         <div class="p-1 text-right ">
-            <span>₱ {moneyFormat(HighestSalaryReceived.bp.toFixed(2))}</span>
+            <span>₱ {moneyFormat(HighestSalaryReceived.retbp.toFixed(2))}</span>
         </div>
         <div class="p-1 ">
             <span>Longevity Pay [{HighestSalaryReceived.pagi}]</span>
         </div>
         <div class="p-1 "> = </div>
         <div class="p-1 text-right ">
-            <span>₱ {moneyFormat(HighestSalaryReceived.lp.toFixed(2))}</span>
+            <span>₱ {moneyFormat(HighestSalaryReceived.retlp.toFixed(2))}</span>
         </div>
         <div class="p-1 col-span-3">
             <div tabindex="0" class="allowances collapse collapse-arrow bg-base-100 border border-base-300 w-80 p-1">
