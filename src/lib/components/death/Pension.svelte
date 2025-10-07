@@ -8,7 +8,7 @@
     }
 
     let totalRate:TotalRating = {year:YearsInSvc.total.y*2.5,month:YearsInSvc.total.m/12*2.5,day:YearsInSvc.total.d/360*2.5,total:0};
-    totalRate.total = totalRate.year + totalRate.month + totalRate.day;
+    totalRate.total = parseFloat(totalRate.year.toFixed(5)) + parseFloat(totalRate.month.toFixed(5)) + parseFloat(totalRate.day.toFixed(5)); //totalRate.year + totalRate.month + totalRate.day;
     totalRate.total = (totalRate.total>90)? 90:totalRate.total;
     let computation ={pension:HighestSalaryReceived.hsr*totalRate.total/100,survivorPension:0};
     computation.survivorPension = computation.pension*0.75; 
