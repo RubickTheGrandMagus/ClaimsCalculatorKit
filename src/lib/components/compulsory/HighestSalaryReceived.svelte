@@ -30,7 +30,26 @@
 
     const salaryDatabase:SalaryTable[]=[
         {
-            coverage:{startDate:"2019-01-01",endDate:"present"},
+            coverage:{startDate:"2026-01-01",endDate:"present"},
+            salaryMatrix:[
+                        {rank:"FO1 (SG 10)",basepay:31151},
+                        {rank:"FO2 (SG 12)",basepay:32410},
+                        {rank:"FO3 (SG 14)",basepay:33720},
+                        {rank:"SFO1 (SG 16)",basepay:35082},
+                        {rank:"SFO2 (SG 17)",basepay:35783},
+                        {rank:"SFO3 (SG 18)",basepay:36499},
+                        {rank:"SFO4 (SG 19)",basepay:40284},
+                        {rank:"FINSP (SG 22)",basepay:52004},
+                        {rank:"FSINSP (SG 23)",basepay:59411},
+                        {rank:"FCINSP (SG 24)",basepay:65683},
+                        {rank:"FSUPT (SG 25)",basepay:74879},
+                        {rank:"FSSUPT (SG 26)",basepay:84612},
+                        {rank:"FCSUPT (SG 27)",basepay:95611},
+                        {rank:"FDIR (SG 28)",basepay:108041}
+            ]   
+        },
+        {
+            coverage:{startDate:"2019-01-01",endDate:"2025-12-31"},
             salaryMatrix:[
                         {rank:"FO1 (SG 10)",basepay:29668},
                         {rank:"FO2 (SG 12)",basepay:30867},
@@ -416,7 +435,7 @@
     function findSalaryMatrix(){
         let retdate = new Date(YearsInSvc.dor);
 
-        if(YearsInSvc.dor=="" || retdate>=(new Date("2019-01-01"))){
+        if(YearsInSvc.dor=="" || retdate>=(new Date("2026-01-01"))){
             return salaryDatabase[0].salaryMatrix;
         }
 
