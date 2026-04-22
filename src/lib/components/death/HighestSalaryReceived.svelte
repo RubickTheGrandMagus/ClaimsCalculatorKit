@@ -32,7 +32,45 @@
 
     const salaryDatabase:SalaryTable[]=[
         {
-             coverage:{startDate:"2026-01-01",endDate:"present"},
+            coverage:{startDate:"2028-01-01",endDate:"present"},
+            salaryMatrix:[
+                        {rank:"FO1 (SG 10)",basepay:34118},
+                        {rank:"FO2 (SG 12)",basepay:35497},
+                        {rank:"FO3 (SG 14)",basepay:36931},
+                        {rank:"SFO1 (SG 16)",basepay:38423},
+                        {rank:"SFO2 (SG 17)",basepay:39191},
+                        {rank:"SFO3 (SG 18)",basepay:39975},
+                        {rank:"SFO4 (SG 19)",basepay:44121},
+                        {rank:"FINSP (SG 22)",basepay:56957},
+                        {rank:"FSINSP (SG 23)",basepay:65069},
+                        {rank:"FCINSP (SG 24)",basepay:71938},
+                        {rank:"FSUPT (SG 25)",basepay:82010},
+                        {rank:"FSSUPT (SG 26)",basepay:92670},
+                        {rank:"FCSUPT (SG 27)",basepay:104717},
+                        {rank:"FDIR (SG 28)",basepay:118330}
+            ]   
+        },
+        {
+            coverage:{startDate:"2027-01-01",endDate:"2027-12-31"},
+            salaryMatrix:[
+                        {rank:"FO1 (SG 10)",basepay:32412},
+                        {rank:"FO2 (SG 12)",basepay:33722},
+                        {rank:"FO3 (SG 14)",basepay:35085},
+                        {rank:"SFO1 (SG 16)",basepay:36502},
+                        {rank:"SFO2 (SG 17)",basepay:37231},
+                        {rank:"SFO3 (SG 18)",basepay:37976},
+                        {rank:"SFO4 (SG 19)",basepay:41915},
+                        {rank:"FINSP (SG 22)",basepay:54109},
+                        {rank:"FSINSP (SG 23)",basepay:61816},
+                        {rank:"FCINSP (SG 24)",basepay:68341},
+                        {rank:"FSUPT (SG 25)",basepay:77909},
+                        {rank:"FSSUPT (SG 26)",basepay:88037},
+                        {rank:"FCSUPT (SG 27)",basepay:99481},
+                        {rank:"FDIR (SG 28)",basepay:112414}
+            ]   
+        },
+        {
+            coverage:{startDate:"2026-01-01",endDate:"2026-12-31"},
             salaryMatrix:[
                         {rank:"FO1 (SG 10)",basepay:31151},
                         {rank:"FO2 (SG 12)",basepay:32410},
