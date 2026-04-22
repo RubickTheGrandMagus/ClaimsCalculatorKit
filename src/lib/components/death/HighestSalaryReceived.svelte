@@ -478,7 +478,7 @@
     function findSalaryMatrix(){
         let retdate = new Date(YearsInSvc.dod);
 
-        if(YearsInSvc.dod=="" || retdate>=(new Date("2026-01-01"))){
+        if(YearsInSvc.dod=="" || retdate>=(new Date("2028-01-01"))){
             return salaryDatabase[0].salaryMatrix;
         }
 
