@@ -122,3 +122,11 @@
       </ul>
     </div>
   </div>
+
+<style>
+	.drawer-side .menu li a:hover svg,
+	.drawer-side .menu li summary:hover svg {
+		transform: scale(1.15) translateY(-2px) rotate(4deg);
+		transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	}
+</style>
