@@ -262,111 +262,111 @@
     });
 </script>
 
-<h2 class="card-title">Calculate Years in Service - DEA</h2>
-<p>Please Enter Dates</p>
-<label for="dob" class="flex input mb-2">
-    <span class="label">Date of Birth:</span> 
-    <input id ="dob" type="date" class="text-right block" bind:value={bdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();}}>
-</label>
-<label for="des" class="flex input mb-2">
-    <span class="label">Date Entered Service:</span> 
-    <input id ="des" type="date" class="text-right block" bind:value={svcdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();}}>
-</label>
-<label for="dod" class="flex input mb-2">
-    <span class="label">Date of Death:</span> 
-    <input id ="dod" type="date" class="text-right block" bind:value={deadate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();}}>
-</label>
-Total Years in Service: 
-<div class="flex flex-row items-center mb-2">
-    <span class="font-mono text-4xl mr-2 ">{totalsvc.year}</span> years
-    <span class="font-mono text-4xl mr-2 ml-2">{totalsvc.month}</span> months
-    <span class="font-mono text-4xl mr-2 ml-2">{totalsvc.day}</span> days
+<h2 class="card-title text-2xl font-bold mb-2">Calculate Years in Service - DEA</h2>
+<p class="text-base-content/70 mb-6">Please enter the required dates to compute your service duration.</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 bg-base-200 p-6 rounded-2xl">
+    <div class="form-control w-full">
+        <label for="dob" class="label font-semibold"><span class="label-text">Date of Birth</span></label> 
+        <input id="dob" type="date" class="input input-bordered w-full" bind:value={bdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();}}>
+    </div>
+
+    <div class="form-control w-full">
+        <label for="des" class="label font-semibold"><span class="label-text">Date Entered Service</span></label> 
+        <input id="des" type="date" class="input input-bordered w-full" bind:value={svcdate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();}}>
+    </div>
+
+    <div class="form-control w-full md:col-span-2">
+        <label for="dod" class="label font-semibold"><span class="label-text">Date of Death</span></label> 
+        <input id="dod" type="date" class="input input-bordered w-full bg-base-100" bind:value={deadate} onchange={()=>{getYearsInService();getAgeValidation();errorHandler();}}>
+    </div>
 </div>
-{#if showOtherGovSvc}
-    BFP Service: 
-    <div class="flex flex-row items-center mb-2">
-        <span class="font-mono text-4xl mr-2 ">{YearsInSvc.allService.bfp.years}</span> years
-        <span class="font-mono text-4xl mr-2 ml-2">{YearsInSvc.allService.bfp.months}</span> months
-        <span class="font-mono text-4xl mr-2 ml-2">{YearsInSvc.allService.bfp.days}</span> days
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="card bg-primary text-primary-content shadow-lg">
+        <div class="card-body">
+            <h3 class="card-title text-sm opacity-90">Total Years in Service</h3>
+            <div class="flex items-center justify-center gap-4 mt-2">
+                <div class="text-center"><div class="font-mono text-4xl font-bold">{totalsvc.year}</div><div class="text-xs opacity-70">y</div></div>
+                <div class="text-center"><div class="font-mono text-4xl font-bold">{totalsvc.month}</div><div class="text-xs opacity-70">m</div></div>
+                <div class="text-center"><div class="font-mono text-4xl font-bold">{totalsvc.day}</div><div class="text-xs opacity-70">d</div></div>
+            </div>
+        </div>
     </div>
-{/if}
-<label for="otherGovSvc" class="flex items-center mb-2">
-    <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={showOtherGovSvc} onchange={()=>{getYearsInService();addOtherSvc();errorHandler();}}>
-    Other Government Service
-</label>
-{#if showOtherGovSvc}
-    <div class="grid grid-cols-[auto,auto,auto]">
-        <div class="p-1">
-            <input type="number" min="0" max="20" class="w-14 input input-primary input-sm input-bordered text-right "
-            bind:value={otherGovSvc.year} 
-            onchange={()=>{counterGovService();getYearsInService();addOtherSvc();errorHandler();}}
-            onkeyup={()=>{counterGovService();getYearsInService();addOtherSvc();errorHandler();}}
-            >
-            Yrs
-        </div> 
-        <div class="p-1">
-            <input type="number" min="0" max="12" class="w-14 input input-primary input-sm input-bordered text-right "
-            bind:value={otherGovSvc.month} 
-            onchange={()=>{counterGovService();getYearsInService();addOtherSvc();errorHandler();}}
-            onkeyup={()=>{counterGovService();getYearsInService();addOtherSvc();errorHandler();}}
-            >
-            Mos
-        </div> 
-        <div class="p-1">
-            <input type="number" min="0" max="30" class="w-14 input input-primary input-sm input-bordered text-right "
-            bind:value={otherGovSvc.day} 
-            onchange={()=>{counterGovService();getYearsInService();addOtherSvc();errorHandler();}}
-            onkeyup={()=>{counterGovService();getYearsInService();addOtherSvc();errorHandler();}}
-            >
-            Days
-        </div> 
+    
+    {#if showOtherGovSvc}
+    <div class="card bg-base-200 text-base-content shadow-lg border border-base-300">
+        <div class="card-body">
+            <h3 class="card-title text-sm opacity-70">BFP Service</h3>
+            <div class="flex items-center justify-center gap-4 mt-2">
+                <div class="text-center"><div class="font-mono text-4xl font-bold text-primary">{YearsInSvc.allService.bfp.years}</div><div class="text-xs opacity-70">y</div></div>
+                <div class="text-center"><div class="font-mono text-4xl font-bold text-primary">{YearsInSvc.allService.bfp.months}</div><div class="text-xs opacity-70">m</div></div>
+                <div class="text-center"><div class="font-mono text-4xl font-bold text-primary">{YearsInSvc.allService.bfp.days}</div><div class="text-xs opacity-70">d</div></div>
+            </div>
+        </div>
     </div>
-{/if}
-<label for="suspendedSvc" class="flex items-center mb-2">
-    <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={showSuspendedSvc} onchange={()=>{getYearsInService();addOtherSvc();errorHandler();}}>
-    Gap(s) in Service
-</label>
-{#if showSuspendedSvc}
-    <div class="grid grid-cols-[auto,auto,auto]">
-        <div class="p-1">
-            <input type="number" min="0" max="20" class="w-14 input input-error input-sm input-bordered text-right "
-            bind:value={suspendedSvc.year} 
-            onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
-            onkeyup={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
-            >
-            Yrs
-        </div> 
-        <div class="p-1">
-            <input type="number" min="0" max="12" class="w-14 input input-error input-sm input-bordered text-right "
-            bind:value={suspendedSvc.month} 
-            onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
-            onkeyup={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
-            >
-            Mos
-        </div> 
-        <div class="p-1">
-            <input type="number" min="0" max="30" class="w-14 input input-error input-sm input-bordered text-right "
-            bind:value={suspendedSvc.day} 
-            onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
-            onkeyup={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
-            >
-            Days
-        </div> 
+    {/if}
+</div>
+
+<div class="divider">Adjustments</div>
+
+<div class="space-y-4">
+    <div class="bg-base-100 border border-base-200 p-4 rounded-xl shadow-sm">
+        <label for="otherGovSvc" class="flex flex-row items-center justify-between cursor-pointer">
+            <span class="font-medium">Other Government Service</span>
+            <input id="otherGovSvc" type="checkbox" class="toggle toggle-success" bind:checked={showOtherGovSvc} onchange={()=>{getYearsInService();addOtherSvc();errorHandler();}}>
+        </label>
+        {#if showOtherGovSvc}
+            <div class="grid grid-cols-3 gap-4 mt-4">
+                <div class="form-control">
+                    <label class="label text-xs">Years</label>
+                    <input type="number" min="0" max="20" class="input input-primary input-sm input-bordered w-full text-center"
+                    bind:value={otherGovSvc.year} onchange={()=>{counterGovService();getYearsInService();addOtherSvc();errorHandler();}} onkeyup={()=>{counterGovService();getYearsInService();addOtherSvc();errorHandler();}}>
+                </div> 
+                <div class="form-control">
+                    <label class="label text-xs">Months</label>
+                    <input type="number" min="0" max="12" class="input input-primary input-sm input-bordered w-full text-center"
+                    bind:value={otherGovSvc.month} onchange={()=>{counterGovService();getYearsInService();addOtherSvc();errorHandler();}} onkeyup={()=>{counterGovService();getYearsInService();addOtherSvc();errorHandler();}}>
+                </div> 
+                <div class="form-control">
+                    <label class="label text-xs">Days</label>
+                    <input type="number" min="0" max="30" class="input input-primary input-sm input-bordered w-full text-center"
+                    bind:value={otherGovSvc.day} onchange={()=>{counterGovService();getYearsInService();addOtherSvc();errorHandler();}} onkeyup={()=>{counterGovService();getYearsInService();addOtherSvc();errorHandler();}}>
+                </div> 
+            </div>
+        {/if}
     </div>
-{/if}
-{#if error.length>0}
-    <div role="alert" class="alert alert-error">
-            <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24">
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-        <span>{@html error}</span>
+
+    <div class="bg-base-100 border border-base-200 p-4 rounded-xl shadow-sm">
+        <label for="suspendedSvc" class="flex flex-row items-center justify-between cursor-pointer">
+            <span class="font-medium">Gap(s) in Service</span>
+            <input id="suspendedSvc" type="checkbox" class="toggle toggle-success" bind:checked={showSuspendedSvc} onchange={()=>{getYearsInService();addOtherSvc();errorHandler();}}>
+        </label>
+        {#if showSuspendedSvc}
+            <div class="grid grid-cols-3 gap-4 mt-4">
+                <div class="form-control">
+                    <label class="label text-xs">Years</label>
+                    <input type="number" min="0" max="20" class="input input-error input-sm input-bordered w-full text-center"
+                    bind:value={suspendedSvc.year} onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}} onkeyup={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}>
+                </div> 
+                <div class="form-control">
+                    <label class="label text-xs">Months</label>
+                    <input type="number" min="0" max="12" class="input input-error input-sm input-bordered w-full text-center"
+                    bind:value={suspendedSvc.month} onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}} onkeyup={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}>
+                </div> 
+                <div class="form-control">
+                    <label class="label text-xs">Days</label>
+                    <input type="number" min="0" max="30" class="input input-error input-sm input-bordered w-full text-center"
+                    bind:value={suspendedSvc.day} onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}} onkeyup={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}>
+                </div> 
+            </div>
+        {/if}
+    </div>
+</div>
+
+{#if error && error.length>0}
+    <div role="alert" class="alert alert-error mt-6 shadow-md drop-shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current drop-shadow-sm" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span class="font-medium">{@html error}</span>
     </div>
 {/if}

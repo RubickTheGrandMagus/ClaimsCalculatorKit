@@ -70,125 +70,110 @@
         },1000);
     });
 </script>
-<h2 class="card-title">Calculate Special Financial Assistance</h2>
-<p class="italic text-xs text-justify text-gray-400">Note: This Special Benefit is only applicable for firefighting operations.</p>
-    <div class="grid grid-cols-[auto,auto,2fr]">
-        <div class="p-1 ">
-            <span>Basepay - {HighestSalaryReceived.rank}</span>
-        </div>
-        <div class="p-1 "> = </div>
-        <div class="p-1 text-right ">
-            <span>₱ {moneyFormat(HighestSalaryReceived.bp.toFixed(2))}</span>
-        </div>
-        <div class="p-1 ">
-            <span>Longevity Pay [{HighestSalaryReceived.pagi}]</span>
-        </div>
-        <div class="p-1 "> = </div>
-        <div class="p-1 text-right ">
-            <span>₱ {moneyFormat(HighestSalaryReceived.lp.toFixed(2))}</span>
-        </div>
-        <div class="p-1 col-span-3">
-            <div tabindex="0" class="allowances collapse collapse-arrow bg-base-100 border border-base-300 w-full p-1">
-                <div class="collapse-title font-bold min-h-0 p-3">See Allowances</div>
-                <div class="collapse-content text-sm grid grid-cols-[auto,auto,2fr]">
-                    <div class="p-1 ">
-                        <span>PERA</span>
-                    </div>
-                    <div class="p-1 "> = </div>
-                    <div class="p-1 text-right ">
-                        <span>₱ {moneyFormat(allowance.pera.toFixed(2))}</span>
-                    </div>
-                    <div class="p-1 ">
-                        <span>Hazard Pay</span>
-                    </div>
-                    <div class="p-1 "> = </div>
-                    <div class="p-1 text-right ">
-                        <span>₱ {moneyFormat(allowance.hazard.toFixed(2))}</span>
-                    </div>
-                    <div class="p-1 ">
-                        <span>Quarter Allowance</span>
-                    </div>
-                    <div class="p-1 "> = </div>
-                    <div class="p-1 text-right ">
-                        <span>₱ {moneyFormat(allowance.quarter.toFixed(2))}</span>
-                    </div>
-                    <div class="p-1 ">
-                        <span>Clothing Allowance</span>
-                    </div>
-                    <div class="p-1 "> = </div>
-                    <div class="p-1 text-right ">
-                        <span>₱ {moneyFormat(allowance.clothing.toFixed(2))}</span>
-                    </div>
-                    <div class="p-1 ">
-                        <span>Laundry Allowance</span>
-                    </div>
-                    <div class="p-1 "> = </div>
-                    <div class="p-1 text-right ">
-                        <span>₱ {moneyFormat(allowance.laundry.toFixed(2))}</span>
+<div class="flex items-center justify-between mb-8 pb-4 border-b border-base-200">
+    <div>
+        <h2 class="text-2xl font-extrabold text-primary flex items-center gap-3 drop-shadow-sm uppercase tracking-wider">
+            Special Financial Assistance
+        </h2>
+        <p class="text-base-content/60 text-sm mt-1">Calculate the special financial assistance applicable for firefighting operations.</p>
+    </div>
+</div>
+
+<div class="alert bg-base-100 shadow-sm border border-info/20 rounded-xl mb-6 flex items-start p-5">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <div class="flex-1 ml-3">
+        <h3 class="font-bold text-base-content m-0 text-sm">Note</h3>
+        <p class="text-xs text-base-content/80 mt-1">This Special Benefit is only applicable for firefighting operations.</p>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-6">
+    <div class="flex flex-col gap-6">
+        <div class="bg-base-200 p-6 rounded-2xl shadow-inner border border-base-300 flex flex-col gap-4">
+            <div class="flex justify-between items-center py-2 border-b border-base-300/50">
+                <span class="text-sm font-bold uppercase text-base-content/70">Basepay - {HighestSalaryReceived.rank}</span>
+                <span class="font-mono text-lg font-bold">₱ {moneyFormat(HighestSalaryReceived.bp.toFixed(2))}</span>
+            </div>
+            
+            <div class="flex justify-between items-center py-2 border-b border-base-300/50">
+                <span class="text-sm font-bold uppercase text-base-content/70">Longevity Pay [{HighestSalaryReceived.pagi}]</span>
+                <span class="font-mono text-lg font-bold">₱ {moneyFormat(HighestSalaryReceived.lp.toFixed(2))}</span>
+            </div>
+
+            <div class="collapse collapse-arrow bg-base-100 border border-base-300 shadow-sm rounded-xl mt-2 allowances">
+                <input type="checkbox" /> 
+                <div class="collapse-title text-sm font-bold uppercase tracking-wider text-base-content/80 py-3">
+                    See Allowances Breakdown
+                </div>
+                <div class="collapse-content pt-0 border-t border-base-200">
+                    <div class="flex flex-col gap-2 mt-4 text-sm">
+                        <div class="flex justify-between items-center"><span class="text-base-content/70">PERA</span><span class="font-mono font-medium">₱ {moneyFormat(allowance.pera.toFixed(2))}</span></div>
+                        <div class="flex justify-between items-center"><span class="text-base-content/70">Hazard Pay</span><span class="font-mono font-medium">₱ {moneyFormat(allowance.hazard.toFixed(2))}</span></div>
+                        <div class="flex justify-between items-center"><span class="text-base-content/70">Quarter Allowance</span><span class="font-mono font-medium">₱ {moneyFormat(allowance.quarter.toFixed(2))}</span></div>
+                        <div class="flex justify-between items-center"><span class="text-base-content/70">Clothing Allowance</span><span class="font-mono font-medium">₱ {moneyFormat(allowance.clothing.toFixed(2))}</span></div>
+                        <div class="flex justify-between items-center"><span class="text-base-content/70">Laundry Allowance</span><span class="font-mono font-medium">₱ {moneyFormat(allowance.laundry.toFixed(2))}</span></div>
                     </div>
                 </div>
-              </div>
+            </div>
+
+            <div class="flex justify-between items-center mt-2 pt-3 border-t-2 border-base-300/80">
+                <span class="text-sm font-black uppercase text-base-content/80">Sub-Total</span>
+                <span class="font-mono text-xl font-bold text-base-content">₱ {moneyFormat(total.toFixed(2))}</span>
+            </div>
         </div>
-        <div class="p-1 font-bold">
-            <span>Total</span>
-        </div>
-        <div class="p-1 font-bold"> = </div>
-        <div class="p-1 text-right font-bold">
-            <span>₱ {moneyFormat(total.toFixed(2))}</span>
-        </div>
-        <div class="p-1">
-            <span>Bonus / 12 months</span>
-        </div>
-        <div class="p-1"> = </div>
-        <div class="p-1 text-right">
-            <span>₱ {moneyFormat(allowance.bonus.toFixed(2))}</span>
-        </div>
-        <div class="p-1">
-            <span>Subsistence Allowance <br> (₱ 150 * 30 days)</span>
-        </div>
-        <div class="p-1"> = </div>
-        <div class="p-1 text-right">
-            <span>₱ {moneyFormat(allowance.subsistence.toFixed(2))}</span>
-        </div>
-        <div class="p-1 font-bold">
-            <span>Total SFA Claim <br> (₱ {moneyFormat(specialFinancialAssistanceClaim.toFixed(2))} * 6 months)</span>
-        </div>
-        <div class="p-1 font-bold"> = </div>
-        <div class="p-1 text-right font-bold">
-            <span>₱ {moneyFormat((specialFinancialAssistanceClaim*6).toFixed(2))}</span>
+
+        <div tabindex="0" class="collapse collapse-plus border border-base-300 bg-base-200 mt-2 rounded-2xl shadow-sm">
+            <div class="collapse-title text-sm font-bold uppercase py-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-5 w-5 shrink-0 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                RESO # 2001-01 Section 17.1
+            </div>
+            <div class="collapse-content text-justify text-sm">
+                <div class="bg-base-100 p-4 rounded-xl border-l-4 border-primary italic text-base-content/80 leading-relaxed shadow-inner">
+                    The average of six (6) months of base and longevity pay including 
+                    all allowances and bonuses during the last twelve (12) months 
+                    immediately preceding the death or permanent incapacity of 
+                    uniformed personnel. The same benefits shall be computed for those 
+                    who have served less than twelve (12) months and the payment 
+                    shall come from the expected salary, allowances and bonuses of the 
+                    deceased or incapacitated personnel for the next six (6) months after 
+                    his death or permanent incapacity.
+                </div>
+            </div>
         </div>
     </div>
-    <div tabindex="0" class="collapse collapse-plus border-base-300 bg-base-200 border w-80">
-        <div class="collapse-title text-xl font-medium flex items-center">
-            <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            class="h-6 w-6 shrink-0 stroke-current mr-2">
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-                RESO # 2001-01 Section 17.1
+
+    <div class="relative bg-primary/5 p-6 sm:p-8 rounded-2xl border border-primary/20 shadow-lg flex flex-col gap-6 overflow-hidden max-w-xl self-start sticky top-6">
+        <div class="absolute -right-10 -bottom-10 opacity-[0.03] pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-64 h-64"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         </div>
-        <div class="collapse-content text-justify">
-            <blockquote class="border-l-4 border-gray-500 pl-4 italic text-gray-700">
-                The average of six (6) months of base and longevity pay including 
-                all allowances and bonuses during the last twelve (12) months 
-                immediately preceding the death or permanent incapacity of 
-                uniformed personnel. The same benefits shall be computed for those 
-                who have served less than twelve (12) months and the payment 
-                shall come from the expected salary, allowances and bonuses of the 
-                deceased or incapacitated personnel for the next six (6) months after 
-                his death or permanent incapacity.
-            </blockquote>
+
+        <div class="bg-base-100 p-5 rounded-xl shadow-sm border border-base-200">
+            <span class="text-xs font-bold uppercase text-base-content/60 tracking-wider mb-2 block">Monthly Additional</span>
+            <div class="flex flex-col gap-3">
+                <div class="flex justify-between items-center group">
+                    <span class="text-sm font-medium text-base-content/80 group-hover:text-primary transition-colors">Bonus ÷ 12 months</span>
+                    <span class="font-mono font-bold group-hover:text-primary transition-colors">₱ {moneyFormat(allowance.bonus.toFixed(2))}</span>
+                </div>
+                <div class="flex justify-between items-center group">
+                    <span class="text-sm font-medium text-base-content/80 group-hover:text-primary transition-colors">Subsistence (₱150 × 30 days)</span>
+                    <span class="font-mono font-bold group-hover:text-primary transition-colors">₱ {moneyFormat(allowance.subsistence.toFixed(2))}</span>
+                </div>
+            </div>
         </div>
-      </div>
-  
-  <style>
-    .collapse-title::after {
-        top:1.5rem;
-    }
-  </style>
+
+        <div class="bg-base-100 p-5 rounded-xl shadow-sm border border-base-200">
+            <span class="text-xs font-bold uppercase text-base-content/60 tracking-wider mb-1 block">Expected Monthly Calculation</span>
+            <div class="flex justify-between items-end mt-2">
+                <span class="text-xs text-base-content/50 max-w-[50%]">Total + Bonus + Subsistence</span>
+                <span class="font-mono text-xl font-bold">₱ {moneyFormat(specialFinancialAssistanceClaim.toFixed(2))}</span>
+            </div>
+        </div>
+
+        <div class="mt-4 pt-4 border-t-2 border-primary/20 flex flex-col items-end relative z-10">
+            <span class="text-xs font-bold uppercase tracking-widest text-primary/70 mb-1">Total SFA Claim (Monthly × 6 months)</span>
+            <div class="text-3xl sm:text-4xl lg:text-5xl font-mono font-black text-primary drop-shadow-sm whitespace-nowrap break-all">
+                ₱ {moneyFormat((specialFinancialAssistanceClaim*6).toFixed(2))}
+            </div>
+        </div>
+    </div>
+</div>

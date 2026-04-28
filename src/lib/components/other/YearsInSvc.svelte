@@ -250,77 +250,133 @@
     });
 </script>
 
-<h2 class="card-title">Calculate Years in Service - TLC</h2>
-<p>Please Enter Dates</p>
-<label for="dob" class="flex input mb-2">
-    <span class="label">Date of Birth:</span> 
-    <input id ="dob" type="date" class="text-right block" bind:value={bdate} onchange={()=>{getYearsInService();getAgeValidation();addOtherSvc();errorHandler();}}>
-</label>
-<label for="des" class="flex input mb-2">
-    <span class="label">Date Entered Service:</span> 
-    <input id ="des" type="date" class="text-right block" bind:value={svcdate} onchange={()=>{getYearsInService();getAgeValidation();addOtherSvc();errorHandler();}}>
-</label>
-<label for="dos" class="flex input mb-2">
-    <span class="label">Date Separated:</span> 
-    <input id ="dos" type="date" class="text-right block" bind:value={sepdate} onchange={()=>{getYearsInService();getAgeValidation();addOtherSvc();errorHandler();}}>
-</label>
-Total Years in Service: 
-<div class="flex flex-row items-center mb-2">
-    <span class="font-mono text-4xl mr-2 ">{totalsvc.year}</span> years
-    <span class="font-mono text-4xl mr-2 ml-2">{totalsvc.month}</span> months
-    <span class="font-mono text-4xl mr-2 ml-2">{totalsvc.day}</span> days
+<div class="flex items-center justify-between mb-8 pb-4 border-b border-base-200">
+    <div>
+        <h2 class="text-2xl font-extrabold text-primary flex items-center gap-3 drop-shadow-sm uppercase tracking-wider">
+            Record of Service
+        </h2>
+        <p class="text-base-content/60 text-sm mt-1">Provide your entry and validity dates to assess terminal eligibility.</p>
+    </div>
 </div>
-<label for="suspendedSvc" class="flex items-center mb-2">
-    <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={showSuspendedSvc} onchange={()=>{getYearsInService();addOtherSvc();errorHandler();}}>
-    Gap in Service
-</label>
-{#if showSuspendedSvc}
-    <div class="grid grid-cols-[auto,auto,auto]">
-        <div class="p-1">
-            <input type="number" min="0" max="20" class="w-14 input input-error input-sm input-bordered text-right "
-            bind:value={suspendedSvc.year} 
-            onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
-            onkeyup={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
-            >
-            Yrs
-        </div> 
-        <div class="p-1">
-            <input type="number" min="0" max="12" class="w-14 input input-error input-sm input-bordered text-right "
-            bind:value={suspendedSvc.month} 
-            onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
-            onkeyup={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
-            >
-            Mos
-        </div> 
-        <div class="p-1">
-            <input type="number" min="0" max="30" class="w-14 input input-error input-sm input-bordered text-right "
-            bind:value={suspendedSvc.day} 
-            onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
-            onkeyup={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
-            >
-            Days
-        </div> 
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-6">
+    <div class="bg-base-200 p-6 sm:p-8 rounded-2xl shadow-inner border border-base-300 flex flex-col gap-6">
+        <h3 class="text-sm font-bold uppercase tracking-wider text-base-content/70 border-b border-base-300 pb-2">Service Dates</h3>
+        
+        <div class="form-control w-full">
+            <label for="dob" class="label pb-1">
+                <span class="label-text font-bold text-sm">Date of Birth</span>
+            </label>
+            <input id="dob" type="date" class="input input-bordered w-full font-mono text-lg bg-base-100 transition-all focus:input-primary focus:shadow-md" bind:value={bdate} onchange={()=>{getYearsInService();getAgeValidation();addOtherSvc();errorHandler();}}>
+        </div>
+
+        <div class="form-control w-full">
+            <label for="des" class="label pb-1">
+                <span class="label-text font-bold text-sm">Date Entered Service</span>
+            </label>
+            <input id="des" type="date" class="input input-bordered w-full font-mono text-lg bg-base-100 transition-all focus:input-primary focus:shadow-md" bind:value={svcdate} onchange={()=>{getYearsInService();getAgeValidation();addOtherSvc();errorHandler();}}>
+        </div>
+
+        <div class="form-control w-full">
+            <label for="dos" class="label pb-1">
+                <span class="label-text font-bold text-sm text-primary">Date Separated</span>
+            </label>
+            <input id="dos" type="date" class="input input-bordered input-primary shadow-sm w-full font-mono text-lg bg-base-100 transition-all focus:shadow-md" bind:value={sepdate} onchange={()=>{getYearsInService();getAgeValidation();addOtherSvc();errorHandler();}}>
+        </div>
+
+        <div class="divider my-0"></div>
+
+        <div class="form-control bg-base-100 p-4 rounded-xl border border-base-200 shadow-sm transition-all hover:shadow-md">
+            <label class="label cursor-pointer justify-start gap-4">
+                <input type="checkbox" id="suspendedSvc" class="toggle toggle-warning toggle-md shadow-inner" bind:checked={showSuspendedSvc} onchange={()=>{getYearsInService();addOtherSvc();errorHandler();}} />
+                <div>
+                    <span class="label-text font-bold block">Declare Gap(s) in Service</span>
+                    <span class="text-xs text-base-content/60 w-full block mt-0.5">Subtract non-creditable periods from your total service</span>
+                </div>
+            </label>
+        </div>
+
+        {#if showSuspendedSvc}
+            <div class="bg-warning/5 p-5 rounded-xl border border-warning/20 shadow-inner -mt-2 animate-in slide-in-from-top-2">
+                <span class="text-xs font-bold uppercase text-warning/80 mb-3 block">Deductible Periods (Gaps)</span>
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="form-control">
+                        <label class="label pt-0 pb-1"><span class="label-text text-xs font-bold">Years</span></label>
+                        <input type="number" min="0" max="20" class="input input-bordered input-warning input-sm w-full font-mono text-center"
+                            bind:value={suspendedSvc.year} 
+                            onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
+                            onkeyup={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}>
+                    </div>
+                    <div class="form-control">
+                        <label class="label pt-0 pb-1"><span class="label-text text-xs font-bold">Months</span></label>
+                        <input type="number" min="0" max="11" class="input input-bordered input-warning input-sm w-full font-mono text-center"
+                            bind:value={suspendedSvc.month} 
+                            onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
+                            onkeyup={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}>
+                    </div>
+                    <div class="form-control">
+                        <label class="label pt-0 pb-1"><span class="label-text text-xs font-bold">Days</span></label>
+                        <input type="number" min="0" max="29" class="input input-bordered input-warning input-sm w-full font-mono text-center"
+                            bind:value={suspendedSvc.day} 
+                            onchange={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}
+                            onkeyup={()=>{counterSuspendedService();getYearsInService();addOtherSvc();errorHandler();}}>
+                    </div>
+                </div>
+            </div>
+        {/if}
+
+        {#if validateDateofRetirement()}
+            <div class="form-control bg-base-100 p-4 rounded-xl border border-base-200 shadow-sm transition-all hover:shadow-md -mt-2 animate-in fade-in">
+                <label class="label cursor-pointer justify-start gap-4" for="rank">
+                    <input type="checkbox" id="rank" class="toggle toggle-success toggle-md shadow-inner" bind:checked={showIsNUP} onchange={()=>{toggleNUP();errorHandler();}} />
+                    <div>
+                        <span class="label-text font-bold block {showIsNUP ? 'text-success' : ''}">Personnel is NUP</span>
+                        <span class="text-xs text-base-content/60 w-full block mt-0.5">Toggle if the claiming personnel is a Non-Uniformed Personnel</span>
+                    </div>
+                </label>
+            </div>
+        {/if}
     </div>
-{/if}
-{#if validateDateofRetirement()}
-    <label for="rank" class="flex mb-2">
-        <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={showIsNUP} onchange={()=>{toggleNUP();errorHandler();}}/>
-        <span class="{(showIsNUP)? "": "text-gray-400"}">{(showIsNUP)? " Personnel is NUP":" Personnel is non-NUP"}</span>
-    </label>
-{/if}
-{#if error.length>0}
-    <div role="alert" class="alert alert-error mt-2">
-            <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24">
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-        <span>{@html error}</span>
+
+    <div class="flex flex-col gap-6 lg:sticky lg:top-8">
+        <div class="relative bg-primary p-6 sm:p-8 rounded-3xl text-primary-content shadow-xl overflow-hidden min-h-[300px] flex flex-col items-center justify-center text-center">
+            <div class="absolute -right-16 -top-16 opacity-10 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-64 h-64"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            
+            <h3 class="text-sm font-bold uppercase tracking-widest opacity-80 mb-6 drop-shadow-sm relative z-10 w-full">Total Years in Service</h3>
+            
+            <div class="flex flex-row items-center justify-center gap-4 sm:gap-8 relative z-10 flex-wrap w-full">
+                <div class="flex flex-col items-center group">
+                    <div class="bg-base-100/10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 min-w-[80px] sm:min-w-[100px] border border-base-100/20 shadow-inner group-hover:bg-base-100/20 transition-all">
+                        <span class="font-mono text-4xl sm:text-6xl font-black drop-shadow-md">{totalsvc.year}</span>
+                    </div>
+                    <span class="text-xs sm:text-sm uppercase font-bold tracking-widest mt-3 opacity-90 group-hover:opacity-100 transition-opacity">Years</span>
+                </div>
+                <div class="flex flex-col items-center group">
+                    <div class="bg-base-100/10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 min-w-[80px] sm:min-w-[100px] border border-base-100/20 shadow-inner group-hover:bg-base-100/20 transition-all">
+                        <span class="font-mono text-4xl sm:text-6xl font-black drop-shadow-md">{totalsvc.month}</span>
+                    </div>
+                    <span class="text-xs sm:text-sm uppercase font-bold tracking-widest mt-3 opacity-90 group-hover:opacity-100 transition-opacity">Months</span>
+                </div>
+                <div class="flex flex-col items-center group">
+                    <div class="bg-base-100/10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 min-w-[80px] sm:min-w-[100px] border border-base-100/20 shadow-inner group-hover:bg-base-100/20 transition-all">
+                        <span class="font-mono text-4xl sm:text-6xl font-black drop-shadow-md">{totalsvc.day}</span>
+                    </div>
+                    <span class="text-xs sm:text-sm uppercase font-bold tracking-widest mt-3 opacity-90 group-hover:opacity-100 transition-opacity">Days</span>
+                </div>
+            </div>
+            
+            {#if totalsvc.year >= 0}
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-success/0 via-success to-success/0"></div>
+            {/if}
+        </div>
+
+        {#if error.length>0}
+            <div role="alert" class="alert alert-error shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span class="font-medium">{@html error}</span>
+            </div>
+        {/if}
     </div>
-{/if}
+</div>

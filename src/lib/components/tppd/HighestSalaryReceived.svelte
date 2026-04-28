@@ -517,7 +517,7 @@
 
     //show 1 rank higher if more than 20 yrs of service (All gov service)
     const introSteps = ()=>{
-        if(YearsInSvc.total.y<20 && YearsInSvc.dod!=""){
+        if(YearsInSvc.total.y<20 && YearsInSvc.dor!=""){
             return [
                 {
                     element: 'label[for="rank"]',
@@ -551,39 +551,73 @@
         }, 1000);
     });
 </script>
-<h2 class="card-title mb-2">Calculate Highest Salary Received - TPPD</h2>
-<label for="rank" class="select mb-2">
-    <span class="label">Rank:</span>
-    <select id="rank" class="select select-bordered select-sm w-full max-w-xs" bind:value={tppd.rank} onchange={()=>computeHSR()}>
-        <option disabled selected>Your current rank</option>
-        {#each salaryGrade as salary}
-            {#if salary.rank != "FDIR (SG 28)"}
-                <option value={salary.rank}>{salary.rank}</option>
-            {/if}
-        {/each}
-    </select>
-</label>
-{#if YearsInSvc.total.y>=20 || YearsInSvc.dor==""}
-    <label for="1rank" class="flex mb-2">
-            <div class="tooltip tooltip-right" data-tip="at least 1 year active service of current rank">
-            <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
+<div class="flex items-center justify-between mb-8 pb-4 border-b border-base-200">
+    <div>
+        <h2 class="text-2xl font-extrabold text-primary flex items-center gap-3 drop-shadow-sm uppercase tracking-wider">
+            Calculate Highest Salary
+        </h2>
+        <p class="text-base-content/60 text-sm mt-1">Determine your base pay and longevity pay adjustments.</p>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-6">
+    <div class="bg-base-200 p-6 rounded-2xl shadow-inner border border-base-300 flex flex-col gap-5">
+        <h3 class="text-xs font-bold uppercase tracking-widest text-base-content/50 border-b border-base-300 pb-2 mb-2">Input Information</h3>
+        
+        <label for="rank" class="form-control w-full">
+            <div class="label pb-1">
+                <span class="label-text font-bold text-sm">Select Your Rank</span>
             </div>
-            <span class="{(rankHigher)? "": "text-gray-400"}">{(rankHigher)? " with one rank higher":" without one rank higher"}</span>
-    </label>
-{/if}
-<label class="label font-bold flex mb-2" for="retrank">
-    <span>Retirement Salary Grade:</span>
-    <span>{tppd.retrank}</span>
-</label>
-<label class="label flex mb-2" for="basepay">
-    <span class="flex-auto">Base Pay:</span>
-    <span class="flex-auto text-right">₱ {moneyFormat(tppd.bp.toFixed(2))}</span>
-</label>
-<label class="label flex mb-2" for="longpay">
-    <span class="flex-auto">Long Pay [ {tppd.pagi} ]:</span>
-    <span class="flex-auto text-right">₱ {moneyFormat(tppd.lp.toFixed(2))}</span>
-</label>
-<label class="label flex mb-2" for="hsr">
-    <span class="flex-auto">Highest Salary Received:</span>
-    <span class="flex-auto text-right">₱ {moneyFormat(tppd.hsr.toFixed(2))}</span>
-</label>
+            <select id="rank" class="select select-bordered select-primary w-full shadow-sm text-base font-medium" bind:value={tppd.rank} onchange={()=>computeHSR()}>
+                <option disabled value="">Select Rank</option>
+                {#each salaryGrade as salary}
+                    {#if salary.rank != "FDIR (SG 28)"}
+                        <option value={salary.rank}>{salary.rank}</option>
+                    {/if}
+                {/each}
+            </select>
+        </label>
+        
+        {#if YearsInSvc.total.y>=20 || YearsInSvc.dor==""}
+            <div class="form-control w-full bg-base-100 p-4 rounded-xl shadow-sm border border-base-200 mt-2">
+                <label for="1rank" class="label cursor-pointer p-0 justify-start gap-4">
+                    <input id="1rank" type="checkbox" class="toggle toggle-success toggle-md" bind:checked={rankHigher} onchange={()=>computeHSR()} />
+                    <span class="label-text flex flex-col">
+                        <span class="font-bold text-sm {(rankHigher)? "text-success": "text-base-content"}">Apply One Rank Higher</span>
+                        <span class="text-xs opacity-60 mt-0.5">At least 1 yr active service of current rank</span>
+                    </span>
+                </label>
+            </div>
+        {/if}
+    </div>
+
+    <div class="relative bg-primary/5 p-6 sm:p-8 rounded-2xl border border-primary/20 shadow-lg flex flex-col gap-6 overflow-hidden min-h-64 justify-center">
+        <div class="absolute -right-12 -top-12 opacity-[0.03] pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-64 h-64"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        </div>
+
+        <div class="flex justify-between items-end border-b border-base-300 pb-3 relative z-10">
+            <span class="text-sm font-bold uppercase text-base-content/60 tracking-wider">Computed Target Rank</span>
+            <span class="text-lg font-bold text-base-content {tppd.retrank === 'Select Your Rank' ? 'opacity-50 italic text-sm' : ''}">{tppd.retrank}</span>
+        </div>
+
+        <div class="flex justify-between items-center relative z-10">
+            <span class="text-sm font-medium text-base-content/80">Base Pay:</span>
+            <span class="font-mono text-lg font-bold">₱ {moneyFormat(tppd.bp.toFixed(2))}</span>
+        </div>
+
+        <div class="flex justify-between items-center relative z-10">
+            <span class="text-sm font-medium text-base-content/80 flex items-center gap-2">Long Pay <span class="badge badge-sm badge-neutral">{tppd.pagi}</span></span>
+            <span class="font-mono text-lg font-bold">₱ {moneyFormat(tppd.lp.toFixed(2))}</span>
+        </div>
+
+        <div class="divider my-0 relative z-10 opacity-50"></div>
+
+        <div class="relative z-10 flex flex-col items-end">
+            <span class="text-xs font-bold uppercase text-primary/70 tracking-widest mb-1">Total Highest Salary Received</span>
+            <div class="text-3xl sm:text-4xl lg:text-5xl font-mono font-black text-primary drop-shadow-sm mt-1 whitespace-nowrap break-all">
+                ₱ {moneyFormat(tppd.hsr.toFixed(2))}
+            </div>
+        </div>
+    </div>
+</div>

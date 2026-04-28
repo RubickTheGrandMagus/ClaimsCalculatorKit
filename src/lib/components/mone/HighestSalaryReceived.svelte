@@ -535,32 +535,76 @@
         }, 1000);
     });
 </script>
-<h2 class="card-title mb-2">Calculate Highest Salary Received - MLC</h2>
-<label for="rank" class="select mb-2">
-    <span class="label">Rank:</span>
-    <select id="rank" class="select select-bordered select-sm w-full max-w-xs" bind:value={personnel.rank} onchange={()=>computeHSR()} {disabled}>
-        <option disabled selected>Your current rank</option>
-        <option value="NUP">Non-Uniform Personnel (NUP)</option>
-        {#each salaryGrade as salary}
-            {#if salary.rank != "FDIR (SG 28)"}
-                <option value={salary.rank}>{salary.rank}</option>
+<div class="flex items-center justify-between mb-8 pb-4 border-b border-base-200">
+    <div>
+        <h2 class="text-2xl font-extrabold text-primary flex items-center gap-3 drop-shadow-sm uppercase tracking-wider">
+            Highest Salary Received
+        </h2>
+        <p class="text-base-content/60 text-sm mt-1">Determine your terminal pay bracket based on rank and longevity.</p>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+    <div class="bg-base-200 p-6 sm:p-8 rounded-2xl shadow-inner border border-base-300 flex flex-col gap-6">
+        <h3 class="text-sm font-bold uppercase tracking-wider text-base-content/70 border-b border-base-300 pb-2">Salary Information</h3>
+        
+        <div class="form-control w-full">
+            <label for="rank" class="label pb-1">
+                <span class="label-text font-bold text-sm">Rank</span>
+            </label>
+            <select id="rank" class="select select-bordered select-lg w-full font-bold bg-base-100 transition-all focus:select-primary focus:shadow-md {personnel.rank == 'NUP' ? 'select-success' : ''}" bind:value={personnel.rank} onchange={()=>computeHSR()} {disabled}>
+                <option disabled selected>Select Current Rank</option>
+                <option value="NUP" class="font-bold text-success">Non-Uniformed Personnel (NUP)</option>
+                <optgroup label="Uniformed Personnel">
+                    {#each salaryGrade as salary}
+                        {#if salary.rank != "FDIR (SG 28)"}
+                            <option value={salary.rank}>{salary.rank}</option>
+                        {/if}
+                    {/each}
+                </optgroup>
+            </select>
+        </div>
+
+        {#if personnel.rank == "NUP"}
+            <div class="form-control w-full animate-in slide-in-from-top-2">
+                <label for="basepay" class="label pb-1">
+                    <span class="label-text font-bold text-sm text-success">Custom Base Pay</span>
+                </label>
+                <div class="join">
+                    <span class="join-item bg-success/20 text-success font-bold flex items-center px-4 border border-success/30 rounded-l-lg">₱</span>
+                    <input id="basepay" type="number" step="0.01" min="0" class="input input-bordered input-success text-right w-full join-item font-mono text-lg bg-base-100 transition-all focus:shadow-md" bind:value={personnel.bp} onchange={()=>computeHSR()} placeholder="0.00"/>
+                </div>
+            </div>
+        {/if}
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+            <div class="bg-base-100 p-4 rounded-xl border border-base-200 flex flex-col items-center justify-center text-center shadow-sm">
+                <span class="text-xs uppercase font-bold text-base-content/60 mb-1">Base Pay</span>
+                <span class="font-mono text-xl font-bold {personnel.rank == 'NUP' ? 'text-success' : 'text-primary'}">₱ {moneyFormat(personnel.bp.toFixed(2))}</span>
+            </div>
+            <div class="bg-base-100 p-4 rounded-xl border border-base-200 flex flex-col items-center justify-center text-center shadow-sm {personnel.rank == 'NUP' ? 'opacity-50 grayscale' : ''}">
+                <span class="text-xs uppercase font-bold text-base-content/60 mb-1">Longevity Pay <span class="badge badge-sm badge-neutral ml-1">PI: {personnel.pagi}</span></span>
+                <span class="font-mono text-xl font-bold text-secondary">₱ {moneyFormat(personnel.lp.toFixed(2))}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-6 lg:sticky lg:top-8">
+        <div class="relative bg-primary p-6 sm:p-8 rounded-3xl text-primary-content shadow-xl overflow-hidden min-h-[300px] flex flex-col items-center justify-center text-center">
+            <div class="absolute -right-16 -bottom-16 opacity-10 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-64 h-64"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            
+            <h3 class="text-sm font-bold uppercase tracking-widest opacity-80 mb-6 drop-shadow-sm relative z-10 w-full">Highest Salary Received</h3>
+            
+            <div class="bg-base-100/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-base-100/20 shadow-inner w-full flex flex-col items-center group hover:bg-base-100/20 transition-all relative z-10">
+                <span class="text-xl sm:text-2xl font-black opacity-80 mb-2">₱</span>
+                <span class="font-mono text-4xl sm:text-5xl lg:text-6xl font-black drop-shadow-md tracking-tight">{moneyFormat(personnel.hsr.toFixed(2))}</span>
+            </div>
+            
+            {#if personnel.hsr > 0}
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-success/0 via-success to-success/0"></div>
             {/if}
-        {/each}
-    </select>
-</label>
-<label class="label flex mb-2 {personnel.rank=="NUP" ? "input":""}" for="basepay">
-    <span class="flex-auto {personnel.rank=="NUP" ? "label":""}">Base Pay:</span>
-    {#if personnel.rank=="NUP"}
-        <input type="number" step="0.01" min="0" class="text-right" bind:value={personnel.bp} onchange={()=>computeHSR()}/>
-    {:else}
-        <span class="flex-auto text-right">₱ {moneyFormat(personnel.bp.toFixed(2))}</span>
-    {/if}
-</label>
-<label class="label flex mb-2" for="longpay">
-    <span class="flex-auto">Long Pay [ {personnel.pagi} ]:</span>
-    <span class="flex-auto text-right">₱ {moneyFormat(personnel.lp.toFixed(2))}</span>
-</label>
-<label class="label flex mb-2" for="hsr">
-    <span class="flex-auto">Highest Salary Received:</span>
-    <span class="flex-auto text-right">₱ {moneyFormat(personnel.hsr.toFixed(2))}</span>
-</label>
+        </div>
+    </div>
+</div>

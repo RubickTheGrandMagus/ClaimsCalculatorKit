@@ -22,8 +22,15 @@
     }
 </script>
 
-<div class="flex flex-col items-center justify-center">
-	<div class="card w-auto bg-base-100 shadow-xl">
+<div class="flex flex-col items-center justify-center min-h-[70vh] p-4">
+    <!-- Stepper indicator -->
+    <ul class="steps steps-horizontal w-full max-w-4xl mb-8 overflow-x-auto">
+        {#each page as stepLabel, i}
+            <li class="step {i <= pageIndex ? 'step-primary' : ''} text-xs sm:text-sm font-medium whitespace-nowrap">{stepLabel}</li>
+        {/each}
+    </ul>
+
+	<div class="card w-full max-w-4xl bg-base-100 shadow-xl border border-base-200">
 		<div class="card-body">
             {#if pageIndex==0}
                 <div in:fly={{ x: 200}}>
@@ -46,10 +53,10 @@
                     <LeaveCredits />    
                 </div>
             {/if}
-			<div class="flex justify-between">
+			<div class="flex justify-between mt-8 pt-4 border-t border-base-200">
 				<div>
                     {#if pageIndex!=0}
-                        <button class="prev btn btn-sm gap-2 md:btn-md lg:gap-3 {(pageIndex==page.length-1)? 'btn-neutral':''}"
+                        <button class="prev btn btn-sm gap-2 md:btn-md lg:gap-3 {(pageIndex==page.length-1)? 'btn-neutral':'btn-outline btn-primary'}"
                             onclick={()=>movepage(false)}
                             ><svg
                                 class="h-6 w-6 fill-current md:h-8 md:w-8"
@@ -65,9 +72,9 @@
                         </div></button><!---->
                     {/if}
 				</div>
-				<div>
+				<div class="flex justify-end w-full">
                     {#if pageIndex!=page.length-1}
-                        <button class="next btn btn-neutral btn-sm gap-2 md:btn-md lg:gap-3" 
+                        <button class="next btn btn-primary btn-sm gap-2 md:btn-md lg:gap-3 shadow-md" 
                             onclick={()=>movepage(true)}
                             ><div class="flex flex-col items-end">
                                 <span class="hidden text-xs font-normal text-neutral-content/50 md:block">Next</span>

@@ -570,39 +570,54 @@
     });
 
 </script>
-<h2 class="card-title mb-2">Calculate Highest Salary Received - DEA</h2>
-<label for="rank" class="select mb-2">
-    <span class="label">Rank:</span>
-    <select id="rank" class="w-full max-w-xs" bind:value={retiree.rank} onchange={()=>computeHSR()}>
-        <option disabled selected>Your current rank</option>
-        {#each salaryGrade as salary}
-            {#if salary.rank != "FDIR (SG 28)"}
-                <option value={salary.rank}>{salary.rank}</option>
-            {/if}
-        {/each}
-    </select>
-</label>
-{#if YearsInSvc.total.y>=20 || YearsInSvc.dod==""}
-    <label for="1rank" class="flex mb-2">
-            <div class="tooltip tooltip-right" data-tip="at least 1 year active service of current rank">
-            <input type="checkbox" class="toggle toggle-success mr-2" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
+<h2 class="card-title text-2xl font-bold mb-6">Calculate Highest Salary Received - DEA</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="form-control w-full bg-base-200 p-6 rounded-2xl shadow-inner border border-base-300">
+        <label for="rank" class="label font-semibold pt-0"><span class="label-text">Select Your Rank</span></label>
+        <select id="rank" class="select select-bordered select-primary w-full shadow-sm mb-4" bind:value={retiree.rank} onchange={()=>computeHSR()}>
+            <option disabled selected>Your current rank</option>
+            {#each salaryGrade as salary}
+                {#if salary.rank != "FDIR (SG 28)"}
+                    <option value={salary.rank}>{salary.rank}</option>
+                {/if}
+            {/each}
+        </select>
+        
+        {#if YearsInSvc.total.y>=20 || YearsInSvc.dod==""}
+            <label for="1rank" class="label cursor-pointer justify-start gap-4 p-0 mt-2">
+                <input id="1rank" type="checkbox" class="toggle toggle-success" bind:checked={rankHigher} onchange={()=>computeHSR()}/>
+                <span class="label-text font-medium flex flex-wrap items-center gap-1">
+                    {(rankHigher)? "With one rank higher":"Without one rank higher"}
+                    <div class="tooltip tooltip-right ml-1 z-50" data-tip="Requires at least 1 year active service of current rank">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-5 h-5 stroke-info"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                </span>
+            </label>
+        {/if}
+    </div>
+
+    <div class="card bg-primary text-primary-content shadow-lg shadow-primary/30 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
+        <div class="card-body justify-center p-6 sm:p-8 z-10">
+            <div class="flex flex-col gap-3">
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center text-sm lg:text-base opacity-95 border-b border-primary-content/20 pb-2">
+                    <span class="opacity-80 uppercase tracking-wider text-xs font-bold mb-1 sm:mb-0">Retirement Grade</span>
+                    <span class="font-bold text-lg">{retiree.retrank}</span>
+                </div>
+                <div class="flex justify-between items-center text-sm lg:text-base opacity-95 border-b border-primary-content/20 pb-2">
+                    <span class="opacity-80">Base Pay</span>
+                    <span class="font-mono">₱ {moneyFormat(retiree.bp.toFixed(2))}</span>
+                </div>
+                <div class="flex justify-between items-center text-sm lg:text-base opacity-95 border-b border-primary-content/20 pb-2">
+                    <span class="opacity-80">Long Pay <span class="badge badge-sm badge-outline border-primary-content ml-1 opacity-100">{retiree.pagi}</span></span>
+                    <span class="font-mono">₱ {moneyFormat(retiree.lp.toFixed(2))}</span>
+                </div>
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-3">
+                    <span class="text-sm font-bold uppercase tracking-wider opacity-90 text-primary-content">Highest Salary Received</span>
+                    <span class="text-3xl lg:text-4xl font-mono font-extrabold mt-1 sm:mt-0 drop-shadow-sm">₱ {moneyFormat(retiree.hsr.toFixed(2))}</span>
+                </div>
             </div>
-            <span class="{(rankHigher)? "": "text-gray-400"}">{(rankHigher)? " with one rank higher":" without one rank higher"}</span>
-    </label>
-{/if}
-<label class="label font-bold flex mb-2" for="retrank">
-    <span class="flex-auto">Retirement Salary Grade:</span>
-    <span class="flex-auto text-right">{retiree.retrank}</span>
-</label>
-<label class="label flex mb-2" for="basepay">
-    <span class="flex-auto">Base Pay:</span>
-    <span class="flex-auto text-right">₱ {moneyFormat(retiree.bp.toFixed(2))}</span>
-</label>
-<label class="label flex mb-2" for="longpay">
-    <span class="flex-auto">Long Pay [ {retiree.pagi} ]:</span>
-    <span class="flex-auto text-right">₱ {moneyFormat(retiree.lp.toFixed(2))}</span>
-</label>
-<label class="label flex mb-2" for="hsr">
-    <span class="flex-auto">Highest Salary Received:</span>
-    <span class="flex-auto text-right">₱ {moneyFormat(retiree.hsr.toFixed(2))}</span>
-</label>
+        </div>
+    </div>
+</div>
